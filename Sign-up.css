@@ -1,0 +1,183 @@
+/* Overlay Backdrop */
+.signup-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Modal Card */
+.signup-card {
+    background-color: #729eb5; /* Muted teal-blue background from your Figma */
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Top Cyan Header */
+.signup-header {
+    background-color: #52c7db;
+    height: 55px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.close-signup-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.close-signup-btn:hover {
+    opacity: 0.8;
+}
+
+/* Body Content */
+.signup-body {
+    padding: 25px 40px 40px 40px;
+}
+
+.signup-body h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 25px;
+}
+
+/* Form Layout Grids */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.signup-body input[type="text"],
+.signup-body input[type="email"],
+.signup-body input[type="password"],
+.signup-body input[type="number"],
+.signup-body input[type="tel"] {
+    width: 100%;
+    padding: 14px 18px;
+    background-color: #ececec;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+}
+
+.full-width-input {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Position Select Dropdown */
+.role-container {
+    background-color: #ececec;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Position {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 400;
+}
+
+.Position2 {
+    background: transparent;
+    border: none;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Checkboxes Row */
+.checkbox-group-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #000;
+    cursor: pointer;
+}
+
+.checkbox-row p {
+    margin: 0;
+}
+
+/* Confirm Button Style */
+.Confirm1 {
+    display: flex;
+    justify-content: center;
+}
+
+.Confirm1 a {
+    display: block;
+    width: 200px;
+    text-align: center;
+    background: linear-gradient(135deg, #2b9eff, #1e83ec);
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(30, 131, 236, 0.4);
+    transition: transform 0.2s;
+}
+
+.Confirm1 a:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 650px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .checkbox-group-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .signup-body {
+        padding: 20px;
+    }
+}

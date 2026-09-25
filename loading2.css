@@ -1,0 +1,78 @@
+/* Overlay Backdrop */
+.loading-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Loading Modal Card matching Figma theme (#729eb5) */
+.loading-card {
+    background-color: #729eb5;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+/* Top Cyan Header Bar (#52c7db) */
+.loading-header {
+    background-color: #52c7db;
+    height: 45px;
+    width: 100%;
+}
+
+/* Loading Body Content */
+.loading-body {
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.loading-body h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+}
+
+.loading-body p {
+    font-size: 0.95rem;
+    color: #222;
+    margin: 0;
+    opacity: 0.85;
+}
+
+/* Cool Modern Spinner Animation */
+.loader-spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

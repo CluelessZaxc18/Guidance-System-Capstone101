@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-PATH</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Sign-up.js">
+    <script src="script.js" defer></script>
+    <script src="Sign-up.js"></script>
+    <!-- FontAwesome for icons (user, lock, eye, close, arrow) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-overlay">
+        <div class="login-card">
+            <!-- Top cyan bar with close button -->
+            <div class="card-header">
+                <button class="close-btn" aria-label="Close"></button>
+            </div>
+
+            <div class="card-body">
+                <!-- Top branding / greeting section -->
+                <div class="brand-header">
+                    <img src="img/logo.svg" alt="School Logo" class="school-logo">
+                    <h1>Greetings!</h1>
+                    <img src="img/logo-icon.svg" alt="Cap Icon" class="cap-icon">
+                </div>
+
+                <!-- Form section -->
+                <form>
+                    <div class="input-group">
+                        <label for="Email">Email address</label>
+                        <div class="input-field-wrapper">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="email" id="Email" name="Email">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="Password">Password</label>
+                        <div class="input-field-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <!-- Added id="Password" and matching type="password" -->
+                        <input type="password" id="Password" name="Password">
+                        <!-- Added id="togglePassword" for the JS to listen to -->
+                        <i class="fa-regular fa-eye-slash toggle-password " id="togglePassword"></i>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <a href="Loading.html" title="Goes to Main" class="btn-signin" style="text-decoration: none;">
+                            Sign in <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <button type="button" class="btn-signup">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-PATH - Sign Up</title>
+    <link rel="stylesheet" href="Sign-up.css">
+    <script src="Sign-up.js"></script>
+</head>
+<body>
+    <div class="signup-card">
+        <!-- Top Cyan Bar with Close Button -->
+        <div class="signup-header">
+            <button class="close-signup-btn" id="closeSignup"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="signup-body">
+            <h1>Signing up</h1>
+            <div>
+                <form id="signupForm">
+                    <div class="form-grid">
+                        <input type="text" id="Name" placeholder="Full Name">
+                        <input type="email" id="Email" placeholder="Official Email">
+                        <input type="password" id="password1" placeholder="Password">
+                        <input type="password" id="password2" placeholder="Confirm Password">
+                    </div>
+
+                    <input type="text" id="employeeID" class="full-width-input" placeholder="Staff/Employee ID">
+                    <input type="tel" id="Cnumber" pattern="^09[0-9]{9}$" class="full-width-input" placeholder="Official Contact Number" maxlength="11">
+
+                    <div class="role-container">
+                        <label for="Position" class="Position">Position / Role</label>
+                        <select id="Position" class="Position2">
+                            <option value="head">Guidance Counselor</option>
+                            <option value="staff1">Staff 1</option>
+                            <option value="staff2">Staff 2</option>
+                        </select>
+                    </div>
+
+                    <div class="checkbox-group-wrapper">
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="agreement1">
+                            <p>Confidentiality Agreement</p>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="agreement2">
+                            <p>Terms of Service / Data Privacy</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="Confirm1">
+                <a href="Login.html" title="Confirming" id="confirmBtn">Confirm</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

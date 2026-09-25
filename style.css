@@ -1,0 +1,212 @@
+/* Reset & Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    /* Using your local mountain background image */
+    background: url('img/Background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Container to center and handle responsiveness */
+.background-overlay {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Login Card */
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 580px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Top Cyan Bar Header */
+.card-header {
+    background-color: #00e1ff;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #000;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+/* Card Body Content */
+.card-body {
+    padding: 30px 45px 45px 45px;
+}
+
+/* Brand Header (Logo, Greetings, Cap) */
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+
+.school-logo {
+    height: 55px;
+    object-fit: contain;
+}
+
+.brand-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.cap-icon {
+    height: 45px;
+    object-fit: contain;
+}
+
+/* Form Fields */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-field-wrapper input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    background-color: #ececec;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: background-color 0.2s;
+}
+
+.input-field-wrapper input:focus {
+    background-color: #e2e2e2;
+}
+
+/* Icons inside inputs */
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: #555;
+    font-size: 1rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    color: #777;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Buttons Container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Sign In Button */
+.btn-signin {
+    background: linear-gradient(135deg, #2b65ec, #1d4ed8);
+    color: white;
+    border: none;
+    width: 210px;
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(29, 78, 216, 0.3);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-signin:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+/* Sign Up Button */
+.btn-signup {
+    background: #2b65ec;
+    color: white;
+    border: none;
+    width: 160px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(43, 101, 236, 0.25);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-signup:hover {
+    transform: translateY(-2px);
+    background: #1d4ed8;
+}
+
+/* Responsive Media Query for smaller screens */
+@media (max-width: 600px) {
+    .card-body {
+        padding: 20px 20px 30px 20px;
+    }
+    
+    .brand-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .school-logo {
+        height: 40px;
+    }
+
+    .cap-icon {
+        height: 35px;
+    }
+}
