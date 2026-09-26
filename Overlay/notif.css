@@ -1,35 +1,35 @@
-/* Backdrop Overlay Container */
+
 .notif-overlay-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2); /* Softer backdrop background */
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(1px);
     display: flex;
     justify-content: flex-end; 
     align-items: flex-start;
-    padding: 75px 25px 20px 20px; /* Positioned right underneath your top header bell */
+    padding: 75px 25px 20px 20px;
     z-index: 1500;
 }
 
 
-/* Compact Notification Card Box matching Figma */
+
 .notif-card {
     background-color: #ffffff;
     width: 100%;
-    max-width: 420px; /* Slimmer width like Figma */
-    max-height: 85vh;  /* Prevents it from overflowing the screen vertically */
-    overflow-y: auto;  /* Adds a subtle scroll if screen is small */
+    max-width: 420px;
+    max-height: 85vh; 
+    overflow-y: auto; 
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(138, 43, 226, 0.15); 
-    padding: 18px 20px; /* Reduced vertical padding so it's not giant */
+    padding: 18px 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header */
+
 .notif-header {
     display: flex;
     justify-content: space-between;
@@ -55,7 +55,7 @@
     text-decoration: underline;
 }
 
-/* Section Divider & Title */
+
 .notif-divider {
     height: 1px;
     background-color: #edf2f7;
@@ -69,11 +69,11 @@
     margin-bottom: 8px;
 }
 
-/* Notification List Items */
+
 .notif-list {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Tighter gap to keep it compact */
+    gap: 8px;
 }
 
 .notif-item {
@@ -90,7 +90,7 @@
     background-color: #f8fafc;
 }
 
-/* Icons */
+
 .notif-icon {
     width: 36px;
     height: 36px;
@@ -107,7 +107,7 @@
 .notif-icon.orange { background-color: #fef3c7; color: #d97706; }
 .notif-icon.blue { background-color: #e0f2fe; color: #0284c7; }
 
-/* Content Formatting */
+
 .notif-content {
     flex-grow: 1;
 }
@@ -138,7 +138,7 @@
     line-height: 1.25;
 }
 
-/* Unread Indicator Dot */
+
 .unread-dot {
     width: 6px;
     height: 6px;
@@ -148,7 +148,7 @@
     flex-shrink: 0;
 }
 
-/* Footer Link */
+
 .notif-footer {
     text-align: center;
     margin-top: 14px;

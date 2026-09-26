@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const link = document.createElement('link');
                 link.id = 'notifCSS';
                 link.rel = 'stylesheet';
-                link.href = 'notif.css';
+                link.href = 'Overlay/notif.css';
                 document.head.appendChild(link);
             }
 
             try {
                 // Fetch notifications.html content
-                const response = await fetch('notif.html');
+                const response = await fetch('Overlay/notif.html');
                 if (!response.ok) throw new Error('Could not load notifications.html');
                 const htmlContent = await response.text();
 

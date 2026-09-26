@@ -1,4 +1,4 @@
-/* Overlay Backdrop */
+
 .signup-overlay-container {
     position: fixed;
     top: 0;
@@ -14,9 +14,9 @@
     padding: 20px;
 }
 
-/* Modal Card */
+
 .signup-card {
-    background-color: #729eb5; /* Muted teal-blue background from your Figma */
+    background-color: #729eb5;
     width: 100%;
     max-width: 500px;
     border-radius: 16px;
@@ -25,10 +25,10 @@
     position: relative;
 }
 
-/* Top Cyan Header */
+
 .signup-header {
     background-color: #52c7db;
-    height: 55px;
+    height: 30px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -47,7 +47,7 @@
     opacity: 0.8;
 }
 
-/* Body Content */
+
 .signup-body {
     padding: 25px 40px 40px 40px;
 }
@@ -60,7 +60,7 @@
     margin-bottom: 25px;
 }
 
-/* Form Layout Grids */
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -88,7 +88,7 @@
     margin-bottom: 15px;
 }
 
-/* Position Select Dropdown */
+
 .role-container {
     background-color: #ececec;
     border-radius: 8px;
@@ -114,7 +114,7 @@
     cursor: pointer;
 }
 
-/* Checkboxes Row */
+
 .checkbox-group-wrapper {
     display: flex;
     justify-content: space-between;
@@ -142,7 +142,7 @@
     margin: 0;
 }
 
-/* Confirm Button Style */
+
 .Confirm1 {
     display: flex;
     justify-content: center;
@@ -167,7 +167,7 @@
     transform: translateY(-2px);
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 650px) {
     .form-grid {
         grid-template-columns: 1fr;

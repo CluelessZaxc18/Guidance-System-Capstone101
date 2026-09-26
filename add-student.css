@@ -19,7 +19,7 @@
   background: rgba(15, 23, 32, .45);
 }
 
-/* --- the card itself: starts above the viewport and "moves in" downward --- */
+
 .as-modal {
   background:linear-gradient(135deg, #119cff, #034662);
   width: 100%;
@@ -39,7 +39,7 @@
   opacity: 1;
 }
 
-/* --- header --- */
+
 .as-header {
   display: flex;
   align-items: center;
@@ -69,7 +69,7 @@
   letter-spacing: .2px;
 }
 
-/* --- body grid: left text inputs / right selects --- */
+
 .as-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -113,7 +113,7 @@
   box-shadow: 0 0 0 3px rgba(25, 185, 167, .15);
 }
 
-/* --- custom select look --- */
+
 .as-select-wrap {
   position: relative;
 }
@@ -154,7 +154,7 @@
   height: 16px;
 }
 
-/* Date of Birth — same input style, chevron badge sits next to label */
+
 .as-dob-label {
   display: flex;
   align-items: center;
@@ -175,7 +175,7 @@
   height: 14px;
 }
 
-/* --- footer buttons --- */
+
 .as-footer {
   display: flex;
   justify-content: flex-end;
