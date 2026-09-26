@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const link = document.createElement('link');
                 link.id = 'notifCSS';
                 link.rel = 'stylesheet';
-                link.href = 'Overlay/notif.css';
+                link.href = '../css/notif.css';
                 document.head.appendChild(link);
             }
 

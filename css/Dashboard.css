@@ -23,7 +23,7 @@
 }
 
 body {
-  background:url(img/Background2.jpg) no-repeat center center fixed;
+  background:url(../img/Background2.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover; 
@@ -152,7 +152,7 @@ a {
 }
 
 .submenu.open {
-  max-height: 110px;
+  max-height: 400px;
 }
 
 .submenu a {

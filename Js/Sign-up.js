@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const link = document.createElement('link');
                 link.id = 'signupCSS';
                 link.rel = 'stylesheet';
-                link.href = 'Overlay/Sign-up.css';
+                link.href = '../css/Sign-up.css';
                 document.head.appendChild(link);
             }
 
             try {
-                const response = await fetch('Overlay/Sign-up.html');
+                const response = await fetch('../Overlay/Sign-up.html');
                 if (!response.ok) throw new Error('Could not load Sign-up.html');
                 const htmlContent = await response.text();
 
@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             const link = document.createElement('link');
                             link.id = 'loadingCSS';
                             link.rel = 'stylesheet';
-                            link.href = 'loading2.css';
+                            link.href = '../css/loading2.css';
                             document.head.appendChild(link);
                         }
 
                         try {
                      
-                            const loadResponse = await fetch('loading2.html');
+                            const loadResponse = await fetch('../loading2.html');
                             if (!loadResponse.ok) throw new Error('Failed to load loading2.html');
                             
                             const loadingHtml = await loadResponse.text();
@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                   
                             setTimeout(() => {
-                                window.location.href = 'Login.html';
+                                window.location.href = '../Login.html';
                             }, 2500);
 
                         } catch (error) {
                             console.error("Error loading loading screen:", error);
-                            window.location.href = 'Sign-up.html';
+                            window.location.href = '../Overlay/Sign-up.html';
                         }
                     });
                 }

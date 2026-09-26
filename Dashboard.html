@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>G-PATH Dashboard</title>
-  <link rel="stylesheet" href="Dashboard.css">
-  <link rel="stylesheet" href="add-student.css">
+  <link rel="stylesheet" href="css/Dashboard.css">
+  <link rel="stylesheet" href="css/add-student.css">
 </head>
 <body>
 
@@ -39,16 +39,38 @@
       </div>
       
 
-      <a class="nav-item" href="#" data-page="Document Management">
-        <span class="nav-icon">▱</span>
+      <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
+        <span class="nav-icon">☷</span>
         <span>Document Management</span>
-      </a>
+        <span class="chevron">›</span>
+      </button>
 
-      <a class="nav-item" href="#" data-page="Reports">
-        <span class="nav-icon">▥</span>
-        <span>Reports</span>
-      </a>
+      <div class="submenu" id="studentMenu2">
 
+        <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
+        <span class="nav-icon">❐</span>
+        <span>Narrative Report for</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu3">
+              <a href="#" data-page="Context 1">Testing</a>
+              <a href="#" data-page="Context 2">Referrals</a>
+              <a href="#" data-page="Context 3">Counseling</a>
+          </div>
+
+        <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
+        <span class="nav-icon">℉</span>
+        <span>Forms of Referrals</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu4">
+              <a href="#" data-page="Context 1">Informed Consent</a>
+              <a href="#" data-page="Context 2">Referral Feedback</a>
+              <a href="#" data-page="Context 3">Case Notes</a>
+          </div>
+        
+      </div>
+      
       <p class="nav-label lower">SYSTEM</p>
 
       <a class="nav-item" href="#" data-page="Settings">
@@ -231,109 +253,15 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- Add Student Modal -->
-  <div class="as-overlay" id="addStudentOverlay">
-    <div class="as-modal" role="dialog" aria-modal="true" aria-labelledby="addStudentTitle">
+  <!-- Add Student modal is a separate file (add-student.html), fetched and
+       injected here at runtime by Js/add-student.js. Requires the page to
+       be served over http:// (e.g. Live Server) — won't work opened as file://. -->
+  <div id="addStudentMount"></div>
 
-      <div class="as-header">
-        <div class="as-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="8" r="4" stroke="white" stroke-width="2"/>
-            <path d="M2 20v-1c0-2.76 3.13-5 7-5s7 2.24 7 5v1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19 8v6M22 11h-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h2 id="addStudentTitle">Add New Student</h2>
-      </div>
-
-      <form id="addStudentForm">
-        <div class="as-body">
-          <!-- Left column -->
-          <div>
-            <div class="as-group">
-              <label for="asFullName">Full Name</label>
-              <input type="text" id="asFullName" placeholder="Enter full name" required>
-            </div>
-
-            <div class="as-group">
-              <label for="asStudentId">Student ID</label>
-              <input type="text" id="asStudentId" placeholder="Enter Student ID" required>
-            </div>
-
-            <div class="as-group">
-              <label for="asContact">Contact Number</label>
-              <input type="tel" id="asContact" placeholder="Enter Contact Number">
-            </div>
-          </div>
-
-          <!-- Right column -->
-          <div>
-            <div class="as-group">
-              <label for="asYearLevel">Year Level</label>
-              <div class="as-select-wrap">
-                <select id="asYearLevel">
-                  <option>First Year</option>
-                  <option>Second Year</option>
-                  <option>Third Year</option>
-                  <option>Fourth Year</option>
-                </select>
-                <span class="as-chevron">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <div class="as-group">
-              <label for="asProgram">Program</label>
-              <div class="as-select-wrap">
-                <select id="asProgram" required>
-                  <option value="" disabled selected>Select Program</option>
-                  <option>BS Information Technology</option>
-                  <option>BS Computer Science</option>
-                  <option>BS Education</option>
-                </select>
-                <span class="as-chevron">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <div class="as-group">
-              <label for="asGender">Gender</label>
-              <div class="as-select-wrap">
-                <select id="asGender" required>
-                  <option value="" disabled selected>Select Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-                <span class="as-chevron">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <div class="as-group">
-              <label for="asDob" class="as-dob-label">
-                Date of Birth
-              </label>
-              <input type="date" id="asDob">
-            </div>
-          </div>
-        </div>
-
-        <div class="as-footer">
-          <button type="button" class="as-btn as-btn-cancel" id="asCancelBtn">Cancel</button>
-          <button type="submit" class="as-btn as-btn-save" id="asSaveBtn">Save</button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-
-  <script src="Dashboard.js"></script>
-  <script src="add-student.js"></script>
-  <script src="notif.js"></script>
-  <script src="Overlay/logout-overlay.js"></script>
-  <script src="Overlay/notif.js"></script>
+  <script src="Js/Dashboard.js"></script>
+  <script src="Js/add-student.js"></script>
+  <script src="Js/notif.js"></script>
+  <script src="Js/logout-overlay.js"></script>
+  <script src="Js/notif.js"></script>
 </body>
 </html>

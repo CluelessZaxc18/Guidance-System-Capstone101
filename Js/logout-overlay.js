@@ -14,13 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const link = document.createElement('link');
                 link.id = 'logoutCSS';
                 link.rel = 'stylesheet';
-                link.href = 'Overlay/logout-overlay.css';
+                link.href = '../css/logout-overlay.css';
                 document.head.appendChild(link);
             }
 
             try {
                
-                const response = await fetch('Overlay/logout-overlay.html');
+                const response = await fetch('../Overlay/logout-overlay.html');
                 if (!response.ok) throw new Error('Could not load logout-overlay.html');
                 const htmlContent = await response.text();
 
