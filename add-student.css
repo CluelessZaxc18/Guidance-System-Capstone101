@@ -1,0 +1,228 @@
+
+.as-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 32, 0);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8vh;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease, background .28s ease;
+}
+
+.as-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(15, 23, 32, .45);
+}
+
+/* --- the card itself: starts above the viewport and "moves in" downward --- */
+.as-modal {
+  background:linear-gradient(135deg, #119cff, #034662);
+  width: 100%;
+  max-width: 620px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(10, 20, 30, .25);
+  padding: 20px 32px 24px;
+  transform: translateY(-120px);
+  opacity: 0;
+  transition: transform .38s cubic-bezier(.22, .9, .32, 1.15), opacity .3s ease;
+  max-height: 91vh;
+  overflow-y: none;
+}
+
+.as-overlay.show .as-modal {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* --- header --- */
+.as-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.as-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 50%;
+  background: #0a3f43;
+  display: grid;
+  place-items: center;
+}
+
+.as-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.as-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e1e1e;
+  letter-spacing: .2px;
+}
+
+/* --- body grid: left text inputs / right selects --- */
+.as-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 28px;
+}
+
+.as-group {
+  margin-bottom: 18px;
+}
+
+.as-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.as-group input[type="text"],
+.as-group input[type="tel"],
+.as-group input[type="date"] {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #f0f0f0;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #1e1e1e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .03);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.as-group input::placeholder {
+  color: #a6a6a6;
+}
+
+.as-group input:focus {
+  outline: none;
+  border-color: #19b9a7;
+  box-shadow: 0 0 0 3px rgba(25, 185, 167, .15);
+}
+
+/* --- custom select look --- */
+.as-select-wrap {
+  position: relative;
+}
+
+.as-select-wrap select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 0 48px 0 14px;
+  font-size: 15px;
+  color: #1e1e1e;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.as-select-wrap select:invalid {
+  color: #4a4a4a;
+}
+
+.as-select-wrap .as-chevron {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: 36px;
+  border-radius: 8px;
+  background: #dbdbdb;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.as-select-wrap .as-chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Date of Birth — same input style, chevron badge sits next to label */
+.as-dob-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.as-dob-label .as-mini-chevron {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: #dbdbdb;
+  display: grid;
+  place-items: center;
+}
+
+.as-dob-label .as-mini-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- footer buttons --- */
+.as-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.as-btn {
+  height: 44px;
+  padding: 0 26px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease;
+}
+
+.as-btn:active {
+  transform: translateY(1px);
+}
+
+.as-btn-cancel {
+  background: #ffffff;
+  border: 1.5px solid #1e1e1e;
+  color: #1e1e1e;
+}
+
+.as-btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+.as-btn-save {
+  background: #044341;
+  border: 1.5px solid #044341;
+  color: #ffffff;
+}
+
+.as-btn-save:hover {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 700px) {
+  .as-body {
+    grid-template-columns: 1fr;
+  }
+  .as-modal {
+    margin: 0 16px;
+    padding: 22px 20px 18px;
+  }
+}

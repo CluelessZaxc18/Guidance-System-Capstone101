@@ -6,8 +6,11 @@
 
     <style>
         body {
-            background: url(img/Background2.jpg) no-repeat center center fixed;
-            background-size: cover;
+            background:url(img/Background2.jpg) no-repeat center center fixed;
+                -webkit-background-size: cover;
+                    -moz-background-size: cover;
+                        -o-background-size: cover; 
+                            background-size: cover;   
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -58,7 +61,7 @@
     <!-- JavaScript Timing & Navigation Engine -->
     <script>
         // Total wait time on this page (2000ms = 2 seconds)
-        const totalDelay = 2000; 
+        const totalDelay = 3000; 
         
         // Duration of the dissolve transition (matches 0.5s in CSS)
         const fadeDuration = 500; 
@@ -70,7 +73,7 @@
 
         // 2. Perform the physical browser redirection to Main.html
         setTimeout(() => {
-            window.location.href = "Main.html";
+            window.location.href = "Dashboard.html";
         }, totalDelay);
     </script>
     

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G-PATH Dashboard</title>
+  <link rel="stylesheet" href="Dashboard.css">
+  <link rel="stylesheet" href="add-student.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">G</div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Office</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+      <a class="nav-item active" href="#" data-page="Dashboard">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- Student dropdown -->
+      <button class="nav-item nav-dropdown" id="studentToggle" type="button" aria-expanded="false">
+        <span class="nav-icon">♙</span>
+        <span>Student</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="submenu" id="studentMenu">
+        <a href="#" data-page="Context 1">Context 1</a>
+        <a href="#" data-page="Context 2">Context 2</a>
+      </div>
+
+      <a class="nav-item" href="#" data-page="Document Management">
+        <span class="nav-icon">▱</span>
+        <span>Document Management</span>
+      </a>
+
+      <a class="nav-item" href="#" data-page="Reports">
+        <span class="nav-icon">▥</span>
+        <span>Reports</span>
+      </a>
+
+      <p class="nav-label lower">SYSTEM</p>
+
+      <a class="nav-item" href="#" data-page="Settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-profile">
+      <div class="avatar">GC</div>
+      <div class="profile-info">
+        <strong>Guidance Counselor</strong>
+        <span>Admin</span>
+      </div>
+      <button class="more-btn" title="More options">•••</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">Dashboard</span></p>
+        <h2 id="pageTitle">Dashboard</h2>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="notificationBtn" title="Notifications">
+          <!-- Red Bell SVG -->
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small">GC</div>
+          <div>
+            <strong>Guidance Counselor</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="welcome">
+        <div>
+          <p class="eyebrow">OVERVIEW</p>
+          <h3>Greetings!</h3>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Total Students</span>
+            <div class="stat-icon blue">♙</div>
+          </div>
+          <strong>128</strong>
+          <small></b>All Registered Students</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Appointments this Month</span>
+            <div class="stat-icon violet">▤</div>
+          </div>
+          <strong>24</strong>
+          <small></b>Scheduled appointments</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Documents Pending Review</span>
+            <div class="stat-icon teal">▱</div>
+          </div>
+          <strong>16</strong>
+          <small>Waiting for Review</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Active Cases</span>
+            <div class="stat-icon orange">◷</div>
+          </div>
+          <strong>9</strong>
+          <small>Currently Open Cases</small>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <section class="panel activity-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">RECENT</p>
+              <h4>Recent Activity</h4>
+            </div>
+            <button class="text-btn">View all</button>
+          </div>
+
+          <div class="activity-list">
+            <div class="activity">
+              <div class="activity-symbol blue">+</div>
+              <div>
+                <strong>Student record updated</strong>
+                <p>Aris Villanueva · Student Information</p>
+              </div>
+              <time>10 min ago</time>
+            </div>
+
+            <div class="activity">
+              <div class="activity-symbol teal">↑</div>
+              <div>
+                <strong>Document uploaded</strong>
+                <p>Medical Certificate · Aris Villanueva</p>
+              </div>
+              <time>42 min ago</time>
+            </div>
+
+            <div class="activity">
+              <div class="activity-symbol violet">✓</div>
+              <div>
+                <strong>Guidance activity recorded</strong>
+                <p>Individual counseling session</p>
+              </div>
+              <time>2 hrs ago</time>
+            </div>
+
+            <div class="activity">
+              <div class="activity-symbol orange">!</div>
+              <div>
+                <strong>Document needs review</strong>
+                <p>Pending verification · 2 files</p>
+              </div>
+              <time>Yesterday</time>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel quick-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">SHORTCUTS</p>
+              <h4>Quick Actions</h4>
+            </div>
+          </div>
+
+          <button class="quick-action" id="quickStudent">
+            <span class="quick-icon blue">+</span>
+            <span><strong>Add Student</strong><small>Create a new student profile</small></span>
+            <span>›</span>
+          </button>
+
+          <button class="quick-action" id="quickDocument">
+            <span class="quick-icon teal">↑</span>
+            <span><strong>Upload Document</strong><small>Store a guidance document</small></span>
+            <span>›</span>
+          </button>
+        </section>
+      </div>
+
+      <section class="panel bottom-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">SYSTEM STATUS</p>
+            <h4>Document Storage</h4>
+          </div>
+          <span class="status-badge">● Operational</span>
+        </div>
+        <div class="storage-row">
+          <div class="storage-bar"><span></span></div>
+          <div class="storage-details">
+            <strong>42.6 GB</strong>
+            <span>of 100 GB used</span>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Add Student Modal -->
+  <div class="as-overlay" id="addStudentOverlay">
+    <div class="as-modal" role="dialog" aria-modal="true" aria-labelledby="addStudentTitle">
+
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="8" r="4" stroke="white" stroke-width="2"/>
+            <path d="M2 20v-1c0-2.76 3.13-5 7-5s7 2.24 7 5v1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 8v6M22 11h-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 id="addStudentTitle">Add New Student</h2>
+      </div>
+
+      <form id="addStudentForm">
+        <div class="as-body">
+          <!-- Left column -->
+          <div>
+            <div class="as-group">
+              <label for="asFullName">Full Name</label>
+              <input type="text" id="asFullName" placeholder="Enter full name" required>
+            </div>
+
+            <div class="as-group">
+              <label for="asStudentId">Student ID</label>
+              <input type="text" id="asStudentId" placeholder="Enter Student ID" required>
+            </div>
+
+            <div class="as-group">
+              <label for="asContact">Contact Number</label>
+              <input type="tel" id="asContact" placeholder="Enter Contact Number">
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div>
+            <div class="as-group">
+              <label for="asYearLevel">Year Level</label>
+              <div class="as-select-wrap">
+                <select id="asYearLevel">
+                  <option>First Year</option>
+                  <option>Second Year</option>
+                  <option>Third Year</option>
+                  <option>Fourth Year</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asProgram">Program</label>
+              <div class="as-select-wrap">
+                <select id="asProgram" required>
+                  <option value="" disabled selected>Select Program</option>
+                  <option>BS Information Technology</option>
+                  <option>BS Computer Science</option>
+                  <option>BS Education</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asGender">Gender</label>
+              <div class="as-select-wrap">
+                <select id="asGender" required>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asDob" class="as-dob-label">
+                Date of Birth
+              </label>
+              <input type="date" id="asDob">
+            </div>
+          </div>
+        </div>
+
+        <div class="as-footer">
+          <button type="button" class="as-btn as-btn-cancel" id="asCancelBtn">Cancel</button>
+          <button type="submit" class="as-btn as-btn-save" id="asSaveBtn">Save</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="Dashboard.js"></script>
+  <script src="add-student.js"></script>
+</body>
+</html>

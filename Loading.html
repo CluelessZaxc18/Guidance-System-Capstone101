@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>G-PATH</title>
+    
+    <!-- 1. CHEAT THE LOAD: Forces the browser to download the background image first -->
+    <link rel="preload" as="image" href="img/Background.jpg">
+
     <style>
         body {
+            /* 2. CHEAT THE FLASH: Set a dark color matching your background tone so it's not a white screen */
+            background-color: #0b132b; 
             background: url(img/Background.jpg) no-repeat center center fixed;
+            
+            /* Prevents the image from being blurry */
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
             background-size: cover;
+            
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -55,7 +67,7 @@
             document.body.classList.add('fade-out');
         }, totalDelay - fadeDuration);
 
-        // Redirect to loading.html at 2 seconds
+        // Redirect to Welcome.html at 2 seconds
         setTimeout(() => {
             window.location.href = "Welcome.html";
         }, totalDelay);
