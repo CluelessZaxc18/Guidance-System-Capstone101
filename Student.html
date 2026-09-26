@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G-PATH Dashboard</title>
+  <link rel="stylesheet" href="Dashboard.css">
+  <link rel="stylesheet" href="add-student.css">
+  <link rel="stylesheet" href="Student.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">G</div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Office</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+      <a class="nav-item" href="Dashboard.html" data-page="Dashboard">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- Student dropdown -->
+      <button class="nav-item active nav-dropdown" id="studentToggle" type="button" aria-expanded="false">
+        <span class="nav-icon">♙</span>
+        <span>Student</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="submenu" id="studentMenu">
+        <a href="#" data-page="Context 1" class="student-list1 active">Context 1</a>
+        <a href="#" data-page="Context 2">Context 2</a>
+      </div>
+
+      <a class="nav-item" href="#" data-page="Document Management">
+        <span class="nav-icon">▱</span>
+        <span>Document Management</span>
+      </a>
+
+      <a class="nav-item" href="#" data-page="Reports">
+        <span class="nav-icon">▥</span>
+        <span>Reports</span>
+      </a>
+
+      <p class="nav-label lower">SYSTEM</p>
+
+      <a class="nav-item" href="#" data-page="Settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-profile">
+      <div class="avatar">GC</div>
+      <div class="profile-info">
+        <strong>Guidance Counselor</strong>
+        <span>Admin</span>
+      </div>
+      <button class="more-btn" title="More options">•••</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">Student</span></p>
+        <h2 id="pageTitle">Student Record</h2>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="notifBell" title="Notifications">
+          <!-- Red Bell SVG -->
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small">GC</div>
+          <div>
+            <strong>Guidance Counselor</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+<div class="content">
+
+    <section class="student-management-section">
+        
+        <!-- Filters & Add Student Bar -->
+        <div class="student-filter-panel panel">
+          <div class="search-box-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" placeholder="Search students by name or ID..." class="student-search-input">
+          </div>
+
+          <div class="filter-dropdowns">
+            <div class="filter-group">
+              <label>Year Level</label>
+              <select class="filter-select">
+                <option>All Year Levels</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Section</label>
+              <select class="filter-select">
+                <option>All Sections</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label>Status</label>
+              <select class="filter-select">
+                <option>All Statuses</option>
+                <option>Active</option>
+                <option>Follow-up</option>
+                <option>Monitoring</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="add-student-main-btn" id="openAddModalBtn">
+            <span>+</span> Add Student
+          </button>
+        </div>
+
+        <!-- Student Data Table Panel -->
+        <div class="panel student-table-panel">
+          <table class="student-data-table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>ID</th>
+                <th>Year Level</th>
+                <th>Last Updated</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar teal-bg">AC</div>
+                    <span>Ana Cruz</span>
+                  </div>
+                </td>
+                <td>110187</td>
+                <td>3rd Year</td>
+                <td>2 hours ago</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar green-bg">MS</div>
+                    <span>Miguel Santos</span>
+                  </div>
+                </td>
+                <td>110638</td>
+                <td>2nd Year</td>
+                <td>May 18, 2024</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar violet-bg">ML</div>
+                    <span>Maria Lim</span>
+                  </div>
+                </td>
+                <td>110744</td>
+                <td>4th Year</td>
+                <td>May 15, 2024</td>
+                <td><span class="status-pill followup"><span class="pill-dot"></span> Follow-up</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar teal-bg">JR</div>
+                    <span>Joshua Reyes</span>
+                  </div>
+                </td>
+                <td>110859</td>
+                <td>3rd Year</td>
+                <td>May 12, 2024</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar green-bg">SM</div>
+                    <span>Sofia Mendoza</span>
+                  </div>
+                </td>
+                <td>110963</td>
+                <td>4th Year</td>
+                <td>May 10, 2024</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar blue-bg">LT</div>
+                    <span>Liam Torres</span>
+                  </div>
+                </td>
+                <td>111074</td>
+                <td>1st Year</td>
+                <td>May 8, 2024</td>
+                <td><span class="status-pill monitoring"><span class="pill-dot"></span> Monitoring</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 7 -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar teal-bg">AV</div>
+                    <span>Aris Villanueva</span>
+                  </div>
+                </td>
+                <td>110198</td>
+                <td>2nd Year</td>
+                <td>June 12, 2026</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 8 (New) -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar green-bg">DG</div>
+                    <span>Daniel Garcia</span>
+                  </div>
+                </td>
+                <td>111530</td>
+                <td>3rd Year</td>
+                <td>June 10, 2026</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 9 (New) -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar violet-bg">CN</div>
+                    <span>Camille Navarro</span>
+                  </div>
+                </td>
+                <td>111419</td>
+                <td>1st Year</td>
+                <td>June 8, 2026</td>
+                <td><span class="status-pill monitoring"><span class="pill-dot"></span> Monitoring</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 10 (New) -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar teal-bg">RM</div>
+                    <span>Rafael Mendoza</span>
+                  </div>
+                </td>
+                <td>111308</td>
+                <td>4th Year</td>
+                <td>June 5, 2026</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 11 (New) -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar green-bg">NR</div>
+                    <span>Nicole Reyes</span>
+                  </div>
+                </td>
+                <td>111297</td>
+                <td>3rd Year</td>
+                <td>June 3, 2026</td>
+                <td><span class="status-pill followup"><span class="pill-dot"></span> Follow-up</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+
+              <!-- Row 12 (New) -->
+              <tr>
+                <td>
+                  <div class="table-user-info">
+                    <div class="table-avatar blue-bg">EF</div>
+                    <span>Ethan Flores</span>
+                  </div>
+                </td>
+                <td>111186</td>
+                <td>2nd Year</td>
+                <td>May 30, 2026</td>
+                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
+                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+      <!-- End of Frame 10 Section -->
+</div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Add Student Modal -->
+  <div class="as-overlay" id="addStudentOverlay">
+    <div class="as-modal" role="dialog" aria-modal="true" aria-labelledby="addStudentTitle">
+
+      <div class="as-header">
+        <div class="as-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="8" r="4" stroke="white" stroke-width="2"/>
+            <path d="M2 20v-1c0-2.76 3.13-5 7-5s7 2.24 7 5v1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 8v6M22 11h-6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 id="addStudentTitle">Add New Student</h2>
+      </div>
+
+      <form id="addStudentForm">
+        <div class="as-body">
+          <!-- Left column -->
+          <div>
+            <div class="as-group">
+              <label for="asFullName">Full Name</label>
+              <input type="text" id="asFullName" placeholder="Enter full name" required>
+            </div>
+
+            <div class="as-group">
+              <label for="asStudentId">Student ID</label>
+              <input type="text" id="asStudentId" placeholder="Enter Student ID" required>
+            </div>
+
+            <div class="as-group">
+              <label for="asContact">Contact Number</label>
+              <input type="tel" id="asContact" placeholder="Enter Contact Number">
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div>
+            <div class="as-group">
+              <label for="asYearLevel">Year Level</label>
+              <div class="as-select-wrap">
+                <select id="asYearLevel">
+                  <option>First Year</option>
+                  <option>Second Year</option>
+                  <option>Third Year</option>
+                  <option>Fourth Year</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asProgram">Program</label>
+              <div class="as-select-wrap">
+                <select id="asProgram" required>
+                  <option value="" disabled selected>Select Program</option>
+                  <option>BS Information Technology</option>
+                  <option>BS Computer Science</option>
+                  <option>BS Education</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asGender">Gender</label>
+              <div class="as-select-wrap">
+                <select id="asGender" required>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="as-group">
+              <label for="asDob" class="as-dob-label">
+                Date of Birth
+              </label>
+              <input type="date" id="asDob">
+            </div>
+          </div>
+        </div>
+
+        <div class="as-footer">
+          <button type="button" class="as-btn as-btn-cancel" id="asCancelBtn">Cancel</button>
+          <button type="submit" class="as-btn as-btn-save" id="asSaveBtn">Save</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="Dashboard.js"></script>
+  <script src="add-student.js"></script>
+  <script src="notif.js"></script>
+</body>
+</html>
