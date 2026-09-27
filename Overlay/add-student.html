@@ -32,12 +32,18 @@
 
             <div class="as-group">
               <label for="asStudentId">Student ID</label>
-              <input type="text" id="asStudentId" placeholder="Enter Student ID" required>
+              <input type="text" id="asStudentId" placeholder="Enter 6 digit Student ID" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
             </div>
 
             <div class="as-group">
               <label for="asContact">Contact Number</label>
-              <input type="tel" id="asContact" placeholder="Enter Contact Number">
+              <input type="tel" id="asContact" pattern="[0-9]{11}" minlength="11" maxlength="11" placeholder="Enter exact 11 digits # number" required>
+            </div>
+
+            <div class="as-group">
+              <label for="asStanding">Academic Standing</label>
+              <input type="text" id="asStanding" pattern="[Rr][Ee][Gg][Uu][Ll][Aa][Rr]|[Ii][Rr][Rr][Ee][Gg][Uu][Ll][Aa][Rr]|[Tt][Rr][Aa][Nn][Ss][Ff][Ee][Rr][Ee][Ee]"
+                placeholder="Regular / Irregular / Transferee" required>
             </div>
           </div>
 
@@ -47,10 +53,10 @@
               <label for="asYearLevel">Year Level</label>
               <div class="as-select-wrap">
                 <select id="asYearLevel">
-                  <option>First Year</option>
-                  <option>Second Year</option>
-                  <option>Third Year</option>
-                  <option>Fourth Year</option>
+                  <option>1st Year</option>
+                  <option>2nd Year</option>
+                  <option>3rd Year</option>
+                  <option>4th Year</option>
                 </select>
                 <span class="as-chevron">
                   <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -63,9 +69,11 @@
               <div class="as-select-wrap">
                 <select id="asProgram" required>
                   <option value="" disabled selected>Select Program</option>
+                  <option>BS Criminology</option>
                   <option>BS Information Technology</option>
-                  <option>BS Computer Science</option>
-                  <option>BS Education</option>
+                  <option>BS Hospitality Management</option>
+                  <option>BS Midwifery Education</option>
+                  <option>BS Tourism Management</option>
                 </select>
                 <span class="as-chevron">
                   <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

@@ -6,7 +6,7 @@
   <title>G-PATH Dashboard</title>
   <link rel="stylesheet" href="css/Dashboard.css">
   <link rel="stylesheet" href="css/add-student.css">
-  <link rel="stylesheet" href="css/Student.css">
+  <link rel="stylesheet" href="css/Student.css">\n  <link rel="stylesheet" href="css/Student-profile.css">
 </head>
 <body>
 
@@ -35,8 +35,8 @@
       </button>
 
       <div class="submenu" id="studentMenu">
-        <a href="#" data-page="Context 1" class="student-list1 active">Context 1</a>
-        <a href="#" data-page="Context 2">Context 2</a>
+        <a href="#" data-page="Context 1" class="student-list1 active">Students</a>
+        <a href="Student.html" data-page="Context 2">Context 2</a>
       </div>
 
       <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
@@ -60,13 +60,14 @@
 
         <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
         <span class="nav-icon">℉</span>
-        <span>Forms of Referrals</span>
+        <span>Forms for</span>
         <span class="chevron">›</span>
       </button>
             <div class="submenu" id="studentMenu4">
-              <a href="#" data-page="Context 1">Informed Consent</a>
-              <a href="#" data-page="Context 2">Referral Feedback</a>
-              <a href="#" data-page="Context 3">Case Notes</a>
+              <a href="#" data-page="Context 1">Referrals</a>
+              <a href="#" data-page="Context 2">Informed Consent</a>
+              <a href="#" data-page="Context 3">Referral Feedback</a>
+              <a href="#" data-page="Context 4">Case Notes</a>
           </div>
         
       </div>
@@ -142,6 +143,21 @@
               <label>Section</label>
               <select class="filter-select">
                 <option>All Sections</option>
+                <option>Room 1</option>
+                <option>Room 2</option>
+                <option>Room 3</option>
+                <option>Room 4</option>
+                <option>Room 5</option>
+                <option>Room 6</option>
+                <option>Room 7</option>
+                <option>Room 8</option>
+                <option>Room 9</option>
+                <option>Room 10</option>
+                <option>Room 11</option>
+                <option>Room 12</option>
+                <option>Room 13</option>
+                <option>Room 14</option>
+                <option>Room 15</option>
               </select>
             </div>
 
@@ -174,186 +190,8 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- Row 1 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar teal-bg">AC</div>
-                    <span>Ana Cruz</span>
-                  </div>
-                </td>
-                <td>110187</td>
-                <td>3rd Year</td>
-                <td>2 hours ago</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 2 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar green-bg">MS</div>
-                    <span>Miguel Santos</span>
-                  </div>
-                </td>
-                <td>110638</td>
-                <td>2nd Year</td>
-                <td>May 18, 2024</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 3 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar violet-bg">ML</div>
-                    <span>Maria Lim</span>
-                  </div>
-                </td>
-                <td>110744</td>
-                <td>4th Year</td>
-                <td>May 15, 2024</td>
-                <td><span class="status-pill followup"><span class="pill-dot"></span> Follow-up</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 4 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar teal-bg">JR</div>
-                    <span>Joshua Reyes</span>
-                  </div>
-                </td>
-                <td>110859</td>
-                <td>3rd Year</td>
-                <td>May 12, 2024</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 5 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar green-bg">SM</div>
-                    <span>Sofia Mendoza</span>
-                  </div>
-                </td>
-                <td>110963</td>
-                <td>4th Year</td>
-                <td>May 10, 2024</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 6 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar blue-bg">LT</div>
-                    <span>Liam Torres</span>
-                  </div>
-                </td>
-                <td>111074</td>
-                <td>1st Year</td>
-                <td>May 8, 2024</td>
-                <td><span class="status-pill monitoring"><span class="pill-dot"></span> Monitoring</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 7 -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar teal-bg">AV</div>
-                    <span>Aris Villanueva</span>
-                  </div>
-                </td>
-                <td>110198</td>
-                <td>2nd Year</td>
-                <td>June 12, 2026</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 8 (New) -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar green-bg">DG</div>
-                    <span>Daniel Garcia</span>
-                  </div>
-                </td>
-                <td>111530</td>
-                <td>3rd Year</td>
-                <td>June 10, 2026</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 9 (New) -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar violet-bg">CN</div>
-                    <span>Camille Navarro</span>
-                  </div>
-                </td>
-                <td>111419</td>
-                <td>1st Year</td>
-                <td>June 8, 2026</td>
-                <td><span class="status-pill monitoring"><span class="pill-dot"></span> Monitoring</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 10 (New) -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar teal-bg">RM</div>
-                    <span>Rafael Mendoza</span>
-                  </div>
-                </td>
-                <td>111308</td>
-                <td>4th Year</td>
-                <td>June 5, 2026</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 11 (New) -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar green-bg">NR</div>
-                    <span>Nicole Reyes</span>
-                  </div>
-                </td>
-                <td>111297</td>
-                <td>3rd Year</td>
-                <td>June 3, 2026</td>
-                <td><span class="status-pill followup"><span class="pill-dot"></span> Follow-up</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
-
-              <!-- Row 12 (New) -->
-              <tr>
-                <td>
-                  <div class="table-user-info">
-                    <div class="table-avatar blue-bg">EF</div>
-                    <span>Ethan Flores</span>
-                  </div>
-                </td>
-                <td>111186</td>
-                <td>2nd Year</td>
-                <td>May 30, 2026</td>
-                <td><span class="status-pill active"><span class="pill-dot"></span> Active</span></td>
-                <td><button class="view-profile-btn">View Profile <span>›</span></button></td>
-              </tr>
+            <tbody id="studentTableBody">
+              <!-- Student rows are generated from Js/student-data.js -->
             </tbody>
           </table>
         </div>
@@ -365,11 +203,11 @@
 
   <div class="toast" id="toast"></div>
 
-  <div id="addStudentMount"></div>
+  <div id="addStudentMount"></div>\n\n  <!-- Student profile overlay is mounted here -->\n  <div id="studentProfileMount"></div>
 
-  <script src="Js/Dashboard.js"></script>
+  <script src="Js/student-data.js"></script>\n  <script src="Js/student-profile.js"></script>\n  <script src="Js/side-nav.js"></script>
   <script src="Js/add-student.js"></script>
   <script src="Js/notif.js"></script>
-  <script src="Js/Overlay/logout-overlay.js"></script>
+  <script src="Js/logout-overlay.js"></script>
 </body>
 </html>

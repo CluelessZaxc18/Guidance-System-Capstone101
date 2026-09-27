@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - G-PATH</title>
+  <link rel="stylesheet" href="css/Student-profile.css">
+</head>
+
+<style>
+  body {
+    background:linear-gradient(135deg, #119cff, #034662);
+  }
+</style>
+<body style="margin:0;">
+  <div id="studentProfileMount"></div>
+
+  <script>
+    const student = {
+      name: "Aris Villanueva",
+      id: "110198",
+      year: "2nd Year",
+      program: "BS Information Technology",
+      section: "Room 1",
+      gender: "Male",
+      birthday: "",
+      updated: "June 12, 2026",
+      status: "Active",
+      standing: "Regular"
+    };
+
+    function studentInitials(name) {
+      return name.split(" ").map(part => part[0]).join("").slice(0, 2).toUpperCase();
+    }
+
+    document.getElementById("studentProfileMount").innerHTML = `
+      <div class="student-profile-overlay show" style="visibility:visible;background:rgba(12,24,29,.12);position:relative;min-height:100vh;display:flex;">
+        <aside class="student-profile-panel" style="transform:none;height:100vh;">
+          <header class="student-profile-header">
+            <div class="student-profile-header-left">
+              <button class="student-profile-back" onclick="history.back()">⇦</button>
+              <div>
+                <div class="student-profile-header-label">STUDENT PROFILE</div>
+                <div class="student-profile-header-title">Student Information</div>
+              </div>
+            </div>
+          </header>
+          <div class="student-profile-body">
+            <section class="student-profile-hero">
+              <div class="student-profile-avatar">${studentInitials(student.name)}</div>
+              <div>
+                <h2 class="student-profile-name">${student.name}</h2>
+                <div class="student-profile-id">Student ID: ${student.id}</div>
+              </div>
+              <span class="student-profile-status">${student.status}</span>
+            </section>
+
+            <section class="student-profile-section">
+              <h3 class="student-profile-section-title">Basic Information</h3>
+              <div class="student-profile-grid">
+                <div class="student-profile-field"><label>Student Name</label><strong>${student.name}</strong></div>
+                <div class="student-profile-field"><label>Student ID</label><strong>${student.id}</strong></div>
+                <div class="student-profile-field"><label>Year Level</label><strong>${student.year}</strong></div>
+                <div class="student-profile-field"><label>Section</label><strong>${student.section}</strong></div>
+                <div class="student-profile-field"><label>Gender</label><strong>${student.gender}</strong></div>
+                <div class="student-profile-field"><label>Birthday</label><strong>${student.birthday}</strong></div>
+              </div>
+            </section>
+
+            <section class="student-profile-section">
+              <h3 class="student-profile-section-title">Academic Information</h3>
+              <div class="student-profile-grid">
+                <div class="student-profile-field"><label>Program</label><strong>${student.program}</strong></div>
+                <div class="student-profile-field"><label>Record Status</label><strong>${student.status}</strong></div>
+                <div class="student-profile-field"><label>Last Updated</label><strong>${student.updated}</strong></div>
+                <div class="student-profile-field"><label>Academic Standing</label><strong>${student.standing}</strong></div>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </div>
+    `;
+  </script>
+</body>
+</html>

@@ -333,7 +333,7 @@ a {
   font-weight: 600;
   font-size: 0.85rem;
   border-bottom: 1px solid var(--line);
-  background: #fafbfc;
+  background: #e3e3e3;
 }
 
 .student-data-table td {
@@ -398,11 +398,11 @@ a {
   background: #16957f;
 }
 
-.status-pill.followup {
+.status-pill.follow-up {
   background: #fff8eb;
   color: #d97706;
 }
-.status-pill.followup .pill-dot {
+.status-pill.follow-up .pill-dot {
   background: #d97706;
 }
 

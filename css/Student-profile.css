@@ -1,0 +1,370 @@
+/* Student profile overlay
+   Loaded by Student.html and also usable with Student-profile.html. */
+
+.student-profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(12, 24, 29, 0);
+  visibility: hidden;
+  transition: background .28s ease, visibility .28s ease;
+}
+
+.student-profile-overlay.show {
+  background: rgba(12, 24, 29, .48);
+  visibility: visible;
+}
+
+.student-profile-panel {
+  width: min(760px, 94vw);
+  height: 100%;
+  background:linear-gradient(135deg, #119cff, #034662);
+  box-shadow: -16px 0 45px rgba(0,0,0,.14);
+  transform: translateX(100%);
+  transition: transform .34s cubic-bezier(.22,.8,.25,1);
+  overflow-y: auto;
+}
+
+.student-profile-overlay.show .student-profile-panel {
+  transform: translateX(0);
+}
+
+.student-profile-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background:linear-gradient(135deg, #119cff, #034662);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e6ebef;
+  padding: 18px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-profile-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-profile-back {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #1d126c;
+  border-radius: 10px;
+  background: #0c67fa;
+  color: #fdfdff;
+  font-size: 20px;
+}
+
+.student-profile-back:hover {
+  background: #1b58ba;
+}
+
+.student-profile-header-label {
+  color: #424b4e;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+
+.student-profile-header-title {
+  font-size: 15px;
+  margin-top: 2px;
+  font-weight: bolder;
+}
+
+.student-profile-body {
+  padding: 26px;
+}
+
+.student-profile-hero {
+  background:linear-gradient(135deg, #7eb1fe, #0d3768);
+  border: 1px solid #e5eaed;
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.student-profile-avatar {
+  width: 66px;
+  height: 66px;
+  flex: 0 0 66px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: #e4f8f4;
+  color: #159786;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.student-profile-name {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.student-profile-id {
+  color: #3b4042;
+  font-size: 11px;
+}
+
+.student-profile-status {
+  margin-left: auto;
+  padding: 7px 10px;
+  border-radius: 20px;
+  background: #e9f9f5;
+  color: #168c7d;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.student-profile-section {
+  margin-top: 18px;
+}
+
+.student-profile-section-title {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.student-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.student-profile-field {
+  background: #fff;
+  border: 1px solid #e5eaed;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.student-profile-field label {
+  display: block;
+  color: #829197;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.student-profile-field strong {
+  display: block;
+  color: #26373c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.student-profile-context {
+  background: #fff;
+  border: 1px solid #e5eaed;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 9px;
+}
+
+.student-profile-context-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.student-profile-context-head strong {
+  font-size: 11px;
+}
+
+.student-profile-context-head span {
+  color: #819196;
+  font-size: 16px;
+}
+
+.student-profile-context p {
+  color: #7a8a8f;
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 7px;
+}
+
+.student-profile-empty {
+  background: #f7fafb;
+  border: 1px dashed #d9e2e5;
+  color: #87979c;
+  border-radius: 10px;
+  padding: 13px;
+  text-align: center;
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  .student-profile-panel {
+    width: 100%;
+  }
+
+  .student-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .student-profile-body {
+    padding: 18px;
+  }
+
+  .student-profile-header {
+    padding: 15px 18px;
+  }
+
+  .student-profile-status {
+    display: none;
+  }
+}
+
+/* ============ Student Profile — Delete button ============ */
+.student-profile-footer {
+  padding: 20px 28px;
+  border-top: 1px solid #eef1f5;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.student-profile-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 24px;
+  border: 1.5px solid #e14848;
+  background: #ffffff;
+  color: #e14848;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.student-profile-delete-btn:hover {
+  background: #e14848;
+  color: #ffffff;
+}
+
+.student-profile-delete-btn:active {
+  transform: translateY(1px);
+}
+
+/* ============ Delete confirmation dialog ============ */
+.confirm-delete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 32, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001; /* sits above the profile overlay */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, background .22s ease;
+}
+
+.confirm-delete-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(15, 23, 32, .5);
+}
+
+.confirm-delete-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 20px;
+  border-radius: 16px;
+  padding: 28px 26px 24px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(10, 20, 30, .3);
+  transform: scale(.92) translateY(10px);
+  opacity: 0;
+  transition: transform .25s cubic-bezier(.22, .9, .32, 1.15), opacity .2s ease;
+}
+
+.confirm-delete-overlay.show .confirm-delete-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.confirm-delete-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #fdeaea;
+  color: #e14848;
+  font-size: 22px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.confirm-delete-card h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+}
+
+.confirm-delete-card p {
+  font-size: 13px;
+  color: #656d7a;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.confirm-delete-card p strong {
+  color: #1e1e1e;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.confirm-delete-cancel,
+.confirm-delete-confirm {
+  flex: 1;
+  height: 44px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .15s ease, transform .15s ease;
+}
+
+.confirm-delete-cancel {
+  background: #ffffff;
+  border: 1.5px solid #1e1e1e;
+  color: #1e1e1e;
+}
+
+.confirm-delete-cancel:hover {
+  background: #f5f5f5;
+}
+
+.confirm-delete-confirm {
+  background: #4b48e1;
+  border: 1.5px solid #211140;
+  color: #ffffff;
+}
+
+.confirm-delete-confirm:hover {
+  filter: brightness(1.20);
+}
+
+.confirm-delete-cancel:active,
+.confirm-delete-confirm:active {
+  transform: translateY(1px);
+}
