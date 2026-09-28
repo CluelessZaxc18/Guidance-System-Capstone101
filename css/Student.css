@@ -207,6 +207,16 @@ a {
   height: 34px;
 }
 
+/* Panel card — moved here from Dashboard.css so Student.html doesn't need it.
+   Keep this ABOVE the .student-* rules below so their padding overrides win. */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
 /* Start of Frame 10 Section Styles */
 .student-management-section {
   display: flex;
@@ -323,8 +333,6 @@ a {
 .student-data-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
-  font-size: 0.9rem;
 }
 
 .student-data-table th {
@@ -535,6 +543,28 @@ a {
 
 .top-profile span {
   color: var(--muted);
+}
+
+/* Add these to Student.css so you can safely delete dashboard.css */
+.content {
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 34px 42px 45px;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  color: var(--primary-dark);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  margin-bottom: 7px;
 }
 
 

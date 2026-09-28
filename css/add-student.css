@@ -225,3 +225,51 @@
     padding: 22px 20px 18px;
   }
 }
+
+/* .as-modal needs this so the loading overlay below can anchor to it */
+.as-modal {
+  position: relative;
+}
+
+.as-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(165, 220, 255, 0.85);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0;
+  transition: opacity .2s ease;
+  z-index: 10;
+}
+
+.as-loading-overlay.show {
+  opacity: 1;
+}
+
+.as-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid #d9e6e5;
+  border-top-color: #0a3f43;
+  border-radius: 50%;
+  animation: as-spin .7s linear infinite;
+}
+
+.as-loading-overlay p {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a3f43;
+}
+
+@keyframes as-spin {
+  to { transform: rotate(360deg); }
+}
+
+.as-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}

@@ -1,6 +1,6 @@
 const studentData = [
   { name: "Ana Cruz", id: "110187", year: "3rd Year", program: "BS Information Technology", section: "Room 5", gender: "Female", birthday: "October 14, 2005", updated: "2 hours ago", standing: "Regular", status: "Active" },
-  { name: "Miguel Santos", id: "110638", year: "2nd Year", program: "BS Criminology", section: "Room 2", gender: "Male", birthday: "March 22, 2006", updated: "May 18, 2024", standing: "Transferee", status: "Active" },
+  { name: "Miguel Santos", id: "110638", year: "2nd Year", program: "BS Criminology", section: "Room 2", gender: "Male", birthday: "March 22, 2006", updated: "May 18, 2024", standing: "Regular", status: "Active" },
   { name: "Maria Lim", id: "110744", year: "4th Year", program: "BS Hospitality Management", section: "Room 9", gender: "Female", birthday: "January 05, 2005", updated: "May 15, 2024", standing: "Irregular", status: "Follow-up" },
   { name: "Joshua Reyes", id: "110859", year: "3rd Year", program: "BS Tourism Management", section: "Room 6", gender: "Male", birthday: "July 19, 2005", updated: "May 12, 2024", standing: "Regular", status: "Active" },
   { name: "Sofia Mendoza", id: "110963", year: "4th Year", program: "BS Midwifery Education", section: "Room 4", gender: "Female", birthday: "November 30, 2004", updated: "May 10, 2024", standing: "Regular", status: "Active" },
@@ -107,7 +107,7 @@ function addStudent(newStudent) {
     return false;
   }
 
-  studentData.push(newStudent);
+  studentData.unshift(newStudent);
 
   // Re-apply whatever search/filter is currently active rather than
   // resetting the view, so the new row only appears if it actually
@@ -144,4 +144,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".filter-select").forEach(select => {
     select.addEventListener("change", filterStudents);
   });
+
+  // If we just arrived here after submitting the Add Student form from a
+  // page with no table (e.g. Dashboard.html), the new student was stashed
+  // in sessionStorage — add it now that the real table actually exists.
+  const pendingRaw = sessionStorage.getItem("pendingNewStudent");
+  if (pendingRaw) {
+    sessionStorage.removeItem("pendingNewStudent");
+    try {
+      const pendingStudent = JSON.parse(pendingRaw);
+      const wasAdded = addStudent(pendingStudent); // also toasts a duplicate ID, if any
+      if (wasAdded && typeof showToast === "function") {
+        showToast(`${pendingStudent.name || "Student"} added successfully.`);
+      }
+    } catch (err) {
+      console.error("Could not read the student added from Dashboard.html:", err);
+    }
+  }
 });

@@ -98,6 +98,29 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.overflow = "";
     }
 
+    // Shows a small "Adding..." spinner overlay on top of the modal card
+    // itself (not the whole screen), while the record is being saved.
+    function showAddingOverlay() {
+      const modalBox = overlay.querySelector(".as-modal");
+      if (!modalBox) return null;
+
+      const loadingEl = document.createElement("div");
+      loadingEl.className = "as-loading-overlay";
+      loadingEl.innerHTML = `
+        <div class="as-loading-spinner"></div>
+        <p>Adding...</p>
+      `;
+      modalBox.appendChild(loadingEl);
+      requestAnimationFrame(() => loadingEl.classList.add("show"));
+      return loadingEl;
+    }
+
+    function hideAddingOverlay(loadingEl) {
+      if (!loadingEl) return;
+      loadingEl.classList.remove("show");
+      setTimeout(() => loadingEl.remove(), 200);
+    }
+
     // --- Hook into the existing "Add Student" quick action button ---
     // Dashboard.js already attaches a toast listener to #quickStudent;
     // cloning the node strips that old listener so only the modal opens.
@@ -137,7 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const program = document.getElementById("asProgram").value;
       const gender = document.getElementById("asGender").value;
       const dobRaw = document.getElementById("asDob").value; // "YYYY-MM-DD" or ""
-      const standing = document.getElementById("asStanding").value;
+      const standing = document.getElementById("asStanding")?.value || "";
+
       const newStudent = {
         name: fullName,
         id: studentId,
@@ -151,25 +175,44 @@ document.addEventListener("DOMContentLoaded", () => {
         standing: standing,
       };
 
-      // Hand off to student-data.js's addStudent() so it lands in the real
-      // table — only present on pages that load student-data.js (e.g.
-      // Student.html). On pages without it (e.g. Dashboard.html), this is
-      // skipped and only the confirmation toast shows.
-      if (typeof addStudent === "function") {
-        const wasAdded = addStudent(newStudent);
-        if (wasAdded === false) {
-          // Duplicate Student ID — addStudent() already showed a toast
-          // explaining why, so stop here and leave the form open to fix it.
-          return;
+      const saveBtn = document.getElementById("asSaveBtn");
+      if (saveBtn) saveBtn.disabled = true;
+      if (cancelBtn) cancelBtn.disabled = true;
+      const loadingEl = showAddingOverlay();
+
+      // Simulated delay so the "Adding..." state is actually visible.
+      // Swap this setTimeout for a real API call later — put everything
+      // below inside its resolved/.then() callback instead.
+      setTimeout(() => {
+        hideAddingOverlay(loadingEl);
+        if (saveBtn) saveBtn.disabled = false;
+        if (cancelBtn) cancelBtn.disabled = false;
+
+        if (typeof addStudent === "function") {
+          // This page already has the real student table (e.g.
+          // Student.html) — add directly.
+          const wasAdded = addStudent(newStudent);
+          if (wasAdded === false) {
+            // Duplicate Student ID — addStudent() already showed a toast
+            // explaining why, so stop here and leave the form open to fix it.
+            return;
+          }
+
+          if (typeof showToast === "function") {
+            showToast(`${newStudent.name || "Student"} added successfully.`);
+          }
+
+          form.reset();
+          closeAddStudentModal();
+        } else {
+          // This page (e.g. Dashboard.html) has no student table to add
+          // to. Stash the new student in sessionStorage — it survives the
+          // page navigation below — and jump to Student.html, where
+          // student-data.js picks it up on load and adds it for real.
+          sessionStorage.setItem("pendingNewStudent", JSON.stringify(newStudent));
+          window.location.href = "Student.html";
         }
-      }
-
-      if (typeof showToast === "function") {
-        showToast(`${newStudent.name || "Student"} added successfully.`);
-      }
-
-      form.reset();
-      closeAddStudentModal();
+      }, 900);
     });
 
     // Expose for other scripts if needed

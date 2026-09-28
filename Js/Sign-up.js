@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         try {
                      
-                            const loadResponse = await fetch('../loading2.html');
+                            const loadResponse = await fetch('../extra/loading2.html');
                             if (!loadResponse.ok) throw new Error('Failed to load loading2.html');
                             
                             const loadingHtml = await loadResponse.text();
