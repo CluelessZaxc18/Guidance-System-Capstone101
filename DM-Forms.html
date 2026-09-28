@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G-PATH - Document Management</title>
+  <link rel="stylesheet" href="css/DM-Forms.css">
+</head>
+<body data-doc-type="forms">
+
+
+  <!-- SIDEBAR NAVIGATION  -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">G</div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Office</span>
+      </div>
+    </div>
+
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+
+      <a class="nav-item" href="Dashboard.html" data-page="Dashboard">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <!-- Student dropdown -->
+      <button class="nav-item nav-dropdown" id="studentToggle" type="button" aria-expanded="false">
+        <span class="nav-icon">♙</span>
+        <span>Student</span>
+        <span class="chevron">›</span>
+      </button>
+
+
+      <div class="submenu" id="studentMenu">
+        <a href="Student.html" data-page="Students">Students</a>
+        <a href="Student.html" data-page="Students">Context 2</a>
+      </div>
+     
+
+
+      <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
+        <span class="nav-icon">☷</span>
+        <span>Document Management</span>
+        <span class="chevron">›</span>
+      </button>
+
+
+      <div class="submenu" id="studentMenu2">
+
+
+        <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
+        <span class="nav-icon">❐</span>
+        <span>Narrative Report for</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu3">
+              <a href="DM-Narrative-reports.html?section=testing" data-page="Narrative Report">Testing</a>
+              <a href="DM-Narrative-reports.html?section=referrals" data-page="Narrative Report">Referrals</a>
+              <a href="DM-Narrative-reports.html?section=counseling" data-page="Narrative Report">Counseling</a>
+          </div>
+
+
+        <button class="nav-item active nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
+        <span class="nav-icon">℉</span>
+        <span>Forms for </span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu4">
+              <a href="DM-Forms.html?section=referrals" data-page="Forms">Referrals</a>
+              <a href="DM-Forms.html?section=informed-consent" data-page="Forms">Informed Consent</a>
+              <a href="DM-Forms.html?section=referral-feedback" data-page="Forms">Referral Feedback</a>
+              <a href="DM-Forms.html?section=case-notes" data-page="Forms">Case Notes</a>
+          </div>
+       
+      </div>
+
+
+     
+      <p class="nav-label lower">SYSTEM</p>
+
+
+      <a class="nav-item" href="#" data-page="Settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+
+    <div class="sidebar-profile">
+      <div class="avatar">GC</div>
+      <div class="profile-info">
+        <strong>Guidance Counselor</strong>
+        <span>Admin</span>
+      </div>
+      <button class="more-btn" title="More options">Log-out</button>
+    </div>
+  </aside>
+
+
+
+
+  <!-- MAIN CONTENT AREA (Header Kept, Body Cleared) -->
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">Document Management</span></p>
+        <h2 id="pageTitle">Forms</h2>
+      </div>
+
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="notifBell" title="Notifications">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#00B7FF">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small">GC</div>
+          <div>
+            <strong>Guidance Counselor</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- =============== New Section =============== -->
+
+    <!-- Content Workspace Ready for Document Management UI -->
+    <div class="content" id="documentWorkspace">
+      <section class="doc-management-section">
+        <div class="doc-filter-panel panel">
+          <div class="search-box-wrap">
+            <input type="text" id="docSearchInput" placeholder="Search Files..." class="doc-search-input">
+          </div>
+          <input type="file" id="hiddenFileInput" style="display: none;" accept=".pdf,.docx,.xlsx,.pptx,.txt">
+          <button class="add-file-main-btn" id="addFileBtn"><span>+</span> Upload File</button>
+        </div>
+
+        <div class="panel doc-table-panel">
+          <table class="doc-data-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>File Name</th>
+                <th>Category</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="docTableBody"></tbody>
+          </table>
+          <div id="emptyStateNotice" class="empty-state" style="display: none;">
+            <div class="empty-icon">📂</div>
+            <h3>No documents found</h3>
+            <p>Click "Upload File" to add documents.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+  <script src="Js/side-nav.js"></script>
+  <script src="Js/notif.js"></script>
+  <script src="Js/logout-overlay.js"></script>
+  <script src="Js/document-manager.js"></script>
+</body>
+</html>
