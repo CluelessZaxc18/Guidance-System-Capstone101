@@ -189,10 +189,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (button.dataset.action === "download") {
         downloadDocument(doc);
+        if (typeof window.addSystemNotification === "function") {
+          window.addSystemNotification(
+            "Document downloaded",
+            `${doc.name} was downloaded.`,
+            "purple"
+          );
+        }
       } else if (button.dataset.action === "delete") {
         showDeleteModal(doc.name, () => {
           saveDocs(loadDocs().filter(item => item.id !== id));
           render();
+
+          if (typeof window.addSystemNotification === "function") {
+            window.addSystemNotification(
+              "Document deleted",
+              `${doc.name} was removed from ${config.titlePrefix} > ${sectionLabel}.`,
+              "red"
+            );
+          }
         });
       }
     });
@@ -224,6 +239,14 @@ document.addEventListener("DOMContentLoaded", () => {
         date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
       });
       saveDocs(docs);
+
+      if (typeof window.addSystemNotification === "function") {
+        window.addSystemNotification(
+          "Document uploaded",
+          `${file.name} was added to ${config.titlePrefix} > ${sectionLabel}.`,
+          "blue"
+        );
+      }
 
       if (searchInput) searchInput.value = "";
       hiddenFileInput.value = ""; 

@@ -66,10 +66,14 @@ a {
 }
 
 .brand-mark {
+  background: url(../img/G-logo.png);
+  background-size: contain;      
+  background-position: center;   
+  background-repeat: no-repeat;
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background-color: #00a2ff;
+  background-color: #4cc0ff;
   display: grid;
   place-items: center;
   font-size: 20px;

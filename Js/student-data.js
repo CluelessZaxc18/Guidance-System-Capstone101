@@ -54,7 +54,7 @@ function renderStudents(list = studentData) {
       </td>
       <td>
         <button class="view-profile-btn" data-student-id="${student.id}">
-          View Profile <span>›</span>
+          View Information <span>›</span>
         </button>
       </td>
     </tr>
@@ -118,6 +118,14 @@ function addStudent(newStudent) {
     renderStudents();
   }
 
+  if (typeof window.addSystemNotification === "function") {
+    window.addSystemNotification(
+      "Student added",
+      `${newStudent.name} (${newStudent.id}) was added to the system.`,
+      "green"
+    );
+  }
+
   return true;
 }
 
@@ -125,13 +133,21 @@ function deleteStudent(studentId) {
   const index = studentData.findIndex(student => student.id === studentId);
   if (index === -1) return false;
 
-  studentData.splice(index, 1);
+  const [removed] = studentData.splice(index, 1);
 
   // Re-apply whatever search/filter is currently active, same as addStudent().
   if (typeof filterStudents === "function") {
     filterStudents();
   } else {
     renderStudents();
+  }
+
+  if (typeof window.addSystemNotification === "function") {
+    window.addSystemNotification(
+      "Student deleted",
+      `${removed.name} (${removed.id}) was removed from the system.`,
+      "red"
+    );
   }
 
   return true;

@@ -165,3 +165,10 @@ document.querySelectorAll("[data-page]").forEach(item => {
     if (pageTitle) pageTitle.textContent = selectedPage;
   });
 });
+
+
+// =========== Notification =============
+
+const notifs = JSON.parse(localStorage.getItem('gpath_notifications')) || [];
+notifs.unshift({ id: Date.now(), title: 'Student Record Updated', desc: 'Added or modified a student profile', type: 'purple', time: 'Just now', unread: true });
+localStorage.setItem('gpath_notifications', JSON.stringify(notifs));

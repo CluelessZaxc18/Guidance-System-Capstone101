@@ -65,10 +65,14 @@ a {
 }
 
 .brand-mark {
+  background: url(../img/G-logo.png);
+  background-size: contain;      
+  background-position: center;   
+  background-repeat: no-repeat;
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background-color: #00a2ff;
+  background-color: #4cc0ff;
   display: grid;
   place-items: center;
   font-size: 20px;
@@ -310,9 +314,9 @@ a {
   justify-content: space-between;
   gap: 15px;
   padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.85);
+  background:linear-gradient(135deg, #9cd6ff, #21bcff);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--line);
+  border: 1px solid #0051ff;;
   border-radius: 14px;
   box-shadow: var(--shadow);
 }
@@ -322,19 +326,19 @@ a {
   padding: 11px 16px 11px 42px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: var(--surface-soft);
+  background: #9cceff;
   font-size: 0.9rem;
   outline: none;
   color: var(--text);
 }
 
 .doc-search-input:focus {
-  border-color: var(--primary);
-  background: white;
+  border-color: #2a51fc;
+  background: #80b4e7;
 }
 
 .add-file-main-btn {
-  background: #0e5c63;
+  background:linear-gradient(135deg, #119cff, #034662);
   color: white;
   border: none;
   border-radius: 10px;
@@ -350,7 +354,7 @@ a {
 }
 
 .add-file-main-btn:hover {
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 .doc-table-panel {

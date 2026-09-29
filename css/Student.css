@@ -66,10 +66,14 @@ a {
 }
 
 .brand-mark {
+  background: url(../img/G-logo.png);
+  background-size: contain;      
+  background-position: center;   
+  background-repeat: no-repeat;
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background-color: #00a2ff;
+  background-color: #4cc0ff;
   display: grid;
   place-items: center;
   font-size: 20px;
@@ -226,6 +230,7 @@ a {
 
 /* Filter Panel Bar */
 .student-filter-panel {
+  background:linear-gradient(135deg, #9cd6ff, #21bcff);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -298,7 +303,7 @@ a {
 }
 
 .add-student-main-btn {
-  background: #0e5c63; /* Matches your dark teal button from Frame 10 */
+  background:linear-gradient(135deg, #119cff, #034662);
   color: white;
   border: none;
   border-radius: 10px;
@@ -314,7 +319,7 @@ a {
 }
 
 .add-student-main-btn:hover {
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 .add-student-main-btn span {

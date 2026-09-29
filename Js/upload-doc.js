@@ -225,6 +225,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.setItem(storageKey, JSON.stringify(docs));
 
+        if (typeof window.addSystemNotification === "function") {
+          window.addSystemNotification(
+            "Document uploaded",
+            `${selectedFile.name} was added to ${config.label} > ${sectionObj.name}.`,
+            "blue"
+          );
+        }
+
         // Redirect user right to that section page
         window.location.href = `${config.page}?section=${sectionId}`;
       }, 900); // 900ms delay gives the user a satisfying loading feedback loop
