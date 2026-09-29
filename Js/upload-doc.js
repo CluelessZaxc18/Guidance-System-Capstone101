@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Inject scoped styles including the loading spinner animation
   const styleEl = document.createElement("style");
   styleEl.innerHTML = `
     .gpath-wizard-overlay {
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       z-index: 99999; animation: fadeIn 0.2s ease; font-family: inherit;
     }
     .gpath-wizard-card {
-      background: white; width: 100%; max-width: 440px; border-radius: 16px;
+      background:linear-gradient(135deg, #119cff, #034662); width: 100%; max-width: 440px; border-radius: 16px;
       box-shadow: 0 15px 35px rgba(23, 32, 51, 0.15); padding: 28px;
       position: relative; animation: scaleUp 0.2s ease; text-align: left;
     }
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       background: #f8fafc; cursor: pointer; transition: 0.2s; margin-top: 5px;
     }
     .gpath-file-dropzone:hover { border-color: #0284c7; background: #f0f9ff; }
-    .gpath-back-link { background: none; border: none; color: #0284c7; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
+    .gpath-back-link { background: none; border: none; color: #000000; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; }
     
     /* Loading Spinner Styles */
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -78,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="gpath-wizard-close" id="wizClose">✕</button>
         </div>
         <div class="gpath-wizard-step">
-          <p style="font-size: 13px; color: #788398; margin-bottom: 6px;">Select the document category type:</p>
+          <p style="font-size: 13px; color: #d1d1d1; margin-bottom: 6px;">Select the document category type:</p>
           <button class="gpath-option-btn" data-type="narrative">
             <span>📁 Narrative Report</span>
             <span style="color: #cbd5e1;">›</span>
@@ -119,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <div class="gpath-wizard-step">
         <button class="gpath-back-link" id="wizBack">← Back to categories</button>
-        <p style="font-size: 13px; color: #788398; margin-bottom: 6px;">Choose where to store this ${config.label}:</p>
+        <p style="font-size: 13px; color: #d1d1d1; margin-bottom: 6px;">Choose where to store this ${config.label}:</p>
         ${sectionsHtml}
       </div>
     `;
@@ -158,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <small style="color: #788398; font-size: 11px;">Supports PDF, DOCX, XLSX, PPTX, TXT</small>
         </div>
 
-        <button id="wizSubmitBtn" style="margin-top: 10px; width: 100%; padding: 12px; background:linear-gradient(135deg, #119cff, #034662); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; opacity: 0.5; pointer-events: none; transition: 0.2s;">
+        <button id="wizSubmitBtn" style="margin-top: 10px; width: 100%; padding: 12px; background: #119cff; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; opacity: 0.5; pointer-events: none; transition: 0.2s;">
           Upload & Open Section
         </button>
       </div>
@@ -189,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.addEventListener("click", () => {
       if (!selectedFile) return;
 
-      // ---- LOADING SPICE ANIMATION STATE ----
       const stepBody = card.querySelector("#wizardStepBody");
       stepBody.innerHTML = `
         <div style="text-align: center; padding: 30px 0;">
@@ -199,7 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
 
-      // Simulate a brief, smooth network delay for visual feedback
       setTimeout(() => {
         const extension = selectedFile.name.split(".").pop().toLowerCase();
         let fileType = "pdf";
@@ -233,9 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
 
-        // Redirect user right to that section page
         window.location.href = `${config.page}?section=${sectionId}`;
-      }, 900); // 900ms delay gives the user a satisfying loading feedback loop
+      }, 900);
     });
   }
 

@@ -8,7 +8,6 @@
 </head>
 <body data-doc-type="narrative">
 
-  <!-- SIDEBAR NAVIGATION -->
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-mark"></div>
@@ -84,7 +83,6 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT AREA (Header Kept, Body Cleared) -->
   <main class="main-content">
     <header class="topbar">
       <div>
@@ -109,18 +107,15 @@
       </div>
     </header>
 
-    <!-- ====================== New Section =================== -->
     <div class="content" id="documentWorkspace">
   <section class="doc-management-section">
     
-    <!-- Filter & Add File Bar -->
     <div class="doc-filter-panel panel">
       <div class="search-box-wrap">
         
         <input type="text" id="docSearchInput" placeholder="Search Files..." class="doc-search-input">
       </div>
 
-      <!-- Hidden file input for cloud storage upload simulation -->
       <input type="file" id="hiddenFileInput" style="display: none;" accept=".pdf,.docx,.xlsx,.pptx,.txt">
       
       <button class="add-file-main-btn" id="addFileBtn">
@@ -128,7 +123,6 @@
       </button>
     </div>
 
-    <!-- Document Data Table / Empty State Container -->
     <div class="panel doc-table-panel">
       <table class="doc-data-table">
         <thead>
@@ -141,11 +135,9 @@
           </tr>
         </thead>
         <tbody id="docTableBody">
-          <!-- Dynamically populated via JavaScript -->
         </tbody>
       </table>
 
-      <!-- Empty State Notice (Shown when no files exist) -->
       <div id="emptyStateNotice" class="empty-state" style="display: none;">
         <div class="empty-icon">📁</div>
         <h3>No documents found</h3>

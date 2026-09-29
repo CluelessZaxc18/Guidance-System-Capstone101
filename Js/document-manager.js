@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ------------------------------------------------------------------
-  // One script for both Document Management pages.
-  //   DM-Narrative-reports.html  ->  <body data-doc-type="narrative">
-  //   DM-Forms.html              ->  <body data-doc-type="forms">
-  // ------------------------------------------------------------------
   const DOC_TYPES = {
     narrative: {
       page: "DM-Narrative-reports.html",
@@ -17,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // Which page is this? Prefer the data attribute; fall back to file name.
   let docType = document.body.dataset.docType;
   if (!DOC_TYPES[docType]) {
     docType = window.location.pathname.includes("DM-Forms") ? "forms" : "narrative";
@@ -34,17 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  // ---- Header title ----
   const pageTitle = document.getElementById("pageTitle");
   if (pageTitle) pageTitle.textContent = `${config.titlePrefix} - ${sectionLabel}`;
 
-  // ---- Highlight sidebar link ----
   const activeHref = `${config.page}?section=${currentSection}`;
   document.querySelectorAll(".submenu a").forEach(link => {
     link.classList.toggle("active", link.getAttribute("href") === activeHref);
   });
 
-  // ---- Storage ----
   const storageKey = `gpath_docs_${docType}_${currentSection}`;
 
   function loadDocs() {
@@ -59,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(storageKey, JSON.stringify(docs));
   }
 
-  // Default mock data the first time a category is opened
   if (localStorage.getItem(storageKey) === null) {
     const base = currentSection.replace(/-/g, "_");
     saveDocs([
@@ -68,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ]);
   }
 
-  // ---- Table rendering ----
   const tbody = document.getElementById("docTableBody");
   const emptyNotice = document.getElementById("emptyStateNotice");
   const searchInput = document.getElementById("docSearchInput");
@@ -120,16 +109,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Functional File Download Logic ----
   function downloadDocument(doc) {
-    // Generates a mock file download payload on the fly using browser blobs
     const fileContent = `G-PATH Document Record\nFile Name: ${doc.name}\nCategory: ${sectionLabel}\nDate Stamped: ${doc.date}\nStatus: Official Record`;
     const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     
     const downloadLink = document.createElement("a");
     downloadLink.href = url;
-    downloadLink.download = doc.name; // Uses the exact file name
+    downloadLink.download = doc.name;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     
@@ -137,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
     URL.revokeObjectURL(url);
   }
 
-  // ---- Custom Delete Confirmation Modal Logic ----
   function showDeleteModal(docName, onConfirm) {
     const existingModal = document.getElementById("deleteConfirmModal");
     if (existingModal) existingModal.remove();
@@ -177,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Button Action Handler (Download or Delete)
   if (tbody) {
     tbody.addEventListener("click", e => {
       const button = e.target.closest("button[data-action]");
@@ -213,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Upload ----
   const addFileBtn = document.getElementById("addFileBtn");
   const hiddenFileInput = document.getElementById("hiddenFileInput");
 
@@ -254,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Search ----
   if (searchInput) searchInput.addEventListener("input", render);
 
   render();

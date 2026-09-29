@@ -92,11 +92,6 @@ function filterStudents() {
   renderStudents(filtered);
 }
 
-// Called by Js/add-student.js when the Add Student form is submitted.
-// Kept as a plain global function (same pattern as openStudentProfile) so
-// add-student.js can check `typeof addStudent === "function"` and only
-// call it on pages that actually have this table (e.g. Student.html) —
-// pages like Dashboard.html without this script just skip it gracefully.
 function addStudent(newStudent) {
   const alreadyExists = studentData.some(student => student.id === newStudent.id);
 
@@ -109,9 +104,6 @@ function addStudent(newStudent) {
 
   studentData.unshift(newStudent);
 
-  // Re-apply whatever search/filter is currently active rather than
-  // resetting the view, so the new row only appears if it actually
-  // matches what's currently being filtered for.
   if (typeof filterStudents === "function") {
     filterStudents();
   } else {
@@ -135,7 +127,6 @@ function deleteStudent(studentId) {
 
   const [removed] = studentData.splice(index, 1);
 
-  // Re-apply whatever search/filter is currently active, same as addStudent().
   if (typeof filterStudents === "function") {
     filterStudents();
   } else {
@@ -161,15 +152,12 @@ document.addEventListener("DOMContentLoaded", () => {
     select.addEventListener("change", filterStudents);
   });
 
-  // If we just arrived here after submitting the Add Student form from a
-  // page with no table (e.g. Dashboard.html), the new student was stashed
-  // in sessionStorage — add it now that the real table actually exists.
   const pendingRaw = sessionStorage.getItem("pendingNewStudent");
   if (pendingRaw) {
     sessionStorage.removeItem("pendingNewStudent");
     try {
       const pendingStudent = JSON.parse(pendingRaw);
-      const wasAdded = addStudent(pendingStudent); // also toasts a duplicate ID, if any
+      const wasAdded = addStudent(pendingStudent);
       if (wasAdded && typeof showToast === "function") {
         showToast(`${pendingStudent.name || "Student"} added successfully.`);
       }

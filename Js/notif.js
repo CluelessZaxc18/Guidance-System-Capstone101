@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const notifBell = document.getElementById('notifBell');
     if (!notifBell) return;
 
-    // 1. Inject CSS styles
     if (!document.getElementById('gpathNotifStyles')) {
         const style = document.createElement('style');
         style.id = 'gpathNotifStyles';
@@ -51,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }[ch]));
     }
 
-    // Turns a stored timestamp into "Just now" / "5 minutes ago" / etc.,
-    // computed fresh every time the list is rendered (not baked in once).
     function timeAgo(timestamp) {
         if (!timestamp) return '';
         const seconds = Math.floor((Date.now() - timestamp) / 1000);
@@ -79,16 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('gpath_notifications', JSON.stringify(notifs));
     }
 
-    // Shows/hides the red dot based on whatever is actually stored, rather
-    // than being flipped on/off ad hoc from multiple places.
     function syncBellDot() {
         const hasUnread = readNotifs().some(n => n.unread);
         const redDot = notifBell.querySelector('.dot');
         if (redDot) redDot.style.display = hasUnread ? 'block' : 'none';
     }
 
-    // Helper other scripts call to log a real notification, e.g.:
-    //   window.addSystemNotification('Student added', 'Ana Cruz was added.', 'green')
     window.addSystemNotification = function (title, description, type = 'green') {
         const notifs = readNotifs();
 
@@ -96,28 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
             id: Date.now(),
             title: title,
             desc: description,
-            type: type, // green, purple, orange, blue, red
+            type: type,
             timestamp: Date.now(),
             unread: true
         });
 
-        // Keep last 15 items max
         if (notifs.length > 15) notifs.length = 15;
         writeNotifs(notifs);
 
         syncBellDot();
     };
 
-    // Initialize empty notification storage if it doesn't exist yet.
-    // (This used to be preceded by a line that wiped this key on every
-    // page load, which meant nothing was ever actually remembered.)
     if (!localStorage.getItem('gpath_notifications')) {
         writeNotifs([]);
     }
 
-    syncBellDot(); // reflect whatever's already stored as soon as this page loads
+    syncBellDot();
 
-    // 2. Handle Bell Click
     notifBell.addEventListener('click', (e) => {
         e.stopPropagation();
 
@@ -166,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.body.appendChild(overlayDiv);
 
-        // Mark all as read action
         const markReadBtn = overlayDiv.querySelector('#markAllReadBtn');
         if (markReadBtn) {
             markReadBtn.addEventListener('click', () => {

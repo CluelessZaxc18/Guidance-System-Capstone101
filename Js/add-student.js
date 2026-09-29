@@ -1,19 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mount = document.getElementById("addStudentMount");
 
-  // If the modal markup is already in the page — e.g. add-student.js got
-  // included twice, or another copy's fetch already finished — don't
-  // create a second copy. Duplicate ids break every getElementById() call
-  // below, silently reading from the wrong (often empty) instance.
-  if (document.getElementById("addStudentOverlay")) {
-    initAddStudentModal();
-    return;
-  }
-
-  if (!mount) return; // this page doesn't have the modal mount point
-
-  // The Add Student form has no "Section" field, so a section is assigned
-  // at random from the same pool used by Student.html's Section filter.
   const SECTION_POOL = [
     "Room 1", "Room 2", "Room 3", "Room 4", "Room 5",
     "Room 6", "Room 7", "Room 8", "Room 9", "Room 10",
@@ -24,10 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return SECTION_POOL[Math.floor(Math.random() * SECTION_POOL.length)];
   }
 
-  // Converts the <input type="date"> value ("YYYY-MM-DD") into the same
-  // "Month Day, Year" style already used in studentData (e.g. "October 14,
-  // 2005"). Parsed as local y/m/d parts (not `new Date(isoString)`) to
-  // avoid a timezone off-by-one shifting the day.
   function formatDob(isoDate) {
     if (!isoDate) return "";
     const [year, month, day] = isoDate.split("-").map(Number);
@@ -35,29 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
     return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   }
 
-  // add-student.html is fetched as plain text and dropped into the mount
-  // div so the modal markup can live in its own file. This path is
-  // relative to Dashboard.html's location, not this script's location —
-  // it lives in the Overlay/ folder, alongside logout-overlay.html and
-  // notif.html.
+  if (document.getElementById("addStudentOverlay")) {
+    initAddStudentModal();
+    return;
+  }
+
+  if (!mount) return;
+
   fetch("Overlay/add-student.html", { cache: "no-store" })
     .then(res => {
       if (!res.ok) throw new Error(`Failed to load add-student.html (${res.status})`);
       return res.text();
     })
     .then(html => {
-      // Re-check here too: if a duplicate script inclusion's own fetch
-      // already resolved and appended the modal while this one was still
-      // in flight, don't append a second, id-clashing copy.
       if (document.getElementById("addStudentOverlay")) {
         initAddStudentModal();
         return;
       }
 
-      // Parse the fetched document and pull out ONLY the modal element by
-      // its id. This ignores anything else in the file — including the
-      // <script> tag dev tools like Live Server auto-inject for reloading —
-      // so it's safe regardless of where that injection lands.
       const parser = new DOMParser();
       const parsedDoc = parser.parseFromString(html, "text/html");
       const modalEl = parsedDoc.getElementById("addStudentOverlay");
@@ -98,8 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.style.overflow = "";
     }
 
-    // Shows a small "Adding..." spinner overlay on top of the modal card
-    // itself (not the whole screen), while the record is being saved.
     function showAddingOverlay() {
       const modalBox = overlay.querySelector(".as-modal");
       if (!modalBox) return null;
@@ -121,9 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => loadingEl.remove(), 200);
     }
 
-    // --- Hook into the existing "Add Student" quick action button ---
-    // Dashboard.js already attaches a toast listener to #quickStudent;
-    // cloning the node strips that old listener so only the modal opens.
     const quickStudentBtn = document.getElementById("quickStudent");
     if (quickStudentBtn) {
       const freshBtn = quickStudentBtn.cloneNode(true);
@@ -131,17 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
       freshBtn.addEventListener("click", openAddStudentModal);
     }
 
-    // Also open it for any element explicitly marked for it, e.g.
-    // <button data-open-modal="addStudent">
     document.querySelectorAll('[data-open-modal="addStudent"]').forEach(el => {
       el.addEventListener("click", openAddStudentModal);
     });
 
-    // --- Closing interactions ---
     cancelBtn?.addEventListener("click", closeAddStudentModal);
 
     overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) closeAddStudentModal(); // click on backdrop
+      if (e.target === overlay) closeAddStudentModal();
     });
 
     document.addEventListener("keydown", (e) => {
@@ -150,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // --- Form submit ---
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -159,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const yearLevel = document.getElementById("asYearLevel").value;
       const program = document.getElementById("asProgram").value;
       const gender = document.getElementById("asGender").value;
-      const dobRaw = document.getElementById("asDob").value; // "YYYY-MM-DD" or ""
+      const dobRaw = document.getElementById("asDob").value;
       const standing = document.getElementById("asStanding")?.value || "";
 
       const newStudent = {
@@ -180,21 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cancelBtn) cancelBtn.disabled = true;
       const loadingEl = showAddingOverlay();
 
-      // Simulated delay so the "Adding..." state is actually visible.
-      // Swap this setTimeout for a real API call later — put everything
-      // below inside its resolved/.then() callback instead.
       setTimeout(() => {
         hideAddingOverlay(loadingEl);
         if (saveBtn) saveBtn.disabled = false;
         if (cancelBtn) cancelBtn.disabled = false;
 
         if (typeof addStudent === "function") {
-          // This page already has the real student table (e.g.
-          // Student.html) — add directly.
           const wasAdded = addStudent(newStudent);
           if (wasAdded === false) {
-            // Duplicate Student ID — addStudent() already showed a toast
-            // explaining why, so stop here and leave the form open to fix it.
             return;
           }
 
@@ -205,17 +167,12 @@ document.addEventListener("DOMContentLoaded", () => {
           form.reset();
           closeAddStudentModal();
         } else {
-          // This page (e.g. Dashboard.html) has no student table to add
-          // to. Stash the new student in sessionStorage — it survives the
-          // page navigation below — and jump to Student.html, where
-          // student-data.js picks it up on load and adds it for real.
           sessionStorage.setItem("pendingNewStudent", JSON.stringify(newStudent));
           window.location.href = "Student.html";
         }
       }, 900);
     });
 
-    // Expose for other scripts if needed
     window.openAddStudentModal = openAddStudentModal;
     window.closeAddStudentModal = closeAddStudentModal;
   }

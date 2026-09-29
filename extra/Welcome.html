@@ -17,10 +17,9 @@
             align-items: center;
             padding: 20px;
             flex-direction: column; 
-            gap: 30px; /* Space between logo and loader loop */
+            gap: 30px;
             margin: 0;
 
-            /* Visual dissolve timing configuration */
             opacity: 1;
             transition: opacity 0.5s ease-out;
         }
@@ -52,26 +51,19 @@
 </head>
 <body>
 
-    <!-- Logo Section -->
     <img src="../img/G-Path.svg" class="G-PATH" alt="Logo">
     
-    <!-- Loader Section -->
     <div class="loader"></div>
 
-    <!-- JavaScript Timing & Navigation Engine -->
     <script>
-        // Total wait time on this page (2000ms = 2 seconds)
         const totalDelay = 4000; 
         
-        // Duration of the dissolve transition (matches 0.5s in CSS)
         const fadeDuration = 500; 
 
-        // 1. Kick off the visual dissolve right before the window switches
         setTimeout(() => {
             document.body.classList.add('fade-out');
-        }, totalDelay - fadeDuration); // Starts fading at 1500ms
+        }, totalDelay - fadeDuration);
 
-        // 2. Perform the physical browser redirection to Main.html
         setTimeout(() => {
             window.location.href = "../Dashboard.html";
         }, totalDelay);
