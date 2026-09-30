@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const listHtml = notifs.map(n => `
             <div class="notif-item ${n.unread ? 'unread' : ''}">
                 <div class="notif-icon ${n.type}">
-                    ${n.type === 'red' ? '🗑️' : n.type === 'orange' ? '⚠️' : n.type === 'purple' ? '✏️' : n.type === 'blue' ? '⬆️' : '📄'}
+                    ${n.type === 'red' ? '🗑️' : n.type === 'orange' ? '⚠️' : n.type === 'purple' ? '❖' : n.type === 'blue' ? '⬆️' : '📄'}
                 </div>
                 <div class="notif-content">
                     <div class="notif-title-row">

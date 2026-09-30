@@ -2,13 +2,23 @@ function studentInitials(name) {
   return name.split(" ").map(part => part[0]).join("").slice(0, 2).toUpperCase();
 }
 
+// Maps a student's gender to their avatar picture. Returns null for any
+// gender not covered here (blank, "Other", a typo, etc.), so the caller
+// can fall back to the plain initials avatar instead of a broken image.
+function studentAvatarImage(gender) {
+  const normalized = String(gender || "").trim().toLowerCase();
+  if (normalized === "male") return "img/male.png";
+  if (normalized === "female") return "img/female.png";
+  return null;
+}
+
 function profileMarkup(student) {
   return `
     <div class="student-profile-overlay" id="studentProfileOverlay" role="dialog" aria-modal="true" aria-label="Student profile">
       <aside class="student-profile-panel">
         <header class="student-profile-header">
           <div class="student-profile-header-left">
-            <button class="student-profile-back" id="closeStudentProfile" type="button" aria-label="Close profile">⇦</button>
+            <button class="student-profile-back" id="closeStudentProfile" type="button" aria-label="Close profile">❮</button>
             <div>
               <div class="student-profile-header-label">STUDENT PROFILE</div>
               <div class="student-profile-header-title">Student Information</div>
@@ -18,7 +28,11 @@ function profileMarkup(student) {
 
         <div class="student-profile-body">
           <section class="student-profile-hero">
-            <div class="student-profile-avatar">${studentInitials(student.name)}</div>
+            <div class="student-profile-avatar">
+              ${studentAvatarImage(student.gender)
+                ? `<img src="${studentAvatarImage(student.gender)}" alt="${student.gender} avatar" class="student-profile-avatar-img">`
+                : studentInitials(student.name)}
+            </div>
             <div>
               <h2 class="student-profile-name">${student.name}</h2>
               <div class="student-profile-id">Student ID: ${student.id}</div>

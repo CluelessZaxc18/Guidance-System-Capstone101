@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const config = categories[docType];
     let sectionsHtml = config.sections.map(sec => `
       <button class="gpath-option-btn" data-section="${sec.id}">
-        <span>↳ ${sec.name}</span>
+        <span>➥ ${sec.name}</span>
         <span style="color: #cbd5e1;">›</span>
       </button>
     `).join("");
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="gpath-wizard-close" id="wizClose">✕</button>
       </div>
       <div class="gpath-wizard-step">
-        <button class="gpath-back-link" id="wizBack">← Back to categories</button>
+        <button class="gpath-back-link" id="wizBack">❮ Back to categories</button>
         <p style="font-size: 13px; color: #d1d1d1; margin-bottom: 6px;">Choose where to store this ${config.label}:</p>
         ${sectionsHtml}
       </div>
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="gpath-wizard-close" id="wizClose">✕</button>
       </div>
       <div class="gpath-wizard-step" id="wizardStepBody">
-        <button class="gpath-back-link" id="wizBack">← Back to sections</button>
+        <button class="gpath-back-link" id="wizBack">❮ Back to sections</button>
         <div style="font-size: 12px; background: #f0fdf4; color: #166534; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px;">
           Target: <strong>${config.label} > ${sectionObj.name}</strong>
         </div>
