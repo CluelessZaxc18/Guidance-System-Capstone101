@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/fav-tab.png">
+  <link rel="stylesheet" href="css/settings.css">
+  <title>G-PATH Setting</title>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Office</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+      <a class="nav-item" href="Dashboard.html" data-page="Dashboard">
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="nav-item" href="Student.html" data-page="Students">
+        <span class="nav-icon">✦</span>
+        <span>Students</span>
+      </a>
+      
+
+      <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
+        <span class="nav-icon">☷</span>
+        <span>Document Management</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="submenu" id="studentMenu2">
+
+        <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
+        <span class="nav-icon">❐</span>
+        <span>Narrative Report for</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu3">
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Testing</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Referrals</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Counseling</a>
+          </div>
+
+        <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
+        <span class="nav-icon">℉</span>
+        <span>Forms for </span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu4">
+              <a href="DM-Forms.html" data-page="Forms">Referrals</a>
+              <a href="DM-Forms.html" data-page="Forms">Informed Consent</a>
+              <a href="DM-Forms.html" data-page="Forms">Referral Feedback</a>
+              <a href="DM-Forms.html" data-page="Forms">Case Notes</a>
+          </div>
+        
+      </div>
+      
+      </div>
+
+      <p class="nav-label lower">SYSTEM</p>
+
+      <a class="nav-item active" href="#" data-page="Settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-profile">
+      <div class="avatar">GC</div>
+      <div class="profile-info">
+        <strong>Guidance Counselor</strong>
+        <span>Admin</span>
+      </div>
+      <button class="more-btn" title="More options">Log-out</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">G-Setting</span></p>
+        <h2 id="pageTitle">Settings</h2>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="notifBell" title="Notifications">
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small">GC</div>
+          <div>
+            <strong>Guidance Counselor</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="settings-section">
+
+        <nav class="settings-tabs panel">
+          <button class="settings-tab active" type="button" data-tab="account">
+            <span class="settings-tab-icon">👤</span> Account
+          </button>
+          <button class="settings-tab" type="button" data-tab="security">
+            <span class="settings-tab-icon">🔒</span> Security
+          </button>
+          <button class="settings-tab" type="button" data-tab="notifications">
+            <span class="settings-tab-icon">🔔</span> Notifications
+          </button>
+        </nav>
+
+        <div class="settings-panels">
+
+          <!-- Account -->
+          <div class="settings-panel panel active" id="settingsAccount">
+            <div class="settings-panel-header">
+              <p class="eyebrow">PROFILE</p>
+              <h3>Account Information</h3>
+            </div>
+
+            <form id="accountForm">
+              <div class="settings-avatar-row">
+                <div class="avatar settings-avatar">GC</div>
+                <div>
+                  <strong>Guidance Counselor</strong>
+                  <span>Admin</span>
+                </div>
+              </div>
+
+              <div class="settings-form-grid">
+                <div class="settings-field">
+                  <label for="setName">Full Name</label>
+                  <input type="text" id="setName" value="Guidance Counselor">
+                </div>
+                <div class="settings-field">
+                  <label for="setEmail">Official Email</label>
+                  <input type="email" id="setEmail" value="counselor@gpath.edu">
+                </div>
+                <div class="settings-field">
+                  <label for="setEmployeeID">Staff/Employee ID</label>
+                  <input type="text" id="setEmployeeID" value="GP-00231">
+                </div>
+                <div class="settings-field">
+                  <label for="setContact">Contact Number</label>
+                  <input type="tel" id="setContact" pattern="^09[0-9]{9}$" maxlength="11" value="09123456789">
+                </div>
+                <div class="settings-field settings-field-full">
+                  <label for="setPosition">Position / Role</label>
+                  <select id="setPosition">
+                    <option value="head">Guidance Counselor</option>
+                    <option value="staff1">Staff 1</option>
+                    <option value="staff2">Staff 2</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="settings-actions">
+                <button type="submit" class="settings-save-btn" id="saveAccountBtn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Security -->
+          <div class="settings-panel panel" id="settingsSecurity">
+            <div class="settings-panel-header">
+              <p class="eyebrow">SECURITY</p>
+              <h3>Change Password</h3>
+            </div>
+
+            <form id="securityForm">
+              <div class="settings-form-grid">
+                <div class="settings-field settings-field-full">
+                  <label for="currentPassword">Current Password</label>
+                  <div class="settings-password-wrap">
+                    <input type="password" id="currentPassword" placeholder="Enter current password">
+                    <button type="button" class="settings-toggle-password" data-target="currentPassword">👁</button>
+                  </div>
+                </div>
+                <div class="settings-field">
+                  <label for="newPassword">New Password</label>
+                  <div class="settings-password-wrap">
+                    <input type="password" id="newPassword" placeholder="Enter new password">
+                    <button type="button" class="settings-toggle-password" data-target="newPassword">👁</button>
+                  </div>
+                </div>
+                <div class="settings-field">
+                  <label for="confirmPassword">Confirm New Password</label>
+                  <div class="settings-password-wrap">
+                    <input type="password" id="confirmPassword" placeholder="Re-enter new password">
+                    <button type="button" class="settings-toggle-password" data-target="confirmPassword">👁</button>
+                  </div>
+                </div>
+              </div>
+
+              <p class="settings-field-error" id="passwordError"></p>
+
+              <div class="settings-actions">
+                <button type="submit" class="settings-save-btn" id="saveSecurityBtn">Update Password</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings-panel panel" id="settingsNotifications">
+            <div class="settings-panel-header">
+              <p class="eyebrow">PREFERENCES</p>
+              <h3>Notification Settings</h3>
+            </div>
+
+            <div class="settings-toggle-list">
+              <div class="settings-toggle-row">
+                <div>
+                  <strong>Document Updates</strong>
+                  <span>Get notified when documents are uploaded or deleted</span>
+                </div>
+                <label class="settings-switch">
+                  <input type="checkbox" id="notifDocs" checked>
+                  <span class="settings-switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-toggle-row">
+                <div>
+                  <strong>Student Records</strong>
+                  <span>Get notified when a student is added or removed</span>
+                </div>
+                <label class="settings-switch">
+                  <input type="checkbox" id="notifStudents" checked>
+                  <span class="settings-switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-toggle-row">
+                <div>
+                  <strong>System Announcements</strong>
+                  <span>Occasional updates about G-PATH itself</span>
+                </div>
+                <label class="settings-switch">
+                  <input type="checkbox" id="notifSystem">
+                  <span class="settings-switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="Js/side-nav.js"></script>
+  <script src="Js/notif.js"></script>
+  <script src="Js/logout-overlay.js"></script>
+  <script src="Js/Settings.js"></script>
+</body>
+</html>
