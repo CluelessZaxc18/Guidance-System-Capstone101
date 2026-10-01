@@ -167,45 +167,9 @@
               <p class="eyebrow">RECENT</p>
               <h4>Recent Activity</h4>
             </div>
-            <button class="text-btn">View all</button>
           </div>
 
-          <div class="activity-list">
-            <div class="activity">
-              <div class="activity-symbol blue">+</div>
-              <div>
-                <strong>Student record updated</strong>
-                <p>Aris Villanueva · Student Information</p>
-              </div>
-              <time>10 min ago</time>
-            </div>
-
-            <div class="activity">
-              <div class="activity-symbol teal">⬆️</div>
-              <div>
-                <strong>Document uploaded</strong>
-                <p>Medical Certificate · Aris Villanueva</p>
-              </div>
-              <time>42 min ago</time>
-            </div>
-
-            <div class="activity">
-              <div class="activity-symbol violet">✓</div>
-              <div>
-                <strong>Guidance activity recorded</strong>
-                <p>Individual counseling session</p>
-              </div>
-              <time>2 hrs ago</time>
-            </div>
-
-            <div class="activity">
-              <div class="activity-symbol orange">!</div>
-              <div>
-                <strong>Document needs review</strong>
-                <p>Pending verification · 2 files</p>
-              </div>
-              <time>Yesterday</time>
-            </div>
+          <div class="activity-list" id="activityList">
           </div>
         </section>
 
@@ -218,13 +182,13 @@
           </div>
 
           <button class="quick-action" id="quickStudent">
-            <span class="quick-icon blue">+</span>
+            <span class="quick-icon blue" style="background-color: #a4caf8;">+</span>
             <span><strong>Add Student</strong><small>Create a new student profile</small></span>
             <span>›</span>
           </button>
 
           <button class="quick-action" id="quickDocument">
-            <span class="quick-icon teal">⬆️</span>
+            <span class="quick-icon teal" style="background-color: #aaf3d0;">☁⬆</span>
             <span><strong>Upload Document</strong><small>Store a document</small></span>
             <span>›</span>
           </button>
@@ -259,5 +223,6 @@
   <script src="Js/notif.js"></script>
   <script src="Js/logout-overlay.js"></script>
   <script src="Js/upload-doc.js"></script>
+  <script src="Js/dashboard.js"></script>
 </body>
 </html>

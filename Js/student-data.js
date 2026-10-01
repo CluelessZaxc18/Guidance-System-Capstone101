@@ -1,4 +1,9 @@
-const studentData = [
+const STUDENTS_STORAGE_KEY = "gpath_students";
+
+// Seed data used only the very first time the app runs (nothing in
+// localStorage yet). After that, the real source of truth is whatever's
+// saved under STUDENTS_STORAGE_KEY.
+const DEFAULT_STUDENT_DATA = [
   { name: "Ana Cruz", id: "110187", year: "3rd Year", program: "BS Information Technology", section: "Room 5", gender: "Female", birthday: "October 14, 2005", updated: "2 hours ago", standing: "Regular", status: "Active" },
   { name: "Miguel Santos", id: "110638", year: "2nd Year", program: "BS Criminology", section: "Room 2", gender: "Male", birthday: "March 22, 2006", updated: "May 18, 2024", standing: "Regular", status: "Active" },
   { name: "Maria Lim", id: "110744", year: "4th Year", program: "BS Hospitality Management", section: "Room 9", gender: "Female", birthday: "January 05, 2005", updated: "May 15, 2024", standing: "Irregular", status: "Follow-up" },
@@ -12,6 +17,22 @@ const studentData = [
   { name: "Nicole Reyes", id: "111297", year: "3rd Year", program: "BS Midwifery Education", section: "7", gender: "Female", birthday: "December 21, 2005", updated: "June 3, 2026", standing: "Regular", status: "Follow-up" },
   { name: "Ethan Flores", id: "111186", year: "2nd Year", program: "BS Tourism Management", section: "9", gender: "Male", birthday: "June 14, 2006", updated: "May 30, 2026", standing: "Irregular", status: "Active" }
 ];
+
+function loadStudentData() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY));
+    if (Array.isArray(stored)) return stored;
+  } catch (err) {
+    // Corrupted/invalid JSON — fall back to the seed defaults below.
+  }
+  return DEFAULT_STUDENT_DATA;
+}
+
+function saveStudentData() {
+  localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(studentData));
+}
+
+const studentData = loadStudentData();
 
 const avatarClasses = ["teal-bg", "green-bg", "violet-bg", "blue-bg"];
 
@@ -103,6 +124,7 @@ function addStudent(newStudent) {
   }
 
   studentData.unshift(newStudent);
+  saveStudentData();
 
   if (typeof filterStudents === "function") {
     filterStudents();
@@ -126,6 +148,7 @@ function deleteStudent(studentId) {
   if (index === -1) return false;
 
   const [removed] = studentData.splice(index, 1);
+  saveStudentData();
 
   if (typeof filterStudents === "function") {
     filterStudents();

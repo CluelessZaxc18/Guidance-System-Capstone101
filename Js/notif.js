@@ -1,3 +1,58 @@
+// ---- Core notification storage ----
+// Defined at the top level (NOT inside DOMContentLoaded) so it's available
+// the instant this script file runs, regardless of where its <script> tag
+// sits relative to other files. This matters because other scripts (e.g.
+// student-data.js picking up a student added via Dashboard's "Add Student"
+// quick action) call window.addSystemNotification(...) from inside their
+// OWN DOMContentLoaded handler — and if that handler happens to be
+// registered before this file's, the old version (which only defined this
+// function inside its own DOMContentLoaded callback) hadn't run yet,
+// silently dropping the notification.
+function gpathReadNotifs() {
+    try {
+        return JSON.parse(localStorage.getItem('gpath_notifications')) || [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function gpathWriteNotifs(notifs) {
+    localStorage.setItem('gpath_notifications', JSON.stringify(notifs));
+}
+
+function gpathSyncBellDot() {
+    const notifBell = document.getElementById('notifBell');
+    if (!notifBell) return;
+    const hasUnread = gpathReadNotifs().some(n => n.unread);
+    const redDot = notifBell.querySelector('.dot');
+    if (redDot) redDot.style.display = hasUnread ? 'block' : 'none';
+}
+
+window.addSystemNotification = function (title, description, type = 'green') {
+    const notifs = gpathReadNotifs();
+
+    notifs.unshift({
+        id: Date.now(),
+        title: title,
+        desc: description,
+        type: type,
+        timestamp: Date.now(),
+        unread: true
+    });
+
+    if (notifs.length > 15) notifs.length = 15;
+    gpathWriteNotifs(notifs);
+
+    gpathSyncBellDot(); // safe even before DOMContentLoaded / without a bell on the page
+};
+
+if (!localStorage.getItem('gpath_notifications')) {
+    gpathWriteNotifs([]);
+}
+
+// ---- Bell UI ----
+// This part legitimately needs the DOM ready (it reads #notifBell and
+// injects styles/markup), so it stays inside DOMContentLoaded.
 document.addEventListener('DOMContentLoaded', () => {
     const notifBell = document.getElementById('notifBell');
     if (!notifBell) return;
@@ -64,47 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Date(timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
-    function readNotifs() {
-        try {
-            return JSON.parse(localStorage.getItem('gpath_notifications')) || [];
-        } catch (e) {
-            return [];
-        }
-    }
-
-    function writeNotifs(notifs) {
-        localStorage.setItem('gpath_notifications', JSON.stringify(notifs));
-    }
-
-    function syncBellDot() {
-        const hasUnread = readNotifs().some(n => n.unread);
-        const redDot = notifBell.querySelector('.dot');
-        if (redDot) redDot.style.display = hasUnread ? 'block' : 'none';
-    }
-
-    window.addSystemNotification = function (title, description, type = 'green') {
-        const notifs = readNotifs();
-
-        notifs.unshift({
-            id: Date.now(),
-            title: title,
-            desc: description,
-            type: type,
-            timestamp: Date.now(),
-            unread: true
-        });
-
-        if (notifs.length > 15) notifs.length = 15;
-        writeNotifs(notifs);
-
-        syncBellDot();
-    };
-
-    if (!localStorage.getItem('gpath_notifications')) {
-        writeNotifs([]);
-    }
-
-    syncBellDot();
+    gpathSyncBellDot();
 
     notifBell.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -115,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const notifs = readNotifs();
+        const notifs = gpathReadNotifs();
 
         const listHtml = notifs.map(n => `
             <div class="notif-item ${n.unread ? 'unread' : ''}">
@@ -157,11 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const markReadBtn = overlayDiv.querySelector('#markAllReadBtn');
         if (markReadBtn) {
             markReadBtn.addEventListener('click', () => {
-                const currentNotifs = readNotifs().map(n => ({ ...n, unread: false }));
-                writeNotifs(currentNotifs);
+                const currentNotifs = gpathReadNotifs().map(n => ({ ...n, unread: false }));
+                gpathWriteNotifs(currentNotifs);
 
                 overlayDiv.querySelectorAll('.unread-dot').forEach(dot => dot.remove());
-                syncBellDot();
+                gpathSyncBellDot();
             });
         }
 

@@ -1,0 +1,81 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("activityList");
+  if (!list) return;
+
+  const MAX_ROWS = 4;
+
+  const TYPE_STYLE = {
+    green: { colorClass: "teal", icon: "+" },
+    red: { colorClass: "red", icon: "−" },
+    blue: { colorClass: "blue", icon: "↑" },
+    purple: { colorClass: "violet", icon: "↓" },
+    orange: { colorClass: "orange", icon: "!" },
+  };
+  const DEFAULT_STYLE = { colorClass: "teal", icon: "•" };
+
+  const PLACEHOLDER_ROWS = [
+    { colorClass: "teal", icon: "✓", title: "Welcome to G-PATH", desc: "Your guidance management system is ready to use." },
+    { colorClass: "blue", icon: "+", title: "Get started", desc: "Add your first student or upload a document." },
+    { colorClass: "violet", icon: "🔔", title: "Stay updated", desc: "Actions you take will appear here automatically." },
+    { colorClass: "orange", icon: "⚙", title: "Tip", desc: "Visit Settings to update your profile and preferences." },
+  ];
+
+  function readNotifications() {
+    try {
+      return JSON.parse(localStorage.getItem("gpath_notifications")) || [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function timeAgo(timestamp) {
+    if (!timestamp) return "";
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    if (seconds < 60) return "Just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+    const days = Math.floor(hours / 24);
+    if (days === 1) return "Yesterday";
+    if (days < 7) return `${days} days ago`;
+    return new Date(timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[ch]));
+  }
+
+  function rowHtml(colorClass, icon, title, desc, timeText) {
+    return `
+      <div class="activity">
+        <div class="activity-symbol ${colorClass}">${icon}</div>
+        <div>
+          <strong>${escapeHtml(title)}</strong>
+          <p>${escapeHtml(desc)}</p>
+        </div>
+        <time>${escapeHtml(timeText)}</time>
+      </div>
+    `;
+  }
+
+  function render() {
+    const notifs = readNotifications();
+
+    if (notifs.length === 0) {
+      list.innerHTML = PLACEHOLDER_ROWS
+        .map(row => rowHtml(row.colorClass, row.icon, row.title, row.desc, ""))
+        .join("");
+      return;
+    }
+
+    list.innerHTML = notifs.slice(0, MAX_ROWS).map(n => {
+      const style = TYPE_STYLE[n.type] || DEFAULT_STYLE;
+      return rowHtml(style.colorClass, style.icon, n.title, n.desc, timeAgo(n.timestamp));
+    }).join("");
+  }
+
+  render();
+});

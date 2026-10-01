@@ -383,6 +383,7 @@ a {
 .violet { background: #f1efff; color: var(--violet); }
 .teal { background: #e8faf7; color: var(--teal); }
 .orange { background: #fff5e7; color: var(--orange); }
+.red { background: #fee2e2; color: #dc2626; }
 
 .stat-card > strong {
   display: block;
@@ -419,14 +420,6 @@ a {
 
 .panel-heading h4 {
   font-size: 15px;
-}
-
-.text-btn {
-  border: 0;
-  background: transparent;
-  color: var(--primary-dark);
-  font-size: 11px;
-  font-weight: 700;
 }
 
 .activity {
