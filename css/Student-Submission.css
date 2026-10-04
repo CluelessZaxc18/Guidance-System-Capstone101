@@ -465,7 +465,7 @@ a {
 }
 
 .sub-modal-card {
-  background: white;
+  background:linear-gradient(135deg, #119cff, #034662);
   width: 100%;
   max-width: 700px;
   border-radius: 14px;
@@ -478,7 +478,7 @@ a {
 
 .sub-modal-header {
   padding: 20px;
-  background: #f8fafc;
+  background:#119cff;
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;

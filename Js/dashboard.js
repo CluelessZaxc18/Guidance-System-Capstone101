@@ -120,4 +120,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   renderTotalStudents();
+
+  //=========================== Total Info Submission count ===========================
+  function totalSubmissionCount() {
+    try {
+      const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+      const pending = submissions.filter(s => s.status === "Pending");
+      return pending.length;
+    } catch (err) {}
+    return 0;
+  }
+
+  function renderTotalSubmissions() {
+    const el = document.getElementById("totalSubmissionCount");
+    if (!el) return;
+    el.textContent = totalSubmissionCount();
+  }
+
+  renderTotalSubmissions();
+
+  //=========================== Total Approved Submissions count ===========================
+  function countTotalApproved() {
+    try {
+      const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+      const approved = submissions.filter(s => s.status === "Approved");
+      return approved.length;
+    } catch (err) {}
+    return 0;
+  }
+
+  function renderTotalApproved() {
+    const el = document.getElementById("totalApprovedCount");
+    if (!el) return;
+    el.textContent = countTotalApproved();
+  }
+
+  renderTotalApproved();
 });

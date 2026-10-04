@@ -1,4 +1,337 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // --- AUTO-POPULATE INITIAL 12 APPROVED STUDENTS (Caraga Region Schools & LRNs) ---
+  const existingSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+  if (existingSubmissions.length === 0) {
+    const defaultApprovedStudents = [
+      {
+        timestamp: 1720000001000,
+        status: "Approved",
+        name: "Ana Cruz",
+        id: "110187",
+        lrn: "135402090112",
+        program: "BS Information Technology",
+        year: "3rd Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2005-10-14",
+        religion: "Catholic",
+        contactNumber: "09514689924",
+        gmail: "CruzAnamae@gmail.com",
+        facebook: "Ana Cruz",
+        currentAddress: "Purok 4, Ampayon, Butuan City, Agusan del Norte",
+        preschool: "Butuan Faith Christian School",
+        elementary: "Ampayon Central Elementary School",
+        juniorHigh: "Caraga Regional Science High School",
+        seniorHigh: "Caraga State University - SHS Dept",
+        fatherName: "Roberto Cruz",
+        fatherContact: "09123456789",
+        motherMaidenName: "Elena Cruz",
+        motherContact: "09187654321",
+        guardianName: "Roberto Cruz",
+        guardianContact: "09123456789"
+      },
+      {
+        timestamp: 1720000002000,
+        status: "Approved",
+        name: "Miguel Santos",
+        id: "110638",
+        lrn: "135405040188",
+        program: "BS Criminology",
+        year: "2nd Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2006-03-22",
+        religion: "Roman Catholic",
+        contactNumber: "09481122334",
+        gmail: "MiguelSantos06@gmail.com",
+        facebook: "Miguel Santos",
+        currentAddress: "National Highway, San Francisco, Agusan del Sur",
+        preschool: "San Francisco Montessori Learning Center",
+        elementary: "San Francisco Pilot Central Elementary School",
+        juniorHigh: "Agusan del Sur National High School",
+        seniorHigh: "Mt. Carmel College of San Francisco - SHS",
+        fatherName: "Eduardo Santos",
+        fatherContact: "09223344556",
+        motherMaidenName: "Carmen Santos",
+        motherContact: "09334455667",
+        guardianName: "Eduardo Santos",
+        guardianContact: "09223344556"
+      },
+      {
+        timestamp: 1720000003000,
+        status: "Approved",
+        name: "Maria Lim",
+        id: "110744",
+        lrn: "135401120395",
+        program: "BS Hospitality Management",
+        year: "4th Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2005-01-05",
+        religion: "Iglesia ni Cristo",
+        contactNumber: "09095544332",
+        gmail: "MariaLim.hm@gmail.com",
+        facebook: "Maria Lim",
+        currentAddress: "Capitol Road, Tandag City, Surigao del Sur",
+        preschool: "Tandag Early Childhood Learning Center",
+        elementary: "Tandag Central Elementary School",
+        juniorHigh: "Purisima National High School",
+        seniorHigh: "Saint Theresa College of Tandag - SHS",
+        fatherName: "George Lim",
+        fatherContact: "09445566778",
+        motherMaidenName: "Susan Lim",
+        motherContact: "09556677889",
+        guardianName: "Susan Lim",
+        guardianContact: "09556677889"
+      },
+      {
+        timestamp: 1720000004000,
+        status: "Approved",
+        name: "Joshua Reyes",
+        id: "110859",
+        lrn: "135403080214",
+        program: "BS Tourism Management",
+        year: "3rd Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2005-07-19",
+        religion: "Roman Catholic",
+        contactNumber: "09367788990",
+        gmail: "JoshuaReyes.tourism@gmail.com",
+        facebook: "Joshua Reyes",
+        currentAddress: "Rizal Street, Surigao City, Surigao del Norte",
+        preschool: "Surigao Covenant Christian School",
+        elementary: "Surigao City Pilot Elementary School",
+        juniorHigh: "Surigao National High School",
+        seniorHigh: "St. Paul University Surigao - SHS",
+        fatherName: "Mario Reyes",
+        fatherContact: "09667788990",
+        motherMaidenName: "Linda Reyes",
+        motherContact: "09778899001",
+        guardianName: "Mario Reyes",
+        guardianContact: "09667788990"
+      },
+      {
+        timestamp: 1720000005000,
+        status: "Approved",
+        name: "Sofia Mendoza",
+        id: "110963",
+        lrn: "135401030567",
+        program: "BS Midwifery Education",
+        year: "4th Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2004-11-30",
+        religion: "Seventh-day Adventist",
+        contactNumber: "09293344556",
+        gmail: "SofiaMendoza.mid@gmail.com",
+        facebook: "Sofia Mendoza",
+        currentAddress: "San Jose St., Butuan City, Agusan del Norte",
+        preschool: "Butuan Little Gems Preschool",
+        elementary: "Butuan Central Elementary School",
+        juniorHigh: "Father Saturnino Urios University - JHS",
+        seniorHigh: "Northern Mindanao School of Midwifery - SHS",
+        fatherName: "Fernando Mendoza",
+        fatherContact: "09889900112",
+        motherMaidenName: "Rosa Mendoza",
+        motherContact: "09990011223",
+        guardianName: "Rosa Mendoza",
+        guardianContact: "09990011223"
+      },
+      {
+        timestamp: 1720000006000,
+        status: "Approved",
+        name: "Liam Torres",
+        id: "111074",
+        lrn: "135402110482",
+        program: "BS Information Technology",
+        year: "1st Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2008-02-12",
+        religion: "Roman Catholic",
+        contactNumber: "09123344556",
+        gmail: "LiamTorres.it@gmail.com",
+        facebook: "Liam Torres",
+        currentAddress: "J.C. Aquino Avenue, Butuan City, Agusan del Norte",
+        preschool: "Kiddie Kollege Butuan",
+        elementary: "West Butuan Central Elementary School",
+        juniorHigh: "Saint Joseph Institute of Technology - High School",
+        seniorHigh: "STI College Surigao - Butuan Learning Center",
+        fatherName: "Victor Torres",
+        fatherContact: "09112233445",
+        motherMaidenName: "Clara Torres",
+        motherContact: "09223344557",
+        guardianName: "Victor Torres",
+        guardianContact: "09112233445"
+      },
+      {
+        timestamp: 1720000007000,
+        status: "Approved",
+        name: "Aris Villanueva",
+        id: "110198",
+        lrn: "135405020331",
+        program: "BS Information Technology",
+        year: "2nd Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2006-08-25",
+        religion: "Baptist",
+        contactNumber: "09506677889",
+        gmail: "ArisVillanueva@gmail.com",
+        facebook: "Aris Villanueva",
+        currentAddress: "Poblacion, Prosperidad, Agusan del Sur",
+        preschool: "Prosperidad Christian Learning Center",
+        elementary: "Prosperidad Central Elementary School",
+        juniorHigh: "Agusan del Sur National High School",
+        seniorHigh: "Agusan del Sur College - SHS",
+        fatherName: "Danilo Villanueva",
+        fatherContact: "09334455668",
+        motherMaidenName: "Jocelyn Villanueva",
+        motherContact: "09445566779",
+        guardianName: "Danilo Villanueva",
+        guardianContact: "09334455668"
+      },
+      {
+        timestamp: 1720000008000,
+        status: "Approved",
+        name: "Daniel Garcia",
+        id: "111530",
+        lrn: "135403060719",
+        program: "BS Criminology",
+        year: "3rd Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2005-04-03",
+        religion: "Roman Catholic",
+        contactNumber: "09612233445",
+        gmail: "DanielGarcia.crim@gmail.com",
+        facebook: "Daniel Garcia",
+        currentAddress: "San Nicolas Street, Surigao City, Surigao del Norte",
+        preschool: "Surigao Montessori School",
+        elementary: "San Juan Elementary School",
+        juniorHigh: "Surigao del Norte National High School",
+        seniorHigh: "Surigao Education Center - SHS",
+        fatherName: "Ramon Garcia",
+        fatherContact: "09556677880",
+        motherMaidenName: "Teresa Garcia",
+        motherContact: "09667788991",
+        guardianName: "Teresa Garcia",
+        guardianContact: "09667788991"
+      },
+      {
+        timestamp: 1720000009000,
+        status: "Approved",
+        name: "Camille Navarro",
+        id: "111419",
+        lrn: "135401090240",
+        program: "BS Tourism Management",
+        year: "1st Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2007-09-08",
+        religion: "Roman Catholic",
+        contactNumber: "09078899002",
+        gmail: "CamilleNavarro@gmail.com",
+        facebook: "Camille Navarro",
+        currentAddress: "Mangagoy, Bislig City, Surigao del Sur",
+        preschool: "Bislig Little Angels Learning Center",
+        elementary: "Mangagoy Central Elementary School",
+        juniorHigh: "Bislig National High School",
+        seniorHigh: "Saint Vincent De Paul Diocesan College - SHS",
+        fatherName: "Arturo Navarro",
+        fatherContact: "09778899002",
+        motherMaidenName: "Beatriz Navarro",
+        motherContact: "09889900113",
+        guardianName: "Arturo Navarro",
+        guardianContact: "09778899002"
+      },
+      {
+        timestamp: 1720000010000,
+        status: "Approved",
+        name: "Rafael Mendoza",
+        id: "111308",
+        lrn: "135401020158",
+        program: "BS Hospitality Management",
+        year: "4th Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2004-05-17",
+        religion: "Roman Catholic",
+        contactNumber: "09451122335",
+        gmail: "RafaelMendoza.hm@gmail.com",
+        facebook: "Rafael Mendoza",
+        currentAddress: "Montilla Boulevard, Butuan City, Agusan del Norte",
+        preschool: "Father Saturnino Urios University Preschool",
+        elementary: "Butuan Central Elementary School",
+        juniorHigh: "Father Saturnino Urios University - JHS",
+        seniorHigh: "Father Saturnino Urios University - SHS",
+        fatherName: "Gabriel Mendoza",
+        fatherContact: "09122334456",
+        motherMaidenName: "Gloria Mendoza",
+        motherContact: "09233445567",
+        guardianName: "Gabriel Mendoza",
+        guardianContact: "09122334456"
+      },
+      {
+        timestamp: 1720000011000,
+        status: "Approved",
+        name: "Nicole Reyes",
+        id: "111297",
+        lrn: "135404120883",
+        program: "BS Midwifery Education",
+        year: "3rd Year",
+        gender: "Female",
+        civilStatus: "Single",
+        birthday: "2005-12-21",
+        religion: "Roman Catholic",
+        contactNumber: "09214455667",
+        gmail: "NicoleReyes.mid@gmail.com",
+        facebook: "Nicole Reyes",
+        currentAddress: "San Jose, Dinagat Islands",
+        preschool: "Dinagat Learning Tree Preschool",
+        elementary: "San Jose Central Elementary School",
+        juniorHigh: "Don Ruben Ecleo Sr. Memorial National High School",
+        seniorHigh: "Don Jose Ecleo Memorial Foundation College of Science & Technology - SHS",
+        fatherName: "Ernesto Reyes",
+        fatherContact: "09344556678",
+        motherMaidenName: "Marivic Reyes",
+        motherContact: "09455667789",
+        guardianName: "Marivic Reyes",
+        guardianContact: "09455667789"
+      },
+      {
+        timestamp: 1720000012000,
+        status: "Approved",
+        name: "Ethan Flores",
+        id: "111186",
+        lrn: "135401080926",
+        program: "BS Tourism Management",
+        year: "2nd Year",
+        gender: "Male",
+        civilStatus: "Single",
+        birthday: "2006-06-14",
+        religion: "United Church of Christ in the Philippines (UCCP)",
+        contactNumber: "09356677881",
+        gmail: "EthanFlores.tourism@gmail.com",
+        facebook: "Ethan Flores",
+        currentAddress: "Cantilan, Surigao del Sur",
+        preschool: "Cantilan Community Preschool",
+        elementary: "Cantilan Pilot Elementary School",
+        juniorHigh: "Cantilan National High School",
+        seniorHigh: "Surigao del Sur State University - Cantilan Campus SHS",
+        fatherName: "Samuel Flores",
+        fatherContact: "09566778892",
+        motherMaidenName: "Rowena Flores",
+        motherContact: "09677889903",
+        guardianName: "Samuel Flores",
+        guardianContact: "09566778892"
+      }
+    ];
+    localStorage.setItem("gpath_submissions", JSON.stringify(defaultApprovedStudents));
+  }
+  // -------------------------------------------------------------
+
   const tabBtns = document.querySelectorAll(".sub-tab-btn");
   const pendingSection = document.getElementById("pendingSection");
   const approvedSection = document.getElementById("approvedSection");
@@ -9,7 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentApprovingTimestamp = null;
 
-  // Tab Switching
   tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       tabBtns.forEach(b => b.classList.remove("active"));
@@ -35,7 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
     pendingBadge.textContent = pending.length;
     approvedBadge.textContent = approved.length;
 
-    // Render Pending
     if (pending.length === 0) {
       pendingList.innerHTML = `<p class="empty-state">No pending student submissions.</p>`;
     } else {
@@ -43,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="sub-card">
           <div class="sub-card-info">
             <h3>${item.name || "Unnamed Student"}</h3>
-            <p><strong>ID:</strong> ${item.id} | <strong>Course:</strong> ${item.program}</p>
+            <p><strong>ID:</strong> ${item.id || "N/A"} | <strong>Course:</strong> ${item.program || "N/A"}</p>
             <p><strong>Email:</strong> ${item.gmail || "N/A"} | <strong>Contact:</strong> ${item.contactNumber || "N/A"}</p>
           </div>
           <div class="sub-card-actions">
@@ -55,7 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `).join("");
     }
 
-    // Render Approved
     if (approved.length === 0) {
       approvedList.innerHTML = `<p class="empty-state">No approved student records yet.</p>`;
     } else {
@@ -74,7 +404,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Open Add Student Modal and Pre-fill with Submission Data
   window.openApprovalModal = function(timestamp) {
     const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
     const item = submissions.find(s => String(s.timestamp) === String(timestamp));
@@ -105,7 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 150);
   };
 
-  // Safe listener to handle approval form submission cleanly
   document.addEventListener("submit", (e) => {
     if (e.target && e.target.id === "addStudentForm" && currentApprovingTimestamp) {
       e.preventDefault();
@@ -126,7 +454,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.setItem("gpath_submissions", JSON.stringify(submissions));
 
-        // Directly push into active student list for Student.html
         let students = JSON.parse(localStorage.getItem("gpath_students")) || [];
         const existingIndex = students.findIndex(st => String(st.id) === String(submissions[index].id));
         
@@ -143,13 +470,23 @@ document.addEventListener("DOMContentLoaded", () => {
           status: "Active"
         };
 
-        if (existingIndex !== -1) {
+        const isUpdate = existingIndex !== -1;
+
+        if (isUpdate) {
           students[existingIndex] = studentRecord;
         } else {
           students.unshift(studentRecord);
         }
 
         localStorage.setItem("gpath_students", JSON.stringify(students));
+
+        if (typeof window.addSystemNotification === "function") {
+          window.addSystemNotification(
+            isUpdate ? "Student record updated" : "Student added",
+            `${studentRecord.name} (${studentRecord.id}) was ${isUpdate ? "updated via" : "approved from"} a student submission.`,
+            "green"
+          );
+        }
       }
 
       currentApprovingTimestamp = null;
@@ -173,7 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="sub-modal-card">
           <div class="sub-modal-header">
             <h3>Student Submission Details</h3>
-            <button type="button" class="sub-modal-close" onclick="document.getElementById('submissionModal').remove()">×</button>
+            <button type="button" class="sub-modal-close" onclick="document.getElementById('submissionModal').remove()">✖</button>
           </div>
           <div class="sub-modal-body">
             <div class="sub-info-grid">
@@ -185,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <div><label>Gender</label><strong>${item.gender || "N/A"}</strong></div>
               <div><label>Civil Status</label><strong>${item.civilStatus || "N/A"}</strong></div>
               <div><label>Birthday</label><strong>${item.birthday || "N/A"}</strong></div>
-              <div><label>Religion</label><strong>${item.religion === "Other" ? item.otherReligion : (item.religion || "N/A")}</strong></div>
+              <div><label>Religion</label><strong>${item.religion || "N/A"}</strong></div>
               <div><label>Contact Number</label><strong>${item.contactNumber || "N/A"}</strong></div>
               <div><label>Gmail</label><strong>${item.gmail || "N/A"}</strong></div>
               <div><label>Facebook</label><strong>${item.facebook || "N/A"}</strong></div>

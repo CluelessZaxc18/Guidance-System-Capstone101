@@ -20,9 +20,9 @@ document.getElementById("studentForm").addEventListener("submit", e => {
 
   // Format name & data for system compatibility
   studentObj.name = `${studentObj.firstName || ""} ${studentObj.lastName || ""}`.trim();
-  studentObj.id = studentObj.idNumber || "11" + Math.floor(1000 + Math.random() * 9000);
+  studentObj.id = studentObj.idNumber && studentObj.idNumber.trim() !== "" ? studentObj.idNumber : "N/A";
   studentObj.year = studentObj.yearLevel || "1st Year";
-  studentObj.program = studentObj.course || "BS Information Technology";
+  studentObj.program = studentObj.course && studentObj.course.trim() !== "" ? studentObj.course : "N/A";
   studentObj.status = "Pending";
   studentObj.updated = "Just now";
   studentObj.timestamp = Date.now();
