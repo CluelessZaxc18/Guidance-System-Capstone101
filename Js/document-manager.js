@@ -110,18 +110,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function downloadDocument(doc) {
-    const fileContent = `G-PATH Document Record\nFile Name: ${doc.name}\nCategory: ${sectionLabel}\nDate Stamped: ${doc.date}\nStatus: Official Record`;
-    const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    
     const downloadLink = document.createElement("a");
-    downloadLink.href = url;
-    downloadLink.download = doc.name;
+    let objectUrlToRevoke = null;
+
+    if (doc.data) {
+      // Real stored file content — a data: URL can be used directly as an
+      // <a download> target, so this serves back the exact original bytes.
+      downloadLink.href = doc.data;
+      downloadLink.download = doc.name;
+    } else {
+      // Older entries (the 2 demo seed docs for a freshly-opened category,
+      // or anything uploaded before file content was captured) never had
+      // real content stored. Download a clearly-labeled .txt placeholder
+      // instead of pretending to serve the original — downloading it with
+      // the original name/extension would look like a "corrupted" docx or
+      // pdf when it's actually opened, which is misleading.
+      const fileContent =
+        `G-PATH Document Record\n` +
+        `File Name: ${doc.name}\n` +
+        `Category: ${sectionLabel}\n` +
+        `Date Stamped: ${doc.date}\n` +
+        `Note: This is a placeholder record — the original file content was not stored for this entry.`;
+      const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+      objectUrlToRevoke = URL.createObjectURL(blob);
+      downloadLink.href = objectUrlToRevoke;
+      downloadLink.download = doc.name.replace(/\.[^./]+$/, "") + " (placeholder).txt";
+    }
+
     document.body.appendChild(downloadLink);
     downloadLink.click();
-    
     document.body.removeChild(downloadLink);
-    URL.revokeObjectURL(url);
+
+    if (objectUrlToRevoke) URL.revokeObjectURL(objectUrlToRevoke);
   }
 
   function showDeleteModal(docName, onConfirm) {
@@ -204,9 +224,26 @@ document.addEventListener("DOMContentLoaded", () => {
   if (addFileBtn && hiddenFileInput) {
     addFileBtn.addEventListener("click", () => hiddenFileInput.click());
 
+    // localStorage's total quota (shared across every category/section,
+    // not per-file) is typically only ~5-10MB across the whole site. Keep
+    // individual uploads well under that so one large file can't eat the
+    // entire budget — and so we can reject it up front instead of reading
+    // the whole thing first and failing on save.
+    const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4MB
+
     hiddenFileInput.addEventListener("change", e => {
       const file = e.target.files[0];
       if (!file) return;
+
+      if (file.size > MAX_FILE_BYTES) {
+        alert(
+          `"${file.name}" is ${(file.size / 1024 / 1024).toFixed(1)} MB, which is over the ` +
+          `${MAX_FILE_BYTES / 1024 / 1024} MB limit. Browser storage has a small total quota shared ` +
+          `across all your documents, so large files can't be stored here.`
+        );
+        hiddenFileInput.value = "";
+        return;
+      }
 
       const extension = file.name.split(".").pop().toLowerCase();
       let fileType = "pdf"; 
@@ -215,26 +252,55 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (["pptx", "ppt"].includes(extension)) fileType = "powerpoint";
       else if (["txt"].includes(extension)) fileType = "txt";
 
-      const docs = loadDocs();
-      docs.unshift({
-        id: Date.now(),
-        name: file.name,
-        type: fileType,
-        date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-      });
-      saveDocs(docs);
+      const reader = new FileReader();
 
-      if (typeof window.addSystemNotification === "function") {
-        window.addSystemNotification(
-          "Document uploaded",
-          `${file.name} was added to ${config.titlePrefix} > ${sectionLabel}.`,
-          "blue"
-        );
-      }
+      reader.onload = () => {
+        const docs = loadDocs();
+        docs.unshift({
+          id: Date.now(),
+          name: file.name,
+          type: fileType,
+          date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+          // The actual file content, as a "data:<mime>;base64,...." string.
+          // This is what makes Download serve back the real original file
+          // instead of a fake placeholder.
+          data: reader.result,
+        });
 
-      if (searchInput) searchInput.value = "";
-      hiddenFileInput.value = ""; 
-      render();
+        try {
+          saveDocs(docs);
+        } catch (err) {
+          alert(
+            `Could not save "${file.name}" — browser storage is full. ` +
+            `Try deleting some existing documents first, then upload again.`
+          );
+          hiddenFileInput.value = "";
+          return;
+        }
+
+        if (typeof window.addSystemNotification === "function") {
+          window.addSystemNotification(
+            "Document uploaded",
+            `${file.name} was added to ${config.titlePrefix} > ${sectionLabel}.`,
+            "blue"
+          );
+        }
+
+        if (typeof showToast === "function") {
+          showToast(`${file.name} uploaded successfully.`);
+        }
+
+        if (searchInput) searchInput.value = "";
+        hiddenFileInput.value = "";
+        render();
+      };
+
+      reader.onerror = () => {
+        alert(`Could not read "${file.name}". Please try again.`);
+        hiddenFileInput.value = "";
+      };
+
+      reader.readAsDataURL(file);
     });
   }
 

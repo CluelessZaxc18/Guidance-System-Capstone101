@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-   
-    const moreBtn = document.querySelector('.more-btn');
+    // Use querySelectorAll to catch ALL buttons with the .more-btn class
+    const moreBtns = document.querySelectorAll('.more-btn');
 
-    if (moreBtn) {
+    moreBtns.forEach(moreBtn => {
         moreBtn.addEventListener('click', async (e) => {
             e.stopPropagation();
 
-          
             if (document.getElementById('logoutOverlay')) return;
 
-            
             if (!document.getElementById('logoutCSS')) {
                 const link = document.createElement('link');
                 link.id = 'logoutCSS';
@@ -19,12 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-               
                 const response = await fetch('../Overlay/logout-overlay.html');
                 if (!response.ok) throw new Error('Could not load logout-overlay.html');
                 const htmlContent = await response.text();
 
-         
                 const container = document.createElement('div');
                 container.innerHTML = htmlContent;
                 document.body.appendChild(container.firstElementChild);
@@ -33,13 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const closeBtn = document.getElementById('closeLogoutBtn');
                 const cancelBtn = document.getElementById('cancelLogoutBtn');
 
-              
                 const closeOverlay = () => overlay.remove();
 
                 closeBtn.addEventListener('click', closeOverlay);
                 cancelBtn.addEventListener('click', closeOverlay);
 
-               
                 overlay.addEventListener('click', (event) => {
                     if (event.target === overlay) {
                         closeOverlay();
@@ -50,5 +44,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Error loading logout overlay:", error);
             }
         });
-    }
+    });
 });

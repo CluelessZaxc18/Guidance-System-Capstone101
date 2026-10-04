@@ -78,4 +78,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   render();
+
+  function countTotalDocuments() {
+    let total = 0;
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith("gpath_docs_")) continue;
+
+      try {
+        const docs = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(docs)) total += docs.length;
+      } catch (err) {
+      }
+    }
+
+    return total;
+  }
+
+  function renderTotalDocuments() {
+    const el = document.getElementById("totalDocsCount");
+    if (!el) return;
+    el.textContent = countTotalDocuments();
+  }
+
+  renderTotalDocuments();
+
+  //=========================== Total Students count ===========================
+    function countTotalStudents() {
+    try {
+      const stored = JSON.parse(localStorage.getItem("gpath_students"));
+      if (Array.isArray(stored)) return stored.length;
+    } catch (err) {}
+    return 12;
+  }
+
+  function renderTotalStudents() {
+    const el = document.getElementById("totalStudentsCount");
+    if (!el) return;
+    el.textContent = countTotalStudents();
+  }
+
+  renderTotalStudents();
 });

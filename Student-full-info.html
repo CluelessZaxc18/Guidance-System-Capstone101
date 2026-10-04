@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="img/fav-tab.png">
+<title>Student Info Form</title>
+<link rel="stylesheet" href="css/Student-full-info.css">
+</head>
+<body>
+<main class="form-page">
+<header class="form-header">
+  <div>
+    <p class="eyebrow">G-PATH / STUDENTS</p>
+    <h1>Student Information</h1>
+    <p class="subtitle">Fill in the student's information below.</p>
+  </div>
+  <button type="button" class="close-btn" onclick="history.back()">×</button>
+</header>
+
+<form id="studentForm">
+
+<section class="form-section">
+<div class="section-heading"><span>01</span><div><h2>Essential Information</h2><p>Basic student identification details.</p></div></div>
+<div class="form-grid">
+<label>ID Number<input type="text" name="idNumber"></label>
+<label>LRN<input type="text" name="lrn"></label>
+<label>First Name<input type="text" name="firstName"></label>
+<label>Middle Name<input type="text" name="middleName"></label>
+<label>Last Name<input type="text" name="lastName"></label>
+<label>Suffix<input type="text" name="suffix"></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>02</span><div><h2>Course & Year</h2><p>Academic information.</p></div></div>
+<div class="form-grid">
+<label>Course<select name="course">
+<option value="" selected disabled>Select course</option>
+<option>BS Criminology</option><option>BS Information Technology</option>
+<option>BS Hospitality Management</option><option>BS Midwifery Education</option>
+<option>BS Tourism Management</option>
+</select></label>
+<label>Year Level<select name="yearLevel">
+<option value="" selected disabled>Select year level</option>
+<option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option>
+</select></label>
+<label class="full-width">Curriculum<input type="text" name="curriculum"></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>03</span><div><h2>Personal Information</h2><p>Personal details of the student.</p></div></div>
+<div class="form-grid">
+<label>Gender<select name="gender"><option value="" selected disabled>Select gender</option><option>Male</option><option>Female</option></select></label>
+<label>Civil Status<select name="civilStatus"><option value="" selected disabled>Select civil status</option><option>Single</option><option>Married</option><option>Widowed</option><option>Separated</option></select></label>
+<label>Birthday<input type="date" name="birthday"></label>
+<label>Religion<select name="religion" id="religion"><option value="" selected disabled>Select religion</option><option>Catholic</option><option>INC</option><option>Islam</option><option>Other</option></select></label>
+<label class="full-width other-religion" id="otherReligionWrap">Specify Religion<input type="text" name="otherReligion"></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>04</span><div><h2>Educational Background</h2><p>School information and school years.</p></div></div>
+<div class="form-grid">
+<label>Preschool (School Year)<input type="text" name="preschool"></label>
+<label>Elementary (School Year)<input type="text" name="elementary"></label>
+<label>Junior High (School Year)<input type="text" name="juniorHigh"></label>
+<label>Senior High (School Year)<input type="text" name="seniorHigh"></label>
+<label class="full-width">College (School Year)<input type="text" name="college"></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>05</span><div><h2>Contact & Address</h2><p>Current contact information.</p></div></div>
+<div class="form-grid">
+<label>Contact Number<input type="tel" name="contactNumber"></label>
+<label class="full-width">Current Address<textarea name="currentAddress" rows="3"></textarea></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>06</span><div><h2>Social Media Accounts</h2><p>Optional account information.</p></div></div>
+<div class="form-grid">
+<label>Facebook<input type="text" name="facebook"></label>
+<label>Gmail<input type="email" name="gmail"></label>
+</div>
+</section>
+
+<section class="form-section">
+<div class="section-heading"><span>07</span><div><h2>Parents / Guardian</h2><p>Select a person below to enter their details.</p></div></div>
+<div class="person-select">
+
+<button type="button" class="person-toggle" data-target="fatherDetails"><span>Father</span><span class="arrow">›</span></button>
+<div class="person-details" id="fatherDetails"><div class="form-grid">
+<label>Father's Name<input type="text" name="fatherName"></label>
+<label>Occupation<input type="text" name="fatherOccupation"></label>
+<label>Contact Number<input type="tel" name="fatherContact"></label>
+</div></div>
+
+<button type="button" class="person-toggle" data-target="motherDetails"><span>Mother</span><span class="arrow">›</span></button>
+<div class="person-details" id="motherDetails"><div class="form-grid">
+<label>Mother's Maiden Name<input type="text" name="motherMaidenName"></label>
+<label>Occupation<input type="text" name="motherOccupation"></label>
+<label>Contact Number<input type="tel" name="motherContact"></label>
+</div></div>
+
+<button type="button" class="person-toggle" data-target="guardianDetails"><span>Guardian</span><span class="arrow">›</span></button>
+<div class="person-details" id="guardianDetails"><div class="form-grid">
+<label>Guardian's Name<input type="text" name="guardianName"></label>
+<label>Relationship to Student<input type="text" name="guardianRelationship"></label>
+<label>Occupation<input type="text" name="guardianOccupation"></label>
+<label>Contact Number<input type="tel" name="guardianContact"></label>
+</div></div>
+
+</div>
+</section>
+
+<div class="form-actions">
+<button type="button" class="cancel-btn" onclick="history.back()">Cancel</button>
+<button type="submit" class="save-btn">Save Student</button>
+</div>
+</form>
+<div class="toast" id="toast">Student information saved.</div>
+</main>
+<script src="js/Student-full-info.js"></script>
+</body>
+</html>

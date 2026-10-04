@@ -210,3 +210,19 @@ body {
         height: 35px;
     }
 }
+
+.quick-form-link {
+    position: absolute;
+    bottom: 18px;
+    left: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2b65ec;
+    text-decoration: none;
+    transition: opacity 0.2s, text-decoration 0.2s;
+}
+
+.quick-form-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}

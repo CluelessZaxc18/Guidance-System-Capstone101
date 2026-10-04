@@ -30,7 +30,6 @@
   opacity: 0;
   transition: transform .38s cubic-bezier(.22, .9, .32, 1.15), opacity .3s ease;
   max-height: 91vh;
-  overflow-y: auto;
 }
 
 .as-overlay.show .as-modal {
