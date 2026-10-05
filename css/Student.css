@@ -318,6 +318,23 @@ a {
   white-space: nowrap;
 }
 
+.student-sub-modal-btn {
+  background: #119cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
 .add-student-main-btn:hover {
   opacity: 0.7;
 }

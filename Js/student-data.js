@@ -1,5 +1,15 @@
 const STUDENTS_STORAGE_KEY = "gpath_students";
 
+function getFirstAndLastName(fullName, firstName, lastName) {
+  if (firstName && lastName) return `${firstName} ${lastName}`.trim();
+  if (!fullName) return "";
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length > 2) {
+    return `${parts[0]} ${parts[parts.length - 1]}`;
+  }
+  return fullName;
+}
+
 const DEFAULT_STUDENT_DATA = [
   { name: "Ana Cruz", id: "110187", year: "3rd Year", program: "BS Information Technology", section: "Room 5", gender: "Female", birthday: "October 14, 2005", updated: "2 hours ago", standing: "Regular", status: "Active" },
   { name: "Miguel Santos", id: "110638", year: "2nd Year", program: "BS Criminology", section: "Room 2", gender: "Male", birthday: "March 22, 2006", updated: "May 18, 2024", standing: "Regular", status: "Active" },
@@ -12,17 +22,26 @@ const DEFAULT_STUDENT_DATA = [
   { name: "Camille Navarro", id: "111419", year: "1st Year", program: "BS Tourism Management", section: "Room 5", gender: "Female", birthday: "September 08, 2007", updated: "June 8, 2026", standing: "Transferee", status: "Monitoring" },
   { name: "Rafael Mendoza", id: "111308", year: "4th Year", program: "BS Hospitality Management", section: "Room 3", gender: "Female", birthday: "May 17, 2004", updated: "June 5, 2026", standing: "Regular", status: "Active" },
   { name: "Nicole Reyes", id: "111297", year: "3rd Year", program: "BS Midwifery Education", section: "7", gender: "Female", birthday: "December 21, 2005", updated: "June 3, 2026", standing: "Regular", status: "Follow-up" },
-  { name: "Ethan Flores", id: "111186", year: "2nd Year", program: "BS Tourism Management", section: "9", gender: "Male", birthday: "June 14, 2006", updated: "May 30, 2026", standing: "Irregular", status: "Active" }
+  { name: "Ethan Flores", id: "111186", year: "2nd Year", program: "BS Tourism Management", section: "9", gender: "Male", birthday: "June 14, 2006", updated: "May 30, 2026", standing: "Irregular", status: "Active" },
 ];
 
 function loadStudentData() {
   try {
     const stored = JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY));
-    if (Array.isArray(stored)) return stored;
-  } catch (err) {
-  }
-  localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(DEFAULT_STUDENT_DATA));
-  return DEFAULT_STUDENT_DATA;
+    if (Array.isArray(stored)) {
+      return stored.map(s => ({
+        ...s,
+        name: getFirstAndLastName(s.name, s.firstName, s.lastName)
+      }));
+    }
+  } catch (err) {}
+
+  const formattedDefaults = DEFAULT_STUDENT_DATA.map(s => ({
+    ...s,
+    name: getFirstAndLastName(s.name)
+  }));
+  localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(formattedDefaults));
+  return formattedDefaults;
 }
 
 function saveStudentData() {
@@ -111,6 +130,8 @@ function filterStudents() {
 }
 
 function addStudent(newStudent) {
+  newStudent.name = getFirstAndLastName(newStudent.name, newStudent.firstName, newStudent.lastName);
+  
   const alreadyExists = studentData.some(student => student.id === newStudent.id);
 
   if (alreadyExists) {
@@ -169,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector(".student-search-input")?.addEventListener("input", filterStudents);
   document.querySelectorAll(".filter-select").forEach(select => {
+    select.change?.(filterStudents);
     select.addEventListener("change", filterStudents);
   });
 
@@ -182,7 +204,20 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast(`${pendingStudent.name || "Student"} added successfully.`);
       }
     } catch (err) {
-      console.error("Could not read the student added from Dashboard.html:", err);
+      console.error("Could not read student data:", err);
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const autoOpenId = sessionStorage.getItem("autoOpenStudentId");
+  if (autoOpenId) {
+    sessionStorage.removeItem("autoOpenStudentId");
+    const targetStudent = studentData.find(s => String(s.id) === String(autoOpenId));
+    if (targetStudent && typeof openStudentProfile === "function") {
+      setTimeout(() => {
+        openStudentProfile(targetStudent);
+      }, 100);
     }
   }
 });

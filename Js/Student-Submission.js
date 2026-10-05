@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const existingSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
   const defaultApprovedStudents = [
     {
       timestamp: 1720000001000,
       status: "Approved",
-      name: "Ana Cruz",
+      firstName: "Ana",
+      middleName: "Mae",
+      lastName: "Cruz",
+      name: "Ana Mae Cruz",
       id: "110187",
       lrn: "135402090112",
       program: "BS Information Technology",
@@ -31,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000002000,
       status: "Approved",
+      firstName: "Miguel",
+      middleName: "",
+      lastName: "Santos",
       name: "Miguel Santos",
       id: "110638",
       lrn: "135405040188",
@@ -58,6 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000003000,
       status: "Approved",
+      firstName: "Maria",
+      middleName: "",
+      lastName: "Lim",
       name: "Maria Lim",
       id: "110744",
       lrn: "135401120395",
@@ -85,6 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000004000,
       status: "Approved",
+      firstName: "Joshua",
+      middleName: "",
+      lastName: "Reyes",
       name: "Joshua Reyes",
       id: "110859",
       lrn: "135403080214",
@@ -112,6 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000005000,
       status: "Approved",
+      firstName: "Sofia",
+      middleName: "",
+      lastName: "Mendoza",
       name: "Sofia Mendoza",
       id: "110963",
       lrn: "135401030567",
@@ -139,6 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000006000,
       status: "Approved",
+      firstName: "Liam",
+      middleName: "",
+      lastName: "Torres",
       name: "Liam Torres",
       id: "111074",
       lrn: "135402110482",
@@ -166,6 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000007000,
       status: "Approved",
+      firstName: "Aris",
+      middleName: "",
+      lastName: "Villanueva",
       name: "Aris Villanueva",
       id: "110198",
       lrn: "135405020331",
@@ -193,6 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000008000,
       status: "Approved",
+      firstName: "Daniel",
+      middleName: "",
+      lastName: "Garcia",
       name: "Daniel Garcia",
       id: "111530",
       lrn: "135403060719",
@@ -220,6 +243,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000009000,
       status: "Approved",
+      firstName: "Camille",
+      middleName: "",
+      lastName: "Navarro",
       name: "Camille Navarro",
       id: "111419",
       lrn: "135401090240",
@@ -247,6 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000010000,
       status: "Approved",
+      firstName: "Rafael",
+      middleName: "",
+      lastName: "Mendoza",
       name: "Rafael Mendoza",
       id: "111308",
       lrn: "135401020158",
@@ -274,6 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000011000,
       status: "Approved",
+      firstName: "Nicole",
+      middleName: "",
+      lastName: "Reyes",
       name: "Nicole Reyes",
       id: "111297",
       lrn: "135404120883",
@@ -301,6 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       timestamp: 1720000012000,
       status: "Approved",
+      firstName: "Ethan",
+      middleName: "",
+      lastName: "Flores",
       name: "Ethan Flores",
       id: "111186",
       lrn: "135401080926",
@@ -327,25 +362,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  if (existingSubmissions.length === 0) {
-    localStorage.setItem("gpath_submissions", JSON.stringify(defaultApprovedStudents));
+  let submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+  let submissionsChanged = false;
+  defaultApprovedStudents.forEach(defaultItem => {
+    const exists = submissions.some(s => String(s.id) === String(defaultItem.id));
+    if (!exists) {
+      submissions.push(defaultItem);
+      submissionsChanged = true;
+    }
+  });
+  if (submissionsChanged || submissions.length === 0) {
+    localStorage.setItem("gpath_submissions", JSON.stringify(submissions));
   }
 
-  const existingStudents = JSON.parse(localStorage.getItem("gpath_students"));
-  if (!Array.isArray(existingStudents) || existingStudents.length === 0) {
-    const defaultStudentsTable = defaultApprovedStudents.map(s => ({
-      name: s.name,
-      id: s.id,
-      year: s.year,
-      program: s.program,
-      section: "Room 1",
-      gender: s.gender || "N/A",
-      birthday: s.birthday || "N/A",
-      updated: "Just now",
-      standing: "Regular",
-      status: "Active"
-    }));
-    localStorage.setItem("gpath_students", JSON.stringify(defaultStudentsTable));
+  let existingStudents = JSON.parse(localStorage.getItem("gpath_students")) || [];
+  let studentsChanged = false;
+  defaultApprovedStudents.forEach(defaultItem => {
+    const exists = existingStudents.some(st => String(st.id) === String(defaultItem.id));
+    if (!exists) {
+      existingStudents.push({
+        name: `${defaultItem.firstName} ${defaultItem.lastName}`,
+        id: defaultItem.id,
+        year: defaultItem.year,
+        program: defaultItem.program,
+        section: "Room 1",
+        gender: defaultItem.gender || "N/A",
+        birthday: defaultItem.birthday || "N/A",
+        updated: "Just now",
+        standing: "Regular",
+        status: "Active"
+      });
+      studentsChanged = true;
+    }
+  });
+  if (studentsChanged || existingStudents.length === 0) {
+    localStorage.setItem("gpath_students", JSON.stringify(existingStudents));
   }
 
   const tabBtns = document.querySelectorAll(".sub-tab-btn");
@@ -355,8 +406,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const approvedList = document.getElementById("approvedList");
   const pendingBadge = document.getElementById("pendingBadge");
   const approvedBadge = document.getElementById("approvedBadge");
-
-  let currentApprovingTimestamp = null;
 
   tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -375,10 +424,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function loadSubmissions() {
-    const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+    const currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
     
-    const pending = submissions.filter(s => s.status === "Pending");
-    const approved = submissions.filter(s => s.status === "Approved");
+    const pending = currentSubmissions.filter(s => s.status === "Pending");
+    const approved = currentSubmissions.filter(s => s.status === "Approved");
 
     pendingBadge.textContent = pending.length;
     approvedBadge.textContent = approved.length;
@@ -386,139 +435,109 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pending.length === 0) {
       pendingList.innerHTML = `<p class="empty-state">No pending student submissions.</p>`;
     } else {
-      pendingList.innerHTML = pending.map(item => `
-        <div class="sub-card">
-          <div class="sub-card-info">
-            <h3>${item.name || "Unnamed Student"}</h3>
-            <p><strong>ID:</strong> ${item.id || "N/A"} | <strong>Course:</strong> ${item.program || "N/A"}</p>
-            <p><strong>Email:</strong> ${item.gmail || "N/A"} | <strong>Contact:</strong> ${item.contactNumber || "N/A"}</p>
+      pendingList.innerHTML = pending.map(item => {
+        const displayName = item.firstName && item.lastName 
+          ? `${item.firstName} ${item.middleName ? item.middleName + ' ' : ''}${item.lastName}` 
+          : (item.name || "Unnamed Student");
+
+        return `
+          <div class="sub-card">
+            <div class="sub-card-info">
+              <h3>${displayName}</h3>
+              <p><strong>ID:</strong> ${item.id || "N/A"} | <strong>Course:</strong> ${item.program || "N/A"}</p>
+              <p><strong>Email:</strong> ${item.gmail || "N/A"} | <strong>Contact:</strong> ${item.contactNumber || "N/A"}</p>
+            </div>
+            <div class="sub-card-actions">
+              <button class="btn-view" onclick="viewSubmissionDetails('${item.timestamp}')">View Details</button>
+              <button class="btn-approve" onclick="approveSubmission('${item.timestamp}')">Approve</button>
+              <button class="btn-decline" onclick="handleAction('${item.timestamp}', 'Declined')">Decline</button>
+            </div>
           </div>
-          <div class="sub-card-actions">
-            <button class="btn-view" onclick="viewSubmissionDetails('${item.timestamp}')">View Details</button>
-            <button class="btn-approve" onclick="openApprovalModal('${item.timestamp}')">Approve</button>
-            <button class="btn-decline" onclick="handleAction('${item.timestamp}', 'Declined')">Decline</button>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
 
     if (approved.length === 0) {
       approvedList.innerHTML = `<p class="empty-state">No approved student records yet.</p>`;
     } else {
-      approvedList.innerHTML = approved.map(item => `
-        <div class="sub-card approved-card">
-          <div class="sub-card-info">
-            <h3>${item.name}</h3>
-            <p><strong>ID:</strong> ${item.id} | <strong>Course:</strong> ${item.program}</p>
-            <span class="approved-tag">Approved & Archived</span>
+      approvedList.innerHTML = approved.map(item => {
+        const displayName = item.firstName && item.lastName 
+          ? `${item.firstName} ${item.middleName ? item.middleName + ' ' : ''}${item.lastName}` 
+          : (item.name || "Unnamed Student");
+
+        return `
+          <div class="sub-card approved-card">
+            <div class="sub-card-info">
+              <h3>${displayName}</h3>
+              <p><strong>ID:</strong> ${item.id} | <strong>Course:</strong> ${item.program}</p>
+              <span class="approved-tag">Approved & Archived</span>
+            </div>
+            <div class="sub-card-actions">
+              <button class="btn-view" onclick="viewSubmissionDetails('${item.timestamp}')">View Details</button>
+            </div>
           </div>
-          <div class="sub-card-actions">
-            <button class="btn-view" onclick="viewSubmissionDetails('${item.timestamp}')">View Details</button>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
   }
 
-  window.openApprovalModal = function(timestamp) {
-    const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-    const item = submissions.find(s => String(s.timestamp) === String(timestamp));
-    if (!item) return;
+  window.approveSubmission = function(timestamp) {
+    let currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+    const index = currentSubmissions.findIndex(s => String(s.timestamp) === String(timestamp));
+    
+    if (index === -1) return;
 
-    currentApprovingTimestamp = timestamp;
+    currentSubmissions[index].status = "Approved";
+    localStorage.setItem("gpath_submissions", JSON.stringify(currentSubmissions));
 
-    if (typeof window.openAddStudentModal === "function") {
-      window.openAddStudentModal();
+    let students = JSON.parse(localStorage.getItem("gpath_students"));
+    if (!Array.isArray(students)) students = [];
+
+    const item = currentSubmissions[index];
+    const existingIndex = students.findIndex(st => String(st.id) === String(item.id));
+    
+    // Student Table only gets First and Last name
+    const fName = item.firstName || item.name?.split(" ")[0] || "";
+    const lName = item.lastName || item.name?.split(" ").pop() || "";
+    const tableDisplayName = `${fName} ${lName}`.trim();
+
+    const studentRecord = {
+      name: tableDisplayName,
+      id: item.id,
+      year: item.year || "3rd Year",
+      program: item.program || "BS Information Technology",
+      section: "Room 1",
+      gender: item.gender || "N/A",
+      birthday: item.birthday || "N/A",
+      updated: "Just now",
+      standing: item.standing || "Regular",
+      status: "Active"
+    };
+
+    if (existingIndex !== -1) {
+      students[existingIndex] = studentRecord;
+    } else {
+      students.unshift(studentRecord);
     }
 
-    setTimeout(() => {
-      const nameInput = document.getElementById("asFullName");
-      const idInput = document.getElementById("asStudentId");
-      const contactInput = document.getElementById("asContact");
-      const yearSelect = document.getElementById("asYearLevel");
-      const programSelect = document.getElementById("asProgram");
-      const genderSelect = document.getElementById("asGender");
-      const dobInput = document.getElementById("asDob");
+    localStorage.setItem("gpath_students", JSON.stringify(students));
 
-      if (nameInput && item.name) nameInput.value = item.name;
-      if (idInput && item.id) idInput.value = item.id;
-      if (contactInput && item.contactNumber) contactInput.value = item.contactNumber;
-      if (yearSelect && item.year) yearSelect.value = item.year;
-      if (programSelect && item.program) programSelect.value = item.program;
-      if (genderSelect && item.gender) genderSelect.value = item.gender;
-      if (dobInput && item.birthday) dobInput.value = item.birthday;
-    }, 150);
+    if (typeof window.addSystemNotification === "function") {
+      window.addSystemNotification(
+        "Student approved",
+        `${tableDisplayName} (${item.id}) was approved from a submission.`,
+        "green"
+      );
+    }
+
+    sessionStorage.setItem("autoOpenStudentId", item.id);
+    window.location.href = "Student.html";
   };
 
-  document.addEventListener("submit", (e) => {
-    if (e.target && e.target.id === "addStudentForm" && currentApprovingTimestamp) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      let submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-      const index = submissions.findIndex(s => String(s.timestamp) === String(currentApprovingTimestamp));
-      
-      if (index !== -1) {
-        submissions[index].status = "Approved";
-        submissions[index].name = document.getElementById("asFullName")?.value || submissions[index].name;
-        submissions[index].id = document.getElementById("asStudentId")?.value || submissions[index].id;
-        submissions[index].program = document.getElementById("asProgram")?.value || submissions[index].program;
-        submissions[index].year = document.getElementById("asYearLevel")?.value || submissions[index].year;
-        submissions[index].gender = document.getElementById("asGender")?.value || submissions[index].gender;
-        submissions[index].birthday = document.getElementById("asDob")?.value || submissions[index].birthday;
-        submissions[index].standing = document.getElementById("asStanding")?.value || "Regular";
-
-        localStorage.setItem("gpath_submissions", JSON.stringify(submissions));
-
-        let students = JSON.parse(localStorage.getItem("gpath_students"));
-        if (!Array.isArray(students)) students = [];
-
-        const existingIndex = students.findIndex(st => String(st.id) === String(submissions[index].id));
-        
-        const studentRecord = {
-          name: submissions[index].name,
-          id: submissions[index].id,
-          year: submissions[index].year,
-          program: submissions[index].program,
-          section: "Room 1",
-          gender: submissions[index].gender || "N/A",
-          birthday: submissions[index].birthday || "N/A",
-          updated: "Just now",
-          standing: submissions[index].standing,
-          status: "Active"
-        };
-
-        const isUpdate = existingIndex !== -1;
-
-        if (isUpdate) {
-          students[existingIndex] = studentRecord;
-        } else {
-          students.unshift(studentRecord);
-        }
-
-        localStorage.setItem("gpath_students", JSON.stringify(students));
-
-        if (typeof window.addSystemNotification === "function") {
-          window.addSystemNotification(
-            isUpdate ? "Student record updated" : "Student added",
-            `${studentRecord.name} (${studentRecord.id}) was ${isUpdate ? "updated via" : "approved from"} a student submission.`,
-            "green"
-          );
-        }
-      }
-
-      currentApprovingTimestamp = null;
-      if (typeof window.closeAddStudentModal === "function") {
-        window.closeAddStudentModal();
-      }
-      e.target.reset();
-      loadSubmissions();
-    }
-  }, true);
-
+  // Separate First, Middle, and Last name cleanly in the details modal popup
   window.viewSubmissionDetails = function(timestamp) {
-    const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-    const item = submissions.find(s => String(s.timestamp) === String(timestamp));
+    const currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+    const item = currentSubmissions.find(s => String(s.timestamp) === String(timestamp));
     if (!item) return;
 
     document.getElementById("submissionModal")?.remove();
@@ -532,7 +551,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="sub-modal-body">
             <div class="sub-info-grid">
-              <div><label>Full Name</label><strong>${item.name || "N/A"}</strong></div>
+              <div><label>First Name</label><strong>${item.firstName || "N/A"}</strong></div>
+              <div><label>Middle Name</label><strong>${item.middleName || "N/A"}</strong></div>
+              <div><label>Last Name</label><strong>${item.lastName || "N/A"}</strong></div>
               <div><label>Student ID</label><strong>${item.id || "N/A"}</strong></div>
               <div><label>LRN</label><strong>${item.lrn || "N/A"}</strong></div>
               <div><label>Course / Program</label><strong>${item.program || "N/A"}</strong></div>
@@ -559,14 +580,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.handleAction = function(timestamp, action) {
-    let submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-    const index = submissions.findIndex(s => String(s.timestamp) === String(timestamp));
+    let currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+    const index = currentSubmissions.findIndex(s => String(s.timestamp) === String(timestamp));
     
     if (index === -1) return;
 
     if (action === "Declined") {
-      submissions.splice(index, 1);
-      localStorage.setItem("gpath_submissions", JSON.stringify(submissions));
+      currentSubmissions.splice(index, 1);
+      localStorage.setItem("gpath_submissions", JSON.stringify(currentSubmissions));
       loadSubmissions();
     }
   };

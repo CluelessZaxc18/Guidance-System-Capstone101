@@ -1,4 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const docSections = [
+    { type: "narrative", section: "testing" },
+    { type: "narrative", section: "referrals" },
+    { type: "narrative", section: "counseling" },
+    { type: "forms", section: "referrals" },
+    { type: "forms", section: "informed-consent" },
+    { type: "forms", section: "referral-feedback" },
+    { type: "forms", section: "case-notes" }
+  ];
+
+  docSections.forEach(item => {
+    const key = `gpath_docs_${item.type}_${item.section}`;
+    if (localStorage.getItem(key) === null) {
+      const base = item.section.replace(/-/g, "_");
+      const defaultDocs = [
+        { id: 1, name: `${base}_assessment_summary.pdf`, type: "pdf", date: "Sept 26, 2026" },
+        { id: 2, name: `${base}_evaluation_notes.docx`, type: "docx", date: "Sept 24, 2026" },
+      ];
+      localStorage.setItem(key, JSON.stringify(defaultDocs));
+    }
+  });
+  // -------------------------------------------------------------------------
+
   const list = document.getElementById("activityList");
   if (!list) return;
 
@@ -105,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTotalDocuments();
 
   //=========================== Total Students count ===========================
-    function countTotalStudents() {
+  function countTotalStudents() {
     try {
       const stored = JSON.parse(localStorage.getItem("gpath_students"));
       if (Array.isArray(stored)) return stored.length;
@@ -124,11 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
   //=========================== Total Info Submission count ===========================
   function totalSubmissionCount() {
     try {
-      const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-      const pending = submissions.filter(s => s.status === "Pending");
-      return pending.length;
+      const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));
+      if (Array.isArray(submissions)) {
+        return submissions.filter(s => s.status === "Pending").length;
+      }
     } catch (err) {}
-    return 0;
+    return 0; 
   }
 
   function renderTotalSubmissions() {
@@ -142,11 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
   //=========================== Total Approved Submissions count ===========================
   function countTotalApproved() {
     try {
-      const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-      const approved = submissions.filter(s => s.status === "Approved");
-      return approved.length;
+      const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));
+      if (Array.isArray(submissions)) {
+        return submissions.filter(s => s.status === "Approved").length;
+      }
     } catch (err) {}
-    return 0;
+    return 12;
   }
 
   function renderTotalApproved() {
