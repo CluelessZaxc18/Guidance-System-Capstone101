@@ -1,13 +1,3 @@
-// ---- Core notification storage ----
-// Defined at the top level (NOT inside DOMContentLoaded) so it's available
-// the instant this script file runs, regardless of where its <script> tag
-// sits relative to other files. This matters because other scripts (e.g.
-// student-data.js picking up a student added via Dashboard's "Add Student"
-// quick action) call window.addSystemNotification(...) from inside their
-// OWN DOMContentLoaded handler — and if that handler happens to be
-// registered before this file's, the old version (which only defined this
-// function inside its own DOMContentLoaded callback) hadn't run yet,
-// silently dropping the notification.
 function gpathReadNotifs() {
     try {
         return JSON.parse(localStorage.getItem('gpath_notifications')) || [];
@@ -43,16 +33,13 @@ window.addSystemNotification = function (title, description, type = 'green') {
     if (notifs.length > 15) notifs.length = 15;
     gpathWriteNotifs(notifs);
 
-    gpathSyncBellDot(); // safe even before DOMContentLoaded / without a bell on the page
+    gpathSyncBellDot();
 };
 
 if (!localStorage.getItem('gpath_notifications')) {
     gpathWriteNotifs([]);
 }
 
-// ---- Bell UI ----
-// This part legitimately needs the DOM ready (it reads #notifBell and
-// injects styles/markup), so it stays inside DOMContentLoaded.
 document.addEventListener('DOMContentLoaded', () => {
     const notifBell = document.getElementById('notifBell');
     if (!notifBell) return;

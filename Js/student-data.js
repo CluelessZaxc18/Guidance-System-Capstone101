@@ -1,8 +1,5 @@
 const STUDENTS_STORAGE_KEY = "gpath_students";
 
-// Seed data used only the very first time the app runs (nothing in
-// localStorage yet). After that, the real source of truth is whatever's
-// saved under STUDENTS_STORAGE_KEY.
 const DEFAULT_STUDENT_DATA = [
   { name: "Ana Cruz", id: "110187", year: "3rd Year", program: "BS Information Technology", section: "Room 5", gender: "Female", birthday: "October 14, 2005", updated: "2 hours ago", standing: "Regular", status: "Active" },
   { name: "Miguel Santos", id: "110638", year: "2nd Year", program: "BS Criminology", section: "Room 2", gender: "Male", birthday: "March 22, 2006", updated: "May 18, 2024", standing: "Regular", status: "Active" },
@@ -23,8 +20,8 @@ function loadStudentData() {
     const stored = JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY));
     if (Array.isArray(stored)) return stored;
   } catch (err) {
-    // Corrupted/invalid JSON — fall back to the seed defaults below.
   }
+  localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(DEFAULT_STUDENT_DATA));
   return DEFAULT_STUDENT_DATA;
 }
 

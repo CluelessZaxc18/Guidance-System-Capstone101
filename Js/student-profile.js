@@ -2,9 +2,6 @@ function studentInitials(name) {
   return name.split(" ").map(part => part[0]).join("").slice(0, 2).toUpperCase();
 }
 
-// Maps a student's gender to their avatar picture. Returns null for any
-// gender not covered here (blank, "Other", a typo, etc.), so the caller
-// can fall back to the plain initials avatar instead of a broken image.
 function studentAvatarImage(gender) {
   const normalized = String(gender || "").trim().toLowerCase();
   if (normalized === "male") return "img/male.png";
@@ -146,7 +143,6 @@ function openStudentProfile(student) {
 }
 
 function openDeleteConfirm(student) {
-  // Defensive: remove any leftover confirm dialog before adding a new one
   document.getElementById("confirmDeleteOverlay")?.remove();
 
   document.body.insertAdjacentHTML("beforeend", confirmDeleteMarkup(student));

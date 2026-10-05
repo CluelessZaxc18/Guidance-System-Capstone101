@@ -114,17 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let objectUrlToRevoke = null;
 
     if (doc.data) {
-      // Real stored file content — a data: URL can be used directly as an
-      // <a download> target, so this serves back the exact original bytes.
       downloadLink.href = doc.data;
       downloadLink.download = doc.name;
     } else {
-      // Older entries (the 2 demo seed docs for a freshly-opened category,
-      // or anything uploaded before file content was captured) never had
-      // real content stored. Download a clearly-labeled .txt placeholder
-      // instead of pretending to serve the original — downloading it with
-      // the original name/extension would look like a "corrupted" docx or
-      // pdf when it's actually opened, which is misleading.
       const fileContent =
         `G-PATH Document Record\n` +
         `File Name: ${doc.name}\n` +
@@ -224,12 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (addFileBtn && hiddenFileInput) {
     addFileBtn.addEventListener("click", () => hiddenFileInput.click());
 
-    // localStorage's total quota (shared across every category/section,
-    // not per-file) is typically only ~5-10MB across the whole site. Keep
-    // individual uploads well under that so one large file can't eat the
-    // entire budget — and so we can reject it up front instead of reading
-    // the whole thing first and failing on save.
-    const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4MB
+    const MAX_FILE_BYTES = 4 * 1024 * 1024;
 
     hiddenFileInput.addEventListener("change", e => {
       const file = e.target.files[0];
@@ -261,9 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
           name: file.name,
           type: fileType,
           date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-          // The actual file content, as a "data:<mime>;base64,...." string.
-          // This is what makes Download serve back the real original file
-          // instead of a fake placeholder.
           data: reader.result,
         });
 

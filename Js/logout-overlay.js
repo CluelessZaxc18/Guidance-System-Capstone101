@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Use querySelectorAll to catch ALL buttons with the .more-btn class
+
     const moreBtns = document.querySelectorAll('.more-btn');
 
     moreBtns.forEach(moreBtn => {

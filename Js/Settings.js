@@ -150,16 +150,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetBtn = document.getElementById("resetDataBtn");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to reset all student data back to default? This will overwrite any custom changes.")) {
-       
+      if (confirm("Are you sure you want to reset the system and restore default records?")) {
+
         localStorage.removeItem("gpath_students");
         localStorage.removeItem("gpath_submissions");
-        
-        
+
         if (typeof showToast === "function") {
           showToast("System data reset successfully.");
         }
-        
+
         setTimeout(() => {
           window.location.reload();
         }, 1000);
