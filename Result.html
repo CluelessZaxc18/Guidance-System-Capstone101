@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/fav-tab.png">
+  <title>G-PATH Dashboard</title>
+  <link rel="stylesheet" href="css/Result.css">
+  <link rel="stylesheet" href="css/add-olsat.css">
+  <link rel="stylesheet" href="css/send-email.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Counseling Office</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+      <a class="nav-item" href="Dashboard.html" data-page="Dashboard">
+        <span class="nav-icon">ⅅ</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="nav-item" href="Student.html" data-page="Students">
+        <span class="nav-icon">✦</span>
+        <span>Students</span>
+      </a>
+
+      <div class="submenu" id="studentMenu">
+        <a href="Student.html" data-page="Students">Students</a>
+        <a href="Student.html" data-page="Students">Context 2</a>
+      </div>
+      
+
+      <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
+        <span class="nav-icon">☷</span>
+        <span>Document Management</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="submenu" id="studentMenu2">
+
+        <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
+        <span class="nav-icon">❐</span>
+        <span>Narrative Report for</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu3">
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Testing</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Referrals</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Counseling</a>
+          </div>
+
+        <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
+        <span class="nav-icon">℉</span>
+        <span>Forms for </span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu4">
+              <a href="DM-Forms.html" data-page="Forms">Referrals</a>
+              <a href="DM-Forms.html" data-page="Forms">Informed Consent</a>
+              <a href="DM-Forms.html" data-page="Forms">Referral Feedback</a>
+              <a href="DM-Forms.html" data-page="Forms">Case Notes</a>
+          </div>
+
+      </div>
+
+      <a class="nav-item active" href="Result.html" data-page="OLSAT Result">
+        <span class="nav-icon">⚛</span>
+        <span>OLSAT Result</span>
+      </a>
+      
+      <p class="nav-label lower">SYSTEM</p>
+
+      <a class="nav-item" href="Settings.html" data-page="Settings">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-profile">
+      <div class="avatar">GC</div>
+      <div class="profile-info">
+        <strong>Guidance Counselor</strong>
+        <span>Admin</span>
+      </div>
+      <button class="more-btn" title="SignOut">Log-out</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">Result</span></p>
+        <h2 id="pageTitle">OLSAT Result Module</h2>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="notifBell" title="Notifications">
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small">GC</div>
+          <div>
+            <strong>Guidance Counselor</strong>
+            <span>Admin</span>
+          </div>
+        </div>
+        <button class="more-btn" title="Log out">
+          <img src="img/log-out.png" alt="Log out" class="icon-out">
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="student-management-section">
+        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div class="search-box-wrap" style="flex: 1; max-width: 350px;">
+            <input type="text" placeholder="Search results by student name or ID..." class="student-search-input" id="olsatSearchInput" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;">
+          </div>
+          <button class="add-student-main-btn" id="addOlsatBtn" onclick="openAddOlsatModal()" style="background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600;">
+                <span>+</span> Add OLSAT Result
+          </button>
+        </div>
+
+        <div class="panel student-table-panel">
+          <table class="student-data-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align: left; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px;">
+                <th style="padding: 12px;">Student Name</th>
+                <th style="padding: 12px;">Student ID</th>
+                <th style="padding: 12px;">Verbal Score</th>
+                <th style="padding: 12px;">Non-Verbal Score</th>
+                <th style="padding: 12px;">Total SAI</th>
+                <th style="padding: 12px;">Test Date</th>
+                <th style="padding: 12px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="olsatTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <div id="addStudentMount"></div>
+
+  <script src="Js/side-nav.js"></script>
+  <script src="Js/notif.js"></script>
+  <script src="Js/logout-overlay.js"></script>
+  <script src="Js/add-olsat.js"></script>
+  <script src="Js/result.js"></script>
+  <script src="Js/send-email.js"></script>
+</body>
+</html>

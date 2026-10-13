@@ -7,10 +7,83 @@
     <title>G-PATH</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/Sign-up.css">
-    <script src="Js/script.js" defer></script>
-    <script src="Js/Sign-up.js"></script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="Js/script.js" defer></script>
+    <script src="Js/Sign-up.js"></script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Ensure default admin account is always seeded in localStorage
+    let accounts = JSON.parse(localStorage.getItem('gpath_staff_accounts')) || [];
+    if (!accounts.some(acc => acc.email === "GuidanceCounselor@gmail.com")) {
+      accounts.push({
+        name: "Guidance Counselor",
+        email: "GuidanceCounselor@gmail.com",
+        password: "135735",
+        pin: "135735",
+        position: "Guidance Counselor"
+      });
+      localStorage.setItem('gpath_staff_accounts', JSON.stringify(accounts));
+    }
+
+    const signinBtn = document.querySelector('.btn-signin');
+    const emailInput = document.getElementById('Email');
+    const passwordInput = document.getElementById('Password');
+    const cardBody = document.querySelector('.card-body form');
+
+    if (signinBtn && emailInput && passwordInput) {
+      signinBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Remove any existing error banner if present
+        document.getElementById('loginErrorBanner')?.remove();
+
+        const enteredEmail = emailInput.value.trim().toLowerCase();
+        const enteredCred = passwordInput.value.trim();
+
+        const storedAccounts = JSON.parse(localStorage.getItem('gpath_staff_accounts')) || [];
+        
+        // Match email with password OR the generated 6-digit PIN
+        const matchedAccount = storedAccounts.find(acc => 
+          acc.email.toLowerCase() === enteredEmail && 
+          (acc.password === enteredCred || acc.pin === enteredCred)
+        );
+
+        if (matchedAccount) {
+          localStorage.setItem('gpath_active_user', JSON.stringify(matchedAccount));
+          window.location.href = signinBtn.getAttribute('href') || 'extra/Loading.html';
+        } else {
+          // Create custom styled inline error banner instead of alert()
+          const errorBanner = document.createElement('div');
+          errorBanner.id = 'loginErrorBanner';
+          errorBanner.style.cssText = `
+            background-color: #fdf2f2;
+            border: 1px solid #f8d7da;
+            color: #b91c1c;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.2s ease-in-out;
+          `;
+          errorBanner.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1rem;"></i>
+            <span>Invalid email or password/PIN combination. Please check your credentials or sign up.</span>
+          `;
+          
+          // Insert the error banner right at the top of the form
+          cardBody.prepend(errorBanner);
+        }
+      });
+    }
+  });
+</script>
+
 </head>
 <body>
     <div class="background-overlay">
@@ -34,16 +107,16 @@
                         <label for="Email">Email address</label>
                         <div class="input-field-wrapper">
                             <i class="fa-regular fa-user input-icon"></i>
-                            <input type="email" id="Email" name="Email" required>
+                            <input type="email" id="Email" name="Email" value="GuidanceCounselor@gmail.com" required>
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label for="Password">Password</label>
+                        <label for="Password">Password or PIN</label>
                         <div class="input-field-wrapper">
                         <i class="fa-solid fa-lock input-icon"></i>
                  
-                        <input type="password" id="Password" name="Password" required>
+                        <input type="password" id="Password" name="Password" value="135735" required>
                     
                         <i class="fa-regular fa-eye-slash toggle-password " id="togglePassword"></i>
                         </div>
@@ -61,5 +134,6 @@
             <a href="Student-full-info.html" class="quick-form-link" title="Open Student Info Form">Student Form</a>
         </div>
     </div>
+
 </body>
 </html>

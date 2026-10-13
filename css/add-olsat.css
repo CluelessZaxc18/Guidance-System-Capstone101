@@ -1,0 +1,127 @@
+.olsat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 32, 51, 0.5);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.olsat-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(23, 32, 51, 0.15);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.olsat-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e7ebf2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.olsat-modal-header h3 {
+  font-size: 18px;
+  color: #172033;
+}
+
+.olsat-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #788398;
+  cursor: pointer;
+}
+
+.olsat-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.olsat-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.olsat-form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #788398;
+  letter-spacing: 0.5px;
+}
+
+.olsat-form-group input,
+.olsat-form-group select {
+  padding: 10px 14px;
+  border: 1px solid #e7ebf2;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #172033;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #ffffff;
+}
+
+.olsat-form-group input:focus,
+.olsat-form-group select:focus {
+  border-color: #19b9a7;
+}
+
+.olsat-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.olsat-modal-footer {
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e7ebf2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.olsat-btn-cancel {
+  background: #ffffff;
+  border: 1px solid #e7ebf2;
+  color: #172033;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.olsat-btn-submit {
+  background: #19b9a7;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.olsat-btn-submit:hover {
+  background: #109a8c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

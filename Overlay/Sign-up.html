@@ -5,55 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G-PATH - Sign Up</title>
     <link rel="stylesheet" href="../css/Sign-up.css">
-    <script src="../Js/Sign-up.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="signup-card">
+
+<script>
+        document.getElementById('file-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const previewWrapper = document.getElementById('preview-wrapper');
+                    const uploadLabel = document.getElementById('upload-label');
+                    
+                    uploadLabel.style.backgroundColor = 'transparent';
+                    uploadLabel.style.padding = '0';
+                    uploadLabel.style.border = 'none';
+                    uploadLabel.style.boxShadow = 'none';
+                    
+                    previewWrapper.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded Preview" class="id-card-full-img">
+                    `;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+
+<body style="background: url('../img/Background.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; display: grid; place-items: center; padding: 20px;">
+
+<div class="signup-card">
    
-        <div class="signup-header">
-            <button class="close-signup-btn" id="closeSignup"><i class="fa-solid fa-xmark"></i></button>
+    <div class="signup-header">
+        <button class="close-signup-btn" id="closeSignup"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="signup-body">
+        <div id="signupStep1">
+            <h1>Signing up</h1>
+            <p class="subtitle">Create your authorized staff account</p>
+            
+    <div class="id-card-row">
+        <div class="id-card-image-container">
+            <img src="../img/emp-id101.jpg" alt="Staff ID Card Mockup" class="id-card-full-img">
         </div>
 
-        <div class="signup-body">
-            <h1>Signing up</h1>
+      <label class="id-card-image-container upload-container" for="file-upload" id="upload-label">
+            <input type="file" id="file-upload" class="hidden-file-input" accept="image/*">
+        
+        <div id="preview-wrapper">
+            <img src="../img/upload-icon.png" alt="Upload Icon" class="id-card-full-img upload-img">
+        </div>
+      </label>
+    </div>
+
             <div>
-                <form id="signupForm">
-                    <div class="form-grid">
-                        <input type="text" id="Name" placeholder="Full Name">
-                        <input type="email" id="Email" placeholder="Official Email">
-                        <input type="password" id="password1" placeholder="Password">
-                        <input type="password" id="password2" placeholder="Confirm Password">
+                <form id="signupDataForm">
+                    <div class="input-group full-width-input">
+                        <label for="regFullName">Full Name</label>
+                        <input type="text" id="regFullName" required>
                     </div>
 
-                    <input type="text" id="employeeID" class="full-width-input" placeholder="Staff/Employee ID">
-                    <input type="tel" id="Cnumber" pattern="^09[0-9]{9}$" class="full-width-input" placeholder="Official Contact Number" maxlength="11">
+                    <div class="input-group full-width-input">
+                        <label for="regEmail">Official Email</label>
+                        <input type="email" id="regEmail" required>
+                    </div>
 
-                    <div class="role-container">
-                        <label for="Position" class="Position">Position / Role</label>
-                        <select id="Position" class="Position2">
-                            <option value="head">Guidance Counselor</option>
-                            <option value="staff1">Staff 1</option>
-                            <option value="staff2">Staff 2</option>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="regPass1">Password</label>
+                            <input type="password" id="regPass1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="regPass2">Confirm Password</label>
+                            <input type="password" id="regPass2" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group full-width-input">
+                        <label for="regPosition">Position / Role</label>
+                        <select id="regPosition" value="Select Role / Position" selected>
+                            <option value="Guidance Counselor" disabled>Guidance Counselor</option>
+                            <option value="Guidance Staff">Guidance Staff 1</option>
+                            <option value="Guidance Staff">Guidance Staff 2</option>
                         </select>
                     </div>
 
-                    <div class="checkbox-group-wrapper">
-                        <div class="checkbox-row">
-                            <input type="checkbox" id="agreement1">
-                            <p>Confidentiality Agreement</p>
+                    <div class="checkbox-group-wrapper full-width-input">
+                        <div class="checkbox-row agreements">
+                            <input type="checkbox" id="agreementDS" required>
+                            <label for="agreementDS" class="terms-label">
+                                I agree to the <a href="#">Terms of Service / Data Privacy Agreement</a>.
+                            </label>
                         </div>
-                        <div class="checkbox-row">
-                            <input type="checkbox" id="agreement2">
-                            <p>Terms of Service / Data Privacy</p>
-                        </div>
+                    </div>
+
+                    <div class="Confirm1">
+                        <button type="submit" class="btn-confirm-step1">Create Account</button>
                     </div>
                 </form>
             </div>
+        </div>
+
+        <div id="signupStep2" style="display: none;">
+            <h1>Account Created</h1>
+            <p class="subtitle">Your secure access PIN has been generated.</p>
             
-            <div class="Confirm1">
-                <a href="../Login.html" title="Confirming" id="confirmBtn">Confirm</a>
+            <div class="pin-display-container">
+                <p>Please securely store this PIN. It's required alongside your email to log in.</p>
+                <div class="pin-box">
+                    <span id="generatedPinDisplay">******</span>
+                    <button class="btn-icon copy-pin-btn" id="copyPinBtn" title="Copy to clipboard">
+                        <i class="fa-regular fa-clone"></i>
+                    </button>
+                </div>
+                <p class="pin-warning">⚠️ Do not share this PIN. Store it securely.</p>
+            </div>
+
+            <div class="Confirm1" style="margin-top: 30px;">
+                <button type="button" class="btn-signin" id="finishSignupBtn">
+                    Go to Login <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
         </div>
+
     </div>
+</div>
+    </div>
+
+    <script src="../Js/Sign-up.js"></script>
 </body>
 </html>

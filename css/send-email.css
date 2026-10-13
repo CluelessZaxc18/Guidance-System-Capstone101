@@ -1,0 +1,135 @@
+.email-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 32, 51, 0.5);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.email-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(23, 32, 51, 0.15);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.email-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e7ebf2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.email-modal-header h3 {
+  font-size: 18px;
+  color: #172033;
+}
+
+.email-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #788398;
+  cursor: pointer;
+}
+
+.email-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.email-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.email-form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #788398;
+  letter-spacing: 0.5px;
+}
+
+.email-form-group input {
+  padding: 10px 14px;
+  border: 1px solid #e7ebf2;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #172033;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #ffffff;
+}
+
+.email-form-group input:focus {
+  border-color: #19b9a7;
+}
+
+.email-preview-box {
+  background: #f8fafc;
+  border: 1px solid #e7ebf2;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.email-preview-box p {
+  margin-bottom: 10px;
+}
+
+.email-modal-footer {
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e7ebf2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.email-btn-cancel {
+  background: #ffffff;
+  border: 1px solid #e7ebf2;
+  color: #172033;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-btn-submit {
+  background: #26dc87;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-btn-submit:hover {
+  background: #1eb970;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

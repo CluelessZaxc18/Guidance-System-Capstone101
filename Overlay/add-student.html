@@ -42,9 +42,18 @@
 
             <div class="as-group">
               <label for="asStanding">Academic Standing</label>
-              <input type="text" id="asStanding" pattern="[Rr][Ee][Gg][Uu][Ll][Aa][Rr]|[Ii][Rr][Rr][Ee][Gg][Uu][Ll][Aa][Rr]|[Tt][Rr][Aa][Nn][Ss][Ff][Ee][Rr][Ee][Ee]"
-                placeholder="Regular / Irregular / Transferee" required>
+              <div class="as-select-wrap">
+                <select id="asStanding">
+                  <option>Regular</option>
+                  <option>Irregular</option>
+                  <option>Transferee</option>
+                </select>
+                <span class="as-chevron">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#1e1e1e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
             </div>
+
           </div>
 
           <!-- Right column -->
