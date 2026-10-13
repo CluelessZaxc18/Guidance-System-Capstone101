@@ -43,7 +43,7 @@ window.openAddOlsatModal = function() {
 
           <div class="olsat-modal-footer">
             <button type="button" class="olsat-btn-cancel" id="cancelOlsatBtn">Cancel</button>
-            <button type="submit" class="olsat-btn-submit">Save & View Results</button>
+            <button type="submit" class="olsat-btn-submit">Save</button>
           </div>
         </form>
       </div>

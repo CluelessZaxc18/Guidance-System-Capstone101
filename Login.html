@@ -13,20 +13,26 @@
     <script src="Js/script.js" defer></script>
     <script src="Js/Sign-up.js"></script>
 
-    <script>
+<script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Ensure default admin account is always seeded in localStorage
     let accounts = JSON.parse(localStorage.getItem('gpath_staff_accounts')) || [];
-    if (!accounts.some(acc => acc.email === "GuidanceCounselor@gmail.com")) {
+    
+    const adminIndex = accounts.findIndex(acc => acc.email.toLowerCase() === "guidancecounselor@gmail.com");
+    
+    if (adminIndex === -1) {
       accounts.push({
         name: "Guidance Counselor",
         email: "GuidanceCounselor@gmail.com",
-        password: "135735",
-        pin: "135735",
-        position: "Guidance Counselor"
+        password: "admin",
+        pin: "113734",
+        position: "Guidance Counselor",
+        idImage: "img/emp_id102.png"
       });
-      localStorage.setItem('gpath_staff_accounts', JSON.stringify(accounts));
+    } else {
+      accounts[adminIndex].password = "admin";
     }
+    
+    localStorage.setItem('gpath_staff_accounts', JSON.stringify(accounts));
 
     const signinBtn = document.querySelector('.btn-signin');
     const emailInput = document.getElementById('Email');
@@ -37,7 +43,6 @@
       signinBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // Remove any existing error banner if present
         document.getElementById('loginErrorBanner')?.remove();
 
         const enteredEmail = emailInput.value.trim().toLowerCase();
@@ -45,7 +50,6 @@
 
         const storedAccounts = JSON.parse(localStorage.getItem('gpath_staff_accounts')) || [];
         
-        // Match email with password OR the generated 6-digit PIN
         const matchedAccount = storedAccounts.find(acc => 
           acc.email.toLowerCase() === enteredEmail && 
           (acc.password === enteredCred || acc.pin === enteredCred)
@@ -55,7 +59,6 @@
           localStorage.setItem('gpath_active_user', JSON.stringify(matchedAccount));
           window.location.href = signinBtn.getAttribute('href') || 'extra/Loading.html';
         } else {
-          // Create custom styled inline error banner instead of alert()
           const errorBanner = document.createElement('div');
           errorBanner.id = 'loginErrorBanner';
           errorBanner.style.cssText = `
@@ -76,7 +79,6 @@
             <span>Invalid email or password/PIN combination. Please check your credentials or sign up.</span>
           `;
           
-          // Insert the error banner right at the top of the form
           cardBody.prepend(errorBanner);
         }
       });
@@ -116,7 +118,7 @@
                         <div class="input-field-wrapper">
                         <i class="fa-solid fa-lock input-icon"></i>
                  
-                        <input type="password" id="Password" name="Password" value="135735" required>
+                        <input type="password" id="Password" name="Password" Value="admin" required>
                     
                         <i class="fa-regular fa-eye-slash toggle-password " id="togglePassword"></i>
                         </div>

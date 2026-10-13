@@ -79,17 +79,17 @@
       
       <p class="nav-label lower">SYSTEM</p>
 
-      <a class="nav-item" href="Settings.html" data-page="Settings">
+      <a class="nav-item" href="Account.html" data-page="Account">
         <span class="nav-icon">⚙</span>
-        <span>Settings</span>
+        <span>Account</span>
       </a>
     </nav>
 
     <div class="sidebar-profile">
-      <div class="avatar">GC</div>
+      <div class="avatar" id="sidebarAvatar">GC</div>
       <div class="profile-info">
-        <strong>Guidance Counselor</strong>
-        <span>Admin</span>
+        <strong id="sidebarName">Guidance Counselor</strong>
+        <span id="sidebarRole">Admin</span>
       </div>
       <button class="more-btn" title="SignOut">Log-out</button>
     </div>
@@ -110,10 +110,10 @@
           <span class="dot"></span>
         </button>
         <div class="top-profile">
-          <div class="avatar small">GC</div>
+          <div class="avatar small" id="topAvatar">GC</div>
           <div>
-            <strong>Guidance Counselor</strong>
-            <span>Admin</span>
+            <strong id="topName">Guidance Counselor</strong>
+            <span id="topRole">Admin</span>
           </div>
         </div>
         <button class="more-btn" title="Log out">
@@ -124,11 +124,11 @@
 
     <div class="content">
       <section class="student-management-section">
-        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background:linear-gradient(135deg, #9cd6ff, #21bcff);">
           <div class="search-box-wrap" style="flex: 1; max-width: 350px;">
-            <input type="text" placeholder="Search results by student name or ID..." class="student-search-input" id="olsatSearchInput" style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;">
+            <input type="text" placeholder="Search results by student name or ID..." class="student-search-input" id="olsatSearchInput" style="width: 100%; padding: 10px 14px; border: 1px solid white; border-radius: 8px;">
           </div>
-          <button class="add-student-main-btn" id="addOlsatBtn" onclick="openAddOlsatModal()" style="background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600;">
+          <button class="add-student-main-btn" id="addOlsatBtn" onclick="openAddOlsatModal()" style="background:linear-gradient(135deg, #119cff, #034662); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600;">
                 <span>+</span> Add OLSAT Result
           </button>
         </div>
@@ -159,6 +159,7 @@
 
   <div id="addStudentMount"></div>
 
+  <script src="Js/profile-loader.js" defer></script>
   <script src="Js/side-nav.js"></script>
   <script src="Js/notif.js"></script>
   <script src="Js/logout-overlay.js"></script>

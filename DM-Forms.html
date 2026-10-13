@@ -81,18 +81,18 @@
       <p class="nav-label lower">SYSTEM</p>
 
 
-      <a class="nav-item" href="Settings.html" data-page="Settings">
+      <a class="nav-item" href="Account.html" data-page="Account">
         <span class="nav-icon">⚙</span>
-        <span>Settings</span>
+        <span>Account</span>
       </a>
     </nav>
 
 
     <div class="sidebar-profile">
-      <div class="avatar">GC</div>
+      <div class="avatar" id="sidebarAvatar">GC</div>
       <div class="profile-info">
-        <strong>Guidance Counselor</strong>
-        <span>Admin</span>
+        <strong id="sidebarName">Guidance Counselor</strong>
+        <span id="sidebarRole">Admin</span>
       </div>
       <button class="more-btn" title="SignOut">Log-out</button>
     </div>
@@ -119,10 +119,10 @@
           <span class="dot"></span>
         </button>
         <div class="top-profile">
-          <div class="avatar small">GC</div>
+          <div class="avatar small" id="topAvatar">GC</div>
           <div>
-            <strong>Guidance Counselor</strong>
-            <span>Admin</span>
+            <strong id="topName">Guidance Counselor</strong>
+            <span id="topRole">Admin</span>
           </div>
         </div>
         <button class="more-btn" title="Log out">
@@ -165,7 +165,7 @@
     </div>
   </main>
 
-
+<script src="Js/profile-loader.js" defer></script>
   <script src="Js/side-nav.js"></script>
   <script src="Js/notif.js"></script>
   <script src="Js/logout-overlay.js"></script>

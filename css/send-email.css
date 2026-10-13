@@ -111,7 +111,7 @@
 }
 
 .email-btn-submit {
-  background: #26dc87;
+  background:linear-gradient(135deg, #119cff, #034662);
   border: none;
   color: white;
   padding: 10px 18px;
@@ -121,7 +121,7 @@
 }
 
 .email-btn-submit:hover {
-  background: #1eb970;
+  background: #1439a9;
 }
 
 @keyframes fadeIn {

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { colorClass: "teal", icon: "✓", title: "Welcome to G-PATH", desc: "Your guidance management system is ready to use." },
     { colorClass: "blue", icon: "+", title: "Get started", desc: "Add your first student or upload a document." },
     { colorClass: "violet", icon: "🔔", title: "Stay updated", desc: "Actions you take will appear here automatically." },
-    { colorClass: "orange", icon: "⚙", title: "Tip", desc: "Visit Settings to update your profile and preferences." },
+    { colorClass: "orange", icon: "⚙", title: "Tip", desc: "Visit Account to update your profile and preferences." },
   ];
 
   function readNotifications() {

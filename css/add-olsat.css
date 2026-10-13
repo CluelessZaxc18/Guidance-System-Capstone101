@@ -103,7 +103,7 @@
 }
 
 .olsat-btn-submit {
-  background: #19b9a7;
+  background:linear-gradient(135deg, #119cff, #034662);
   border: none;
   color: white;
   padding: 10px 18px;
@@ -113,7 +113,7 @@
 }
 
 .olsat-btn-submit:hover {
-  background: #109a8c;
+  background: #1439a9;
 }
 
 @keyframes fadeIn {

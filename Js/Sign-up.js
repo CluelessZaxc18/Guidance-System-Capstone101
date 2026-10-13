@@ -1,4 +1,3 @@
-// Js/Sign-up.js
 document.addEventListener('DOMContentLoaded', () => {
     const signUpBtn = document.querySelector('.btn-signup');
 
@@ -8,18 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (document.getElementById('signupOverlay')) return;
 
-            // Inject CSS dynamically if not present
             if (!document.getElementById('signupCSS')) {
                 const link = document.createElement('link');
                 link.id = 'signupCSS';
                 link.rel = 'stylesheet';
-                link.href = 'css/Sign-up.css'; // Adjust path if needed (e.g. '../css/Sign-up.css')
+                link.href = 'css/Sign-up.css';
                 document.head.appendChild(link);
             }
 
             try {
-                // Fetch the sign-up modal HTML template
-                const response = await fetch('Overlay/Sign-up.html'); // Ensure path matches your folder structure
+                const response = await fetch('Overlay/Sign-up.html');
                 if (!response.ok) throw new Error('Could not load Sign-up.html');
                 const htmlContent = await response.text();
 
@@ -29,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 overlayDiv.innerHTML = htmlContent;
                 document.body.appendChild(overlayDiv);
 
-                // --- EVENT LISTENERS INSIDE THE MODAL ---
                 const closeBtn = document.getElementById('closeSignup');
                 const fileUploadInput = document.getElementById('file-upload');
                 const step1Form = document.getElementById('signupDataForm');
@@ -38,21 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finishBtn = document.getElementById('finishSignupBtn');
                 const copyBtn = document.getElementById('copyPinBtn');
 
-                // 1. Close button
                 if (closeBtn) {
                     closeBtn.addEventListener('click', () => {
                         overlayDiv.remove();
                     });
                 }
 
-                // 2. Click outside modal card to close
                 overlayDiv.addEventListener('click', (event) => {
                     if (event.target === overlayDiv) {
                         overlayDiv.remove();
                     }
                 });
 
-                // 3. File upload preview logic
                 if (fileUploadInput) {
                     fileUploadInput.addEventListener('change', function(event) {
                         const file = event.target.files[0];
@@ -79,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // 4. Handle Step 1 Form Submission (Loading + PIN Generation)
                 if (step1Form) {
                     step1Form.addEventListener('submit', (submitEvent) => {
                         submitEvent.preventDefault();
@@ -95,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             return;
                         }
 
-                        // Show realistic processing loading state inside step 1
                         signupStep1.innerHTML = `
                             <div style="text-align: center; padding: 40px 20px;">
                                 <div style="font-size: 32px; margin-bottom: 15px;">⏳</div>
@@ -104,37 +95,47 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `;
 
-                        // Simulate 2-second processing delay before showing the PIN
                         setTimeout(() => {
-                            // Generate random 6-digit PIN
                             const generatedPin = Math.floor(100000 + Math.random() * 900000).toString();
 
-                            // Save account to localStorage so login can verify it
                             let accounts = JSON.parse(localStorage.getItem('gpath_staff_accounts')) || [];
                             
-                            // Ensure default admin always exists
                             if (!accounts.some(acc => acc.email === "GuidanceCounselor@gmail.com")) {
                                 accounts.push({
                                     name: "Guidance Counselor",
                                     email: "GuidanceCounselor@gmail.com",
-                                    password: "135735",
-                                    pin: "135735",
-                                    position: "Guidance Counselor"
+                                    password: "admin",
+                                    pin: "113734",
+                                    position: "Guidance Counselor",
+                                    idImage: "../img/emp_id102.png"
                                 });
                             }
 
-                            // Push new registered account
+                            // Inside your file reader listener in Sign-up_3.js:
+                            let uploadedImageSrc = "../img/emp-id101.jpg"; // default fallback
+                            fileUploadInput.addEventListener('change', function(event) {
+                                const file = event.target.files[0];
+                                if (file && file.type.startsWith('image/')) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        uploadedImageSrc = e.target.result; // store base64 string
+                                        // ... preview update code ...
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            });
+
                             accounts.push({
                                 name: fullName,
                                 email: email,
                                 password: pass1,
                                 pin: generatedPin,
-                                position: position
+                                position: position,
+                                idImage: uploadedImageSrc
                             });
 
                             localStorage.setItem('gpath_staff_accounts', JSON.stringify(accounts));
 
-                            // Switch views to Step 2
                             if (signupStep1 && signupStep2) {
                                 signupStep1.style.display = 'none';
                                 signupStep2.style.display = 'block';
@@ -148,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // 5. Copy PIN functionality
                 if (copyBtn) {
                     copyBtn.addEventListener('click', () => {
                         const pinText = document.getElementById('generatedPinDisplay')?.textContent;
@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // 6. Finish button -> Close modal and return to login
                 if (finishBtn) {
                     finishBtn.addEventListener('click', () => {
                         overlayDiv.remove();

@@ -70,7 +70,7 @@ window.openSendEmailModal = function(resultId) {
 
             <div style="display: flex; gap: 8px;">
               <button type="button" class="email-btn-cancel" id="cancelEmailBtn">Cancel</button>
-              <button type="submit" class="email-btn-submit" id="submitEmailBtn">Send Now</button>
+              <button type="submit" class="email-btn-submit" id="submitEmailBtn">Submit</button>
             </div>
           </div>
         </form>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="img/fav-tab.png">
+  <link rel="stylesheet" href="css/Account.css">
+  <title>G-PATH Account</title>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <h1>G-PATH</h1>
+        <span style="color: white;">Guidance Counseling Office</span>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <p class="nav-label">MAIN</p>
+
+      <a class="nav-item" href="Dashboard.html" data-page="Dashboard">
+        <span class="nav-icon">ⅅ</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="nav-item" href="Student.html" data-page="Students">
+        <span class="nav-icon">✦</span>
+        <span>Students</span>
+      </a>
+      
+
+      <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
+        <span class="nav-icon">☷</span>
+        <span>Document Management</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="submenu" id="studentMenu2">
+
+        <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
+        <span class="nav-icon">❐</span>
+        <span>Narrative Report for</span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu3">
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Testing</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Referrals</a>
+              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Counseling</a>
+          </div>
+
+        <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
+        <span class="nav-icon">℉</span>
+        <span>Forms for </span>
+        <span class="chevron">›</span>
+      </button>
+            <div class="submenu" id="studentMenu4">
+              <a href="DM-Forms.html" data-page="Forms">Referrals</a>
+              <a href="DM-Forms.html" data-page="Forms">Informed Consent</a>
+              <a href="DM-Forms.html" data-page="Forms">Referral Feedback</a>
+              <a href="DM-Forms.html" data-page="Forms">Case Notes</a>
+          </div>
+        
+      </div>
+
+      <a class="nav-item" href="Result.html" data-page="OLSAT Result">
+        <span class="nav-icon">⚛</span>
+        <span>OLSAT Result</span>
+      </a>
+
+      <p class="nav-label lower">SYSTEM</p>
+
+      <a class="nav-item active" href="#" data-page="Account">
+        <span class="nav-icon">⚙</span>
+        <span>Account</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-profile">
+      <div class="avatar" id="sidebarAvatar">GC</div>
+      <div class="profile-info">
+        <strong id="sidebarName">Guidance Counselor</strong>
+        <span id="sidebarRole">Admin</span>
+      </div>
+      <button class="more-btn" title="SignOut">Log-out</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">G-PATH / <span id="pageName">G-Account</span></p>
+        <h2 id="pageTitle">Guidance Account</h2>
+      </div>
+
+      <div class="topbar-actions">
+        
+        <button class="icon-button" id="notifBell" title="Notifications">
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+
+          <span class="dot"></span>
+        </button>
+        <div class="top-profile">
+          <div class="avatar small" id="topAvatar">GC</div>
+          <div>
+            <strong id="topName">Guidance Counselor</strong>
+            <span id="topRole">Admin</span>
+          </div>
+        </div>
+        <button class="more-btn" title="Log out">
+        <img src="img/log-out.png" alt="Log out" class="icon-out">
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="panel" style="max-width: 850px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: start;">
+        
+        <!-- Left Column: ID Card Placeholder -->
+        <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 20px; text-align: center;">
+          <h3 style="font-size: 14px; color: var(--text); margin-bottom: 12px;">Information Identification</h3>
+          <div id="accountPreviewWrapper" style="width: 100%; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 10px; background: #fff; display: flex; align-items: center; justify-content: center;">
+            <img id="accountIdDisplayImg" src="img/emp-id101.jpg" alt="Staff ID Mockup" style="width: 100%; height: auto; max-height: 220px; object-fit: contain; border-radius: 4px;">
+          </div>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 10px;">Registered ID credential</p>
+        </div>
+
+        <!-- Right Column: Account Info & Editable Form -->
+        <div>
+          <h3 style="font-size: 16px; margin-bottom: 6px; color: var(--text);">Account Settings</h3>
+          <p style="font-size: 12px; color: var(--muted); margin-bottom: 20px;">Profile details.</p>
+
+          <form id="accountSettingsForm">
+            <div style="margin-bottom: 16px;">
+              <label for="accFullName" style="display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Full Name</label>
+              <input type="text" id="accFullName" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px;">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label for="accEmail" style="display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Official Email (Locked)</label>
+              <input type="email" id="accEmail" disabled style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); background: #f1f5f9; border-radius: 8px; font-size: 13px; color: var(--muted);">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label for="accPosition" style="display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Position / Role</label>
+              <input type="text" id="accPosition" disabled style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); background: #f1f5f9; border-radius: 8px; font-size: 13px; color: var(--muted);">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+              <label for="accPassword" style="display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Password</label>
+              <input type="password" id="accPassword" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px;">
+            </div>
+
+            <div style="margin-bottom: 24px;">
+              <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Secure Access PIN</label>
+              <div style="display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;">
+                <span id="accPinDisplay" style="font-family: monospace; font-size: 16px; font-weight: bold; letter-spacing: 2px;">••••••</span>
+                <i class="fa-regular fa-eye-slash" id="togglePinVisibility" style="cursor: pointer; color: var(--muted); margin-left: auto; font-size: 15px;" title="Show/Hide PIN"></i>
+                <span style="font-size: 11px; color: var(--muted);">PIN</span>
+              </div>
+            </div>
+
+            <button type="submit" style="background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: background 0.2s;">
+              Save Changes
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="Js/profile-loader.js" defer></script>
+  <script src="Js/profile-loader.js" defer></script>
+  <script src="Js/side-nav.js"></script>
+  <script src="Js/notif.js"></script>
+  <script src="Js/logout-overlay.js"></script>
+  <script src="Js/Account.js"></script>
+</body>
+</html>
