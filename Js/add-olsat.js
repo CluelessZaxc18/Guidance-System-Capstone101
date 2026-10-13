@@ -1,10 +1,27 @@
 window.openAddOlsatModal = function() {
   document.getElementById("olsatModalOverlay")?.remove();
 
-  const students = JSON.parse(localStorage.getItem("gpath_students")) || [];
+  // Fallback default student list so dropdown works instantly even after a hard reset
+  const defaultStudents = [
+    { id: "110187", name: "Ana Cruz", program: "BS Information Technology" },
+    { id: "110638", name: "Miguel Santos", program: "BS Criminology" },
+    { id: "110744", name: "Maria Lim", program: "BS Hospitality Management" },
+    { id: "110859", name: "Joshua Reyes", program: "BS Tourism Management" },
+    { id: "110963", name: "Sofia Mendoza", program: "BS Midwifery Education" },
+    { id: "111074", name: "Liam Torres", program: "BS Information Technology" },
+    { id: "110198", name: "Aris Villanueva", program: "BS Information Technology" },
+    { id: "111530", name: "Daniel Garcia", program: "BS Criminology" },
+    { id: "111419", name: "Camille Navarro", program: "BS Tourism Management" },
+    { id: "111308", name: "Rafael Mendoza", program: "BS Hospitality Management" },
+    { id: "111297", name: "Nicole Reyes", program: "BS Midwifery Education" },
+    { id: "111186", name: "Ethan Flores", program: "BS Tourism Management" }
+  ];
 
-  const studentOptions = students.length > 0
-    ? students.map(s => `<option value="${s.id}">${s.name} (ID: ${s.id})</option>`).join("")
+  const students = JSON.parse(localStorage.getItem("gpath_students")) || defaultStudents;
+  const activeStudents = students.length > 0 ? students : defaultStudents;
+
+  const studentOptions = activeStudents.length > 0
+    ? activeStudents.map(s => `<option value="${s.id}">${s.name} (ID: ${s.id})</option>`).join("")
     : `<option value="" disabled selected>No students found. Add a student first.</option>`;
 
   const modalHtml = `
@@ -71,7 +88,7 @@ window.openAddOlsatModal = function() {
     const nonVerbal = Number(document.getElementById("olsatNonVerbal").value);
     const dateInput = document.getElementById("olsatDate").value;
 
-    const matchedStudent = students.find(s => String(s.id) === String(selectedId));
+    const matchedStudent = activeStudents.find(s => String(s.id) === String(selectedId));
     if (!matchedStudent) return;
 
     const totalSai = verbal + nonVerbal;

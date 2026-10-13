@@ -6,14 +6,33 @@ window.openSendEmailModal = function(resultId) {
   const record = olsatResults.find(i => String(i.id) === String(resultId));
   if (!record) return;
 
-  // Try to find matching student email from gpath_students or submissions
-  const students = JSON.parse(localStorage.getItem("gpath_students")) || [];
-  const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+  // Fallback default student list with emails in case local storage hasn't been initialized yet
+  const defaultStudentEmails = [
+    { id: "110187", name: "Ana Mae Cruz", gmail: "CruzAnamae@gmail.com" },
+    { id: "110638", name: "Miguel Santos", gmail: "MiguelSantos06@gmail.com" },
+    { id: "110744", name: "Maria Lim", gmail: "MariaLim.hm@gmail.com" },
+    { id: "110859", name: "Joshua Reyes", gmail: "JoshuaReyes.tourism@gmail.com" },
+    { id: "110963", name: "Sofia Mendoza", gmail: "SofiaMendoza.mid@gmail.com" },
+    { id: "111074", name: "Liam Torres", gmail: "LiamTorres.it@gmail.com" },
+    { id: "110198", name: "Aris Villanueva", gmail: "ArisVillanueva@gmail.com" },
+    { id: "111530", name: "Daniel Garcia", gmail: "DanielGarcia.crim@gmail.com" },
+    { id: "111419", name: "Camille Navarro", gmail: "CamilleNavarro@gmail.com" },
+    { id: "111308", name: "Rafael Mendoza", gmail: "RafaelMendoza.hm@gmail.com" },
+    { id: "111297", name: "Nicole Reyes", gmail: "NicoleReyes.mid@gmail.com" },
+    { id: "111186", name: "Ethan Flores", gmail: "EthanFlores.tourism@gmail.com" }
+  ];
+
+  // Load submissions and students from storage, falling back to defaults if empty
+  const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || defaultStudentEmails;
+  const students = JSON.parse(localStorage.getItem("gpath_students")) || defaultStudentEmails;
 
   let studentEmail = "";
-  const matchedSub = submissions.find(s => String(s.id) === String(record.studentId) || s.name === record.name);
-  if (matchedSub && matchedSub.gmail) {
-    studentEmail = matchedSub.gmail;
+  const matchedSub = submissions.find(s => String(s.id) === String(record.studentId) || s.name === record.name) ||
+                     students.find(s => String(s.id) === String(record.studentId) || s.name === record.name) ||
+                     defaultStudentEmails.find(s => String(s.id) === String(record.studentId) || s.name === record.name);
+
+  if (matchedSub) {
+    studentEmail = matchedSub.gmail || matchedSub.email || "";
   }
 
   // Get current date/time to set default min values for scheduler
@@ -50,7 +69,7 @@ window.openSendEmailModal = function(resultId) {
                 <br>
                 <p>Best regards,<br>
                 [Guidance Counseling Office]<br>
-                [Guidance Counselor - Admin]</p>
+                [Admin / Staff]</p>
               </div>
             </div>
           </div>
@@ -111,7 +130,7 @@ window.openSendEmailModal = function(resultId) {
       `Please check your Inbox to view your score report.\n\n` +
       `Best regards,\n` +
       `[Guidance Counseling Office]\n` +
-      `[Guidance Counselor - Admin]`
+      `[Admin / Staff]`
     );
 
     const targetEmail = recipientEmail || "";
