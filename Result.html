@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="img/fav-tab.png">
-  <title>G-PATH Dashboard</title>
+  <title>G-PATH Result</title>
   <link rel="stylesheet" href="css/Result.css">
   <link rel="stylesheet" href="css/add-olsat.css">
   <link rel="stylesheet" href="css/send-email.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <script src="Js/rbac.js"></script>
 </head>
@@ -106,7 +107,7 @@
 
       <div class="topbar-actions">
         <button class="icon-button" id="notifBell" title="Notifications">
-          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
+          <svg xmlns="http://www.w3.org" viewBox="0 0 24 24" width="30" height="30" fill="#00B7FF">
             <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
           </svg>
           <span class="dot"></span>
@@ -126,12 +127,32 @@
 
     <div class="content">
       <section class="student-management-section">
-        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background:linear-gradient(135deg, #9cd6ff, #21bcff);">
-          <div class="search-box-wrap" style="flex: 1; max-width: 350px;">
-            <input type="text" placeholder="Search results by student name or ID..." class="student-search-input" id="olsatSearchInput" style="width: 100%; padding: 10px 14px; border: 1px solid white; border-radius: 8px;">
+        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: linear-gradient(135deg, #9cd6ff, #21bcff); gap: 15px; position: relative;">
+          
+          <div style="display: flex; align-items: center; gap: 10px; flex: 1; max-width: 380px;">
+            <div class="search-box-wrap" style="flex: 1;">
+              <input type="text" placeholder="Search results by student name or ID..." class="student-search-input" id="olsatSearchInput" style="width: 100%; padding: 10px 14px; border: 1px solid white; border-radius: 8px;">
+            </div>
+
+            <div style="position: relative;">
+              <button id="filterMenuBtn" title="Filter by Test Date" style="background: white; border: 1px solid #cbd5e1; color: #034662; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;">
+                <i class="fa-solid fa-filter"></i>
+              </button>
+
+              <div id="filterDropdownMenu" style="display: none; position: absolute; top: 50px; left: 0; background: white; border: 1px solid #e2e8f0; border-radius: 12px; width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); z-index: 100; padding: 8px;">
+                <div style="padding: 8px 12px; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">FILTER BY TEST DATE</div>
+                <div class="filter-option" data-date="all" style="padding: 8px 12px; font-size: 13px; font-weight: 600; color: #1e293b; border-radius: 6px; cursor: pointer;">All Test Dates</div>
+                <div class="filter-option" data-date="2026-09-12" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 12, 2026</div>
+                <div class="filter-option" data-date="2026-09-20" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 20, 2026</div>
+                <div class="filter-option" data-date="2026-09-28" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 28, 2026</div>
+                <div class="filter-option" data-date="2026-10-02" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Oct 02, 2026</div>
+                <div class="filter-option" data-date="2026-10-12" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Oct 12, 2026</div>
+              </div>
+            </div>
           </div>
-          <button class="add-student-main-btn" id="addOlsatBtn" onclick="openAddOlsatModal()" style="background:linear-gradient(135deg, #119cff, #034662); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600;">
-                <span>+</span> Add OLSAT Result
+
+          <button class="add-student-main-btn" id="addOlsatBtn" onclick="openAddOlsatModal()" style="background: linear-gradient(135deg, #119cff, #034662); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; white-space: nowrap;">
+            <span>+</span> Add OLSAT Result
           </button>
         </div>
 
@@ -141,9 +162,7 @@
               <tr style="text-align: left; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px;">
                 <th style="padding: 12px;">Student Name</th>
                 <th style="padding: 12px;">Student ID</th>
-                <th style="padding: 12px;">Verbal Score</th>
-                <th style="padding: 12px;">Non-Verbal Score</th>
-                <th style="padding: 12px;">Total SAI</th>
+                <th style="padding: 12px;">OLSAT Score</th>
                 <th style="padding: 12px;">Test Date</th>
                 <th style="padding: 12px;">Actions</th>
               </tr>
@@ -152,7 +171,7 @@
             </tbody>
           </table>
         </div>
-      </section>
+      </section>        
     </div>
   </main>
 

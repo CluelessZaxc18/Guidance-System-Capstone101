@@ -1,7 +1,7 @@
 window.openAddOlsatModal = function() {
   document.getElementById("olsatModalOverlay")?.remove();
 
-  const defaultStudents = [
+  const allStudents = [
     { id: "110187", name: "Ana Cruz", program: "BS Information Technology" },
     { id: "110638", name: "Miguel Santos", program: "BS Criminology" },
     { id: "110744", name: "Maria Lim", program: "BS Hospitality Management" },
@@ -16,12 +16,10 @@ window.openAddOlsatModal = function() {
     { id: "111186", name: "Ethan Flores", program: "BS Tourism Management" }
   ];
 
-  const students = JSON.parse(localStorage.getItem("gpath_students")) || defaultStudents;
-  const activeStudents = students.length > 0 ? students : defaultStudents;
+  const students = JSON.parse(localStorage.getItem("gpath_students")) || allStudents;
+  const activeStudents = students.length > 0 ? students : allStudents;
 
-  const studentOptions = activeStudents.length > 0
-    ? activeStudents.map(s => `<option value="${s.id}">${s.name} (ID: ${s.id})</option>`).join("")
-    : `<option value="" disabled selected>No students found. Add a student first.</option>`;
+  let selectedStudentId = "";
 
   const modalHtml = `
     <div class="olsat-modal-overlay" id="olsatModalOverlay">
@@ -32,28 +30,21 @@ window.openAddOlsatModal = function() {
         </div>
         <form id="olsatForm">
           <div class="olsat-modal-body">
-            <div class="olsat-form-group">
-              <label>Select Student</label>
-              <select id="olsatStudentSelect" required>
-                <option value="" disabled selected>Select a registered student</option>
-                ${studentOptions}
-              </select>
+            <div class="olsat-form-group" style="position: relative;">
+              <label>Search Student</label>
+              <input type="text" id="studentSearchFilter" placeholder="Type student name or ID..." autocomplete="off" style="width: 100%; padding: 10px; border: 1px solid #e7ebf2; border-radius: 8px; margin-bottom: 6px;" required>
+              <div id="studentDropdownList" style="display: none; position: absolute; top: 75px; left: 0; right: 0; background: white; border: 1px solid #e7ebf2; border-radius: 8px; max-height: 150px; overflow-y: auto; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
+              <input type="hidden" id="olsatSelectedStudentId" required>
             </div>
 
-            <div class="olsat-form-row">
-              <div class="olsat-form-group">
-                <label>Verbal Score</label>
-                <input type="number" id="olsatVerbal" placeholder="e.g. 40" required min="0">
-              </div>
-              <div class="olsat-form-group">
-                <label>Non-Verbal Score</label>
-                <input type="number" id="olsatNonVerbal" placeholder="e.g. 42" required min="0">
-              </div>
+            <div class="olsat-form-group">
+              <label>OLSAT Score</label>
+              <input type="number" id="olsatScoreInput" placeholder="//" required min="0" style="width: 100%; padding: 10px; border: 1px solid #e7ebf2; border-radius: 8px;">
             </div>
 
             <div class="olsat-form-group">
               <label>Test Date</label>
-              <input type="date" id="olsatDate" required>
+              <input type="date" id="olsatDate" required style="width: 100%; padding: 10px; border: 1px solid #e7ebf2; border-radius: 8px;">
             </div>
           </div>
 
@@ -71,37 +62,77 @@ window.openAddOlsatModal = function() {
   const today = new Date().toISOString().split("T")[0];
   document.getElementById("olsatDate").value = today;
 
+  const searchInput = document.getElementById("studentSearchFilter");
+  const dropdownList = document.getElementById("studentDropdownList");
+  const hiddenIdInput = document.getElementById("olsatSelectedStudentId");
+
+  function renderDropdown(list) {
+    if (list.length === 0) {
+      dropdownList.innerHTML = `<div style="padding: 10px; color: #788398; font-size: 13px;">No students found</div>`;
+      return;
+    }
+    dropdownList.innerHTML = list.map(s => `
+      <div class="student-suggestion-item" data-id="${s.id}" data-name="${s.name}" style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f1f3f9; font-size: 13px;">
+        <strong>${s.name}</strong> <span style="color: #788398;">(ID: ${s.id})</span>
+      </div>
+    `).join("");
+
+    dropdownList.querySelectorAll(".student-suggestion-item").forEach(item => {
+      item.addEventListener("click", () => {
+        searchInput.value = `${item.dataset.name} (ID: ${item.dataset.id})`;
+        hiddenIdInput.value = item.dataset.id;
+        selectedStudentId = item.dataset.id;
+        dropdownList.style.display = "none";
+      });
+    });
+  }
+
+  searchInput.addEventListener("focus", () => {
+    dropdownList.style.display = "block";
+    renderDropdown(activeStudents);
+  });
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = activeStudents.filter(s => s.name.toLowerCase().includes(query) || s.id.includes(query));
+    dropdownList.style.display = "block";
+    renderDropdown(filtered);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#studentSearchFilter") && !e.target.closest("#studentDropdownList")) {
+      if (dropdownList) dropdownList.style.display = "none";
+    }
+  });
+
   const closeModal = () => document.getElementById("olsatModalOverlay")?.remove();
   
   document.getElementById("closeOlsatModal").addEventListener("click", closeModal);
   document.getElementById("cancelOlsatBtn").addEventListener("click", closeModal);
-  document.getElementById("olsatModalOverlay").addEventListener("click", e => {
-    if (e.target.id === "olsatModalOverlay") closeModal();
-  });
 
   document.getElementById("olsatForm").addEventListener("submit", e => {
     e.preventDefault();
 
-    const selectedId = document.getElementById("olsatStudentSelect").value;
-    const verbal = Number(document.getElementById("olsatVerbal").value);
-    const nonVerbal = Number(document.getElementById("olsatNonVerbal").value);
+    const studentId = hiddenIdInput.value;
+    const score = Number(document.getElementById("olsatScoreInput").value);
     const dateInput = document.getElementById("olsatDate").value;
 
-    const matchedStudent = activeStudents.find(s => String(s.id) === String(selectedId));
-    if (!matchedStudent) return;
+    const matchedStudent = activeStudents.find(s => String(s.id) === String(studentId));
+    if (!matchedStudent) {
+      alert("Please select a valid student from the search list.");
+      return;
+    }
 
-    const totalSai = verbal + nonVerbal;
     const formattedDate = new Date(dateInput).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
     const newResult = {
       id: Date.now(),
       studentId: matchedStudent.id,
       name: matchedStudent.name,
-      verbal: verbal,
-      nonVerbal: nonVerbal,
-      sai: totalSai,
+      score: score,
       date: formattedDate,
-      remarks: totalSai >= 110 ? "Above Average" : "Average"
+      rawDate: dateInput,
+      remarks: score >= 110 ? "Above Average" : "Average"
     };
 
     const existingResults = JSON.parse(localStorage.getItem("gpath_olsat_results")) || [];
@@ -112,7 +143,7 @@ window.openAddOlsatModal = function() {
     notifs.unshift({
       type: "green",
       title: "OLSAT Result Recorded",
-      desc: `Added test score (SAI: ${totalSai}) for ${matchedStudent.name}.`,
+      desc: `Added test score (${score}) for ${matchedStudent.name}.`,
       timestamp: Date.now()
     });
     localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
@@ -122,7 +153,6 @@ window.openAddOlsatModal = function() {
     }
 
     closeModal();
-
     window.location.href = "Result.html";
   });
 };

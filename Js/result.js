@@ -2,8 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const OLSAT_STORAGE_KEY = "gpath_olsat_results";
 
   const DEFAULT_OLSAT_DATA = [
-    { id: 1, studentId: "110187", name: "Ana Cruz", verbal: 42, nonVerbal: 45, sai: 115, date: "Sept 20, 2026", remarks: "Above Average Cognitive Aptitude" },
-    { id: 2, studentId: "110638", name: "Miguel Santos", verbal: 35, nonVerbal: 38, sai: 102, date: "Sept 22, 2026", remarks: "Average Ability Range" }
+    { id: 1, studentId: "110187", name: "Ana Cruz", score: 115, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Above Average" },
+    { id: 2, studentId: "110638", name: "Miguel Santos", score: 102, date: "Sep 15, 2026", rawDate: "2026-09-15", remarks: "Average" },
+    { id: 3, studentId: "110744", name: "Maria Lim", score: 118, date: "Sep 18, 2026", rawDate: "2026-09-18", remarks: "Above Average" },
+    { id: 4, studentId: "110859", name: "Joshua Reyes", score: 95, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Average" },
+    { id: 5, studentId: "110963", name: "Sofia Mendoza", score: 108, date: "Sep 22, 2026", rawDate: "2026-09-22", remarks: "Average" },
+    { id: 6, studentId: "111074", name: "Liam Torres", score: 124, date: "Sep 25, 2026", rawDate: "2026-09-25", remarks: "Above Average" },
+    { id: 7, studentId: "110198", name: "Aris Villanueva", score: 101, date: "Sep 28, 2026", rawDate: "2026-09-28", remarks: "Average" },
+    { id: 8, studentId: "111530", name: "Daniel Garcia", score: 112, date: "Oct 02, 2026", rawDate: "2026-10-02", remarks: "Above Average" },
+    { id: 9, studentId: "111419", name: "Camille Navarro", score: 99, date: "Oct 05, 2026", rawDate: "2026-10-05", remarks: "Average" },
+    { id: 10, studentId: "111308", name: "Rafael Mendoza", score: 110, date: "Oct 08, 2026", rawDate: "2026-10-08", remarks: "Above Average" },
+    { id: 11, studentId: "111297", name: "Nicole Reyes", score: 104, date: "Oct 10, 2026", rawDate: "2026-10-10", remarks: "Average" },
+    { id: 12, studentId: "111186", name: "Ethan Flores", score: 116, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" }
   ];
 
   function loadOlsatData() {
@@ -17,6 +27,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tbody = document.getElementById("olsatTableBody");
   const searchInput = document.getElementById("olsatSearchInput");
+  const filterMenuBtn = document.getElementById("filterMenuBtn");
+  const filterDropdownMenu = document.getElementById("filterDropdownMenu");
+  let selectedDateFilter = "all";
+
+  if (filterMenuBtn && filterDropdownMenu) {
+    filterMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isVisible = filterDropdownMenu.style.display === "block";
+      filterDropdownMenu.style.display = isVisible ? "none" : "block";
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!filterMenuBtn.contains(e.target) && !filterDropdownMenu.contains(e.target)) {
+        filterDropdownMenu.style.display = "none";
+      }
+    });
+  }
+
+  function populateDateFilterMenu() {
+    if (!filterDropdownMenu) return;
+    const allData = loadOlsatData();
+    
+    const uniqueDatesMap = {};
+    allData.forEach(item => {
+      if (item.rawDate && item.date) {
+        uniqueDatesMap[item.rawDate] = item.date;
+      }
+    });
+
+    let menuHtml = `
+      <div style="padding: 8px 12px; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">FILTER BY TEST DATE</div>
+      <div class="filter-option ${selectedDateFilter === 'all' ? 'active-filter' : ''}" data-date="all" style="padding: 8px 12px; font-size: 13px; font-weight: 600; color: #1e293b; border-radius: 6px; cursor: pointer;">All Test Dates</div>
+    `;
+
+    Object.keys(uniqueDatesMap).sort().forEach(rawDt => {
+      const formattedDt = uniqueDatesMap[rawDt];
+      const isActive = selectedDateFilter === rawDt ? 'active-filter' : '';
+      menuHtml += `<div class="filter-option ${isActive}" data-date="${rawDt}" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">${formattedDt}</div>`;
+    });
+
+    filterDropdownMenu.innerHTML = menuHtml;
+
+    filterDropdownMenu.querySelectorAll(".filter-option").forEach(option => {
+      option.addEventListener("click", () => {
+        filterDropdownMenu.querySelectorAll(".filter-option").forEach(o => o.classList.remove("active-filter"));
+        option.classList.add("active-filter");
+        selectedDateFilter = option.dataset.date;
+        filterDropdownMenu.style.display = "none";
+        applyFilters();
+      });
+    });
+  }
 
   function showDeleteConfirmModal(recordName, onConfirm) {
     document.getElementById("olsatDeleteModalOverlay")?.remove();
@@ -62,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tbody) return;
 
     if (currentData.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: var(--muted);">No OLSAT results found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--muted);">No OLSAT results found.</td></tr>`;
       return;
     }
 
@@ -70,9 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <tr style="border-bottom: 1px solid var(--line);">
         <td style="padding: 14px 12px; font-weight: 600;">${item.name}</td>
         <td style="padding: 14px 12px; color: var(--muted);">${item.studentId}</td>
-        <td style="padding: 14px 12px;">${item.verbal}</td>
-        <td style="padding: 14px 12px;">${item.nonVerbal}</td>
-        <td style="padding: 14px 12px;"><strong style="color: var(--primary);">${item.sai}</strong></td>
+        <td style="padding: 14px 12px;"><strong style="color: var(--primary);">${item.score}</strong></td>
         <td style="padding: 14px 12px; color: var(--muted);">${item.date}</td>
         <td style="padding: 14px 12px;">
           <button class="send-email-btn" data-id="${item.id}" style="background: #e2fbfe; color: #109a8c; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 6px;">Send</button>
@@ -99,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
           let storedList = loadOlsatData();
           storedList = storedList.filter(i => i.id !== id);
           localStorage.setItem(OLSAT_STORAGE_KEY, JSON.stringify(storedList));
+          populateDateFilterMenu();
           window.renderOlsatTable();
 
           const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
@@ -116,16 +177,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.trim().toLowerCase();
-      const allData = loadOlsatData();
-      const filtered = allData.filter(i => 
-        i.name.toLowerCase().includes(query) || i.studentId.toLowerCase().includes(query)
-      );
-      window.renderOlsatTable(filtered);
+  function applyFilters() {
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    
+    const allData = loadOlsatData();
+    const filtered = allData.filter(i => {
+      const matchesSearch = i.name.toLowerCase().includes(query) || i.studentId.toLowerCase().includes(query);
+      const matchesDate = (selectedDateFilter === "all" || i.rawDate === selectedDateFilter);
+      return matchesSearch && matchesDate;
     });
+
+    window.renderOlsatTable(filtered);
   }
 
+  if (searchInput) {
+    searchInput.addEventListener("input", applyFilters);
+  }
+
+  populateDateFilterMenu();
   window.renderOlsatTable();
 });

@@ -5,33 +5,6 @@ window.openSendEmailModal = function(resultId) {
   const record = olsatResults.find(i => String(i.id) === String(resultId));
   if (!record) return;
 
-  const defaultStudentEmails = [
-    { id: "110187", name: "Ana Mae Cruz", gmail: "CruzAnamae@gmail.com" },
-    { id: "110638", name: "Miguel Santos", gmail: "MiguelSantos06@gmail.com" },
-    { id: "110744", name: "Maria Lim", gmail: "MariaLim.hm@gmail.com" },
-    { id: "110859", name: "Joshua Reyes", gmail: "JoshuaReyes.tourism@gmail.com" },
-    { id: "110963", name: "Sofia Mendoza", gmail: "SofiaMendoza.mid@gmail.com" },
-    { id: "111074", name: "Liam Torres", gmail: "LiamTorres.it@gmail.com" },
-    { id: "110198", name: "Aris Villanueva", gmail: "ArisVillanueva@gmail.com" },
-    { id: "111530", name: "Daniel Garcia", gmail: "DanielGarcia.crim@gmail.com" },
-    { id: "111419", name: "Camille Navarro", gmail: "CamilleNavarro@gmail.com" },
-    { id: "111308", name: "Rafael Mendoza", gmail: "RafaelMendoza.hm@gmail.com" },
-    { id: "111297", name: "Nicole Reyes", gmail: "NicoleReyes.mid@gmail.com" },
-    { id: "111186", name: "Ethan Flores", gmail: "EthanFlores.tourism@gmail.com" }
-  ];
-
-  const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || defaultStudentEmails;
-  const students = JSON.parse(localStorage.getItem("gpath_students")) || defaultStudentEmails;
-
-  let studentEmail = "";
-  const matchedSub = submissions.find(s => String(s.id) === String(record.studentId) || s.name === record.name) ||
-                     students.find(s => String(s.id) === String(record.studentId) || s.name === record.name) ||
-                     defaultStudentEmails.find(s => String(s.id) === String(record.studentId) || s.name === record.name);
-
-  if (matchedSub) {
-    studentEmail = matchedSub.gmail || matchedSub.email || "";
-  }
-
   const now = new Date();
   const todayStr = now.toISOString().split("T")[0];
   const timeStr = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
@@ -40,52 +13,47 @@ window.openSendEmailModal = function(resultId) {
     <div class="email-modal-overlay" id="emailModalOverlay">
       <div class="email-modal-card">
         <div class="email-modal-header">
-          <h3>Send OLSAT Result via Email</h3>
+          <h3>via Email</h3>
           <button type="button" class="email-modal-close" id="closeEmailModal">✕</button>
         </div>
         <form id="emailDispatchForm">
           <div class="email-modal-body">
             <div class="email-form-group">
-              <label>Student Name</label>
-              <input type="text" id="emailStudentName" value="${record.name}" required>
-            </div>
-
-            <div class="email-form-group">
-              <label>Student Gmail Address</label>
-              <input type="email" id="emailStudentAddress" value="${studentEmail}" placeholder="e.g. student@gmail.com">
-            </div>
-
-            <div class="email-form-group">
-              <label>Message Preview</label>
-              <div class="email-preview-box">
+              <label>Message Review</label>
+              <div class="email-preview-box" style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e7ebf2; font-size: 13px; line-height: 1.5;">
                 <p><strong>Subject:</strong> Your OLSAT Results Are Ready!</p>
-                <p>Dear <span id="previewName">${record.name.split(' ')[0]}</span>,</p>
+                <p>Dear ${record.name.split(' ')[0]},</p>
                 <p>Your OLSAT results have been officially processed and sent to your registered email address.</p>
-                <p>Please check your Inbox to view your score report.</p>
+                <p>Please check your email to view your score report.</p>
                 <br>
                 <p>Best regards,<br>
-                [Guidance Counseling Office]<br>
-                [Admin / Staff]</p>
+                Guidance Counseling Office<br>
+                Admin / Staff</p>
+              </div>
+            </div>
+
+            <!-- Schedule inputs container (hidden by default until Schedule button clicked) -->
+            <div id="scheduleInputsContainer" style="display: none; margin-top: 15px; padding: 12px; background: #f1f5f9; border-radius: 8px;">
+              <p style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #172033;">Set Schedule Date & Time:</p>
+              <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                  <label style="font-size: 10px; font-weight: 700; color: #788398; display: block; margin-bottom: 3px;">DATE</label>
+                  <input type="date" id="scheduleDate" value="${todayStr}" style="width: 100%; padding: 8px; border: 1px solid #e7ebf2; border-radius: 6px; font-size: 12px;">
+                </div>
+                <div style="flex: 1;">
+                  <label style="font-size: 10px; font-weight: 700; color: #788398; display: block; margin-bottom: 3px;">TIME</label>
+                  <input type="time" id="scheduleTime" value="${timeStr}" style="width: 100%; padding: 8px; border: 1px solid #e7ebf2; border-radius: 6px; font-size: 12px;">
+                </div>
               </div>
             </div>
           </div>
 
           <div class="email-modal-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <!-- Schedule inputs placed on the lower left part of the footer -->
-            <div style="display: flex; gap: 6px; align-items: center;">
-              <div style="display: flex; flex-direction: column;">
-                <label style="font-size: 9px; font-weight: 700; color: #788398; margin-bottom: 2px;">SCHEDULE DATE</label>
-                <input type="date" id="scheduleDate" value="${todayStr}" style="padding: 6px 8px; border: 1px solid #e7ebf2; border-radius: 6px; font-size: 11px;">
-              </div>
-              <div style="display: flex; flex-direction: column;">
-                <label style="font-size: 9px; font-weight: 700; color: #788398; margin-bottom: 2px;">TIME</label>
-                <input type="time" id="scheduleTime" value="${timeStr}" style="padding: 6px 8px; border: 1px solid #e7ebf2; border-radius: 6px; font-size: 11px;">
-              </div>
-            </div>
-
+            <button type="button" class="email-btn-cancel" id="cancelEmailBtn" style="padding: 10px 16px; border: 1px solid #e7ebf2; background: white; border-radius: 8px; cursor: pointer; font-weight: 600;">Cancel</button>
+            
             <div style="display: flex; gap: 8px;">
-              <button type="button" class="email-btn-cancel" id="cancelEmailBtn">Cancel</button>
-              <button type="submit" class="email-btn-submit" id="submitEmailBtn">Submit</button>
+              <button type="button" id="scheduleToggleBtn" style="padding: 10px 16px; background: #e2fbfe; color: #109a8c; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Schedule for Later</button>
+              <button type="submit" class="email-btn-submit" id="sendDirectBtn" style="padding: 10px 18px; background: #119cff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Send Directly</button>
             </div>
           </div>
         </form>
@@ -95,12 +63,6 @@ window.openSendEmailModal = function(resultId) {
 
   document.body.insertAdjacentHTML("beforeend", modalHtml);
 
-  const nameInput = document.getElementById("emailStudentName");
-  const previewSpan = document.getElementById("previewName");
-  nameInput.addEventListener("input", () => {
-    previewSpan.textContent = nameInput.value.trim() || "[Student Name]";
-  });
-
   const closeModal = () => document.getElementById("emailModalOverlay")?.remove();
   
   document.getElementById("closeEmailModal").addEventListener("click", closeModal);
@@ -109,45 +71,69 @@ window.openSendEmailModal = function(resultId) {
     if (e.target.id === "emailModalOverlay") closeModal();
   });
 
+  let isScheduling = false;
+  const scheduleContainer = document.getElementById("scheduleInputsContainer");
+  const scheduleToggleBtn = document.getElementById("scheduleToggleBtn");
+  const sendDirectBtn = document.getElementById("sendDirectBtn");
+
+  scheduleToggleBtn.addEventListener("click", () => {
+    isScheduling = !isScheduling;
+    if (isScheduling) {
+      scheduleContainer.style.display = "block";
+      scheduleToggleBtn.textContent = "Cancel Schedule";
+      sendDirectBtn.textContent = "Confirm Schedule";
+    } else {
+      scheduleContainer.style.display = "none";
+      scheduleToggleBtn.textContent = "Schedule for Later";
+      sendDirectBtn.textContent = "Send Directly";
+    }
+  });
+
   document.getElementById("emailDispatchForm").addEventListener("submit", e => {
     e.preventDefault();
 
-    const recipientName = nameInput.value.trim();
-    const recipientEmail = document.getElementById("emailStudentAddress").value.trim();
-    const schedDate = document.getElementById("scheduleDate").value;
-    const schedTime = document.getElementById("scheduleTime").value;
+    if (isScheduling) {
+      const schedDate = document.getElementById("scheduleDate").value;
+      const schedTime = document.getElementById("scheduleTime").value;
 
-    const subject = encodeURIComponent("Your OLSAT Results Are Ready!");
-    const body = encodeURIComponent(
-      `Dear ${recipientName},\n\n` +
-      `Your OLSAT results have been officially processed and sent to your registered email address.\n\n` +
-      `Please check your Inbox to view your score report.\n\n` +
-      `Best regards,\n` +
-      `[Guidance Counseling Office]\n` +
-      `[Admin / Staff]`
-    );
-
-    const targetEmail = recipientEmail || "";
-
-    if (schedDate && schedTime) {
       if (typeof showToast === "function") {
-        showToast(`Email scheduled for ${recipientName} on ${schedDate} at ${schedTime}.`);
+        showToast(`Email scheduled for ${record.name} on ${schedDate} at ${schedTime}.`);
       }
+
+      const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
+      notifs.unshift({
+        type: "blue",
+        title: "OLSAT Email Scheduled",
+        desc: `Scheduled score report for ${record.name} on ${schedDate} at ${schedTime}.`,
+        timestamp: Date.now()
+      });
+      localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
     } else {
-      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
-      if (typeof showToast === "function") {
-        showToast(`Email draft generated for ${recipientName}.`);
-      }
-    }
+      const subject = encodeURIComponent("Your OLSAT Results Are Ready!");
+      const body = encodeURIComponent(
+        `Dear ${record.name},\n\n` +
+        `Your OLSAT score (${record.score}) has been officially processed.\n\n` +
+        `Please check your student portal to view your complete score report.\n\n` +
+        `Best regards,\n` +
+        `Guidance Counseling Office\n` +
+        `Admin / Staff`
+      );
 
-    const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
-    notifs.unshift({
-      type: "blue",
-      title: "OLSAT Email Notification",
-      desc: `Sent result score report to ${recipientName} (${recipientEmail || "No Email"}).`,
-      timestamp: Date.now()
-    });
-    localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+
+      if (typeof showToast === "function") {
+        showToast(`Email draft dispatched for ${record.name}.`);
+      }
+
+      const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
+      notifs.unshift({
+        type: "green",
+        title: "OLSAT Email Dispatched",
+        desc: `Sent result score report to ${record.name}.`,
+        timestamp: Date.now()
+      });
+      localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
+    }
 
     closeModal();
   });

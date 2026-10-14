@@ -440,14 +440,28 @@ a {
 }
 
 .student-table-panel {
-  max-height: 520px;
+  max-height: 420px;
   overflow-y: auto;
   position: relative;
 }
 
 .student-data-table thead th {
-  position: sticky;
-  top: 0;
+  position: static !important;
   background: var(--surface);
-  z-index: 2;
+}
+
+#filterDropdownMenu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.filter-option:hover {
+  background: #f1f5f9;
+  color: #0284c7 !important;
+}
+
+.filter-option.active-filter {
+  background: #e0f2fe;
+  color: #0369a1 !important;
+  font-weight: 700;
 }
