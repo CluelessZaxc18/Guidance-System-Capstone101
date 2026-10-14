@@ -407,6 +407,79 @@ document.addEventListener("DOMContentLoaded", () => {
   const pendingBadge = document.getElementById("pendingBadge");
   const approvedBadge = document.getElementById("approvedBadge");
 
+  function getManualStudents() {
+    const allStudents = JSON.parse(localStorage.getItem("gpath_students")) || [];
+    const defaultIds = defaultApprovedStudents.map(d => String(d.id));
+    return allStudents.filter(s => !defaultIds.includes(String(s.id)));
+  }
+
+  let approvedHeaderAction = document.getElementById("approvedHeaderAction");
+  if (!approvedHeaderAction) {
+    approvedHeaderAction = document.createElement("div");
+    approvedHeaderAction.id = "approvedHeaderAction";
+    approvedHeaderAction.style.cssText = "display: none; justify-content: flex-end; margin-bottom: 12px; margin-top: -8px;";
+    
+    const manualStudents = getManualStudents();
+    const hasManualStudents = manualStudents.length > 0;
+    
+    approvedHeaderAction.innerHTML = `
+      <button type="button" id="manualPreloadBtn" title="Add Student Record Details" style="background: #007bff; border: none; border-radius: 6px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: ${hasManualStudents ? 'pointer' : 'not-allowed'}; opacity: ${hasManualStudents ? '1.0' : '0.3'}; transition: opacity 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </button>
+    `;
+    
+    approvedSection.parentNode.insertBefore(approvedHeaderAction, approvedSection);
+
+    document.getElementById("manualPreloadBtn").addEventListener("click", () => {
+      const currentManual = getManualStudents();
+      if (currentManual.length === 0) return;
+
+      const latestManual = currentManual[0];
+      
+      let currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+      let targetSub = currentSubmissions.find(s => String(s.id) === String(latestManual.id));
+
+      if (!targetSub) {
+        targetSub = {
+          timestamp: Date.now(),
+          status: "Approved",
+          firstName: latestManual.name.split(" ")[0] || "",
+          middleName: "",
+          lastName: latestManual.name.split(" ").slice(1).join(" ") || "",
+          name: latestManual.name,
+          id: latestManual.id,
+          lrn: "",
+          program: latestManual.program || "",
+          year: latestManual.year || "",
+          gender: latestManual.gender || "",
+          civilStatus: "Single",
+          birthday: latestManual.birthday || "",
+          religion: "",
+          contactNumber: "",
+          gmail: "",
+          facebook: "",
+          currentAddress: "",
+          preschool: "",
+          elementary: "",
+          juniorHigh: "",
+          seniorHigh: "",
+          fatherName: "",
+          fatherContact: "",
+          motherMaidenName: "",
+          motherContact: "",
+          guardianName: "",
+          guardianContact: ""
+        };
+        currentSubmissions.unshift(targetSub);
+        localStorage.setItem("gpath_submissions", JSON.stringify(currentSubmissions));
+      }
+
+      if (typeof window.viewSubmissionDetails === "function") {
+        window.viewSubmissionDetails(targetSub.timestamp);
+      }
+    });
+  }
+
   tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       tabBtns.forEach(b => b.classList.remove("active"));
@@ -416,9 +489,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (target === "pending") {
         pendingSection.classList.add("active");
         approvedSection.classList.remove("active");
+        if (approvedHeaderAction) approvedHeaderAction.style.display = "none";
       } else {
         approvedSection.classList.add("active");
         pendingSection.classList.remove("active");
+        if (approvedHeaderAction) approvedHeaderAction.style.display = "flex";
       }
     });
   });
@@ -431,6 +506,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     pendingBadge.textContent = pending.length;
     approvedBadge.textContent = approved.length;
+
+    const manualStudents = getManualStudents();
+    const preloadBtn = document.getElementById("manualPreloadBtn");
+    if (preloadBtn) {
+      const activeState = manualStudents.length > 0;
+      preloadBtn.style.opacity = activeState ? "1.0" : "0.3";
+      preloadBtn.style.cursor = activeState ? "pointer" : "not-allowed";
+    }
 
     if (pending.length === 0) {
       pendingList.innerHTML = `<p class="empty-state">No pending student submissions.</p>`;
@@ -496,7 +579,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = currentSubmissions[index];
     const existingIndex = students.findIndex(st => String(st.id) === String(item.id));
     
-    // Student Table only gets First and Last name
     const fName = item.firstName || item.name?.split(" ")[0] || "";
     const lName = item.lastName || item.name?.split(" ").pop() || "";
     const tableDisplayName = `${fName} ${lName}`.trim();
@@ -534,49 +616,167 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "Student.html";
   };
 
-  // Separate First, Middle, and Last name cleanly in the details modal popup
   window.viewSubmissionDetails = function(timestamp) {
     const currentSubmissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
     const item = currentSubmissions.find(s => String(s.timestamp) === String(timestamp));
     if (!item) return;
 
-    document.getElementById("submissionModal")?.remove();
+    function renderModal(isEdit) {
+      document.getElementById("submissionModal")?.remove();
 
-    const modalHtml = `
-      <div class="sub-modal-overlay" id="submissionModal">
-        <div class="sub-modal-card">
-          <div class="sub-modal-header">
-            <h3>Student Submission Details</h3>
-            <button type="button" class="sub-modal-close" onclick="document.getElementById('submissionModal').remove()">✖</button>
-          </div>
-          <div class="sub-modal-body">
-            <div class="sub-info-grid">
-              <div><label>First Name</label><strong>${item.firstName || "N/A"}</strong></div>
-              <div><label>Middle Name</label><strong>${item.middleName || "N/A"}</strong></div>
-              <div><label>Last Name</label><strong>${item.lastName || "N/A"}</strong></div>
-              <div><label>Student ID</label><strong>${item.id || "N/A"}</strong></div>
-              <div><label>LRN</label><strong>${item.lrn || "N/A"}</strong></div>
-              <div><label>Course / Program</label><strong>${item.program || "N/A"}</strong></div>
-              <div><label>Year Level</label><strong>${item.year || "N/A"}</strong></div>
-              <div><label>Gender</label><strong>${item.gender || "N/A"}</strong></div>
-              <div><label>Civil Status</label><strong>${item.civilStatus || "N/A"}</strong></div>
-              <div><label>Birthday</label><strong>${item.birthday || "N/A"}</strong></div>
-              <div><label>Religion</label><strong>${item.religion || "N/A"}</strong></div>
-              <div><label>Contact Number</label><strong>${item.contactNumber || "N/A"}</strong></div>
-              <div><label>Gmail</label><strong>${item.gmail || "N/A"}</strong></div>
-              <div><label>Facebook</label><strong>${item.facebook || "N/A"}</strong></div>
-              <div class="full-span"><label>Current Address</label><strong>${item.currentAddress || "N/A"}</strong></div>
-              <div class="full-span"><label>Educational Background</label><strong>Preschool: ${item.preschool || "N/A"} | Elem: ${item.elementary || "N/A"} | JHS: ${item.juniorHigh || "N/A"} | SHS: ${item.seniorHigh || "N/A"}</strong></div>
-              <div><label>Father's Name</label><strong>${item.fatherName || "N/A"} (${item.fatherContact || "No contact"})</strong></div>
-              <div><label>Mother's Name</label><strong>${item.motherMaidenName || "N/A"} (${item.motherContact || "No contact"})</strong></div>
-              <div><label>Guardian's Name</label><strong>${item.guardianName || "N/A"} (${item.guardianContact || "No contact"})</strong></div>
+      const modalHtml = `
+        <div class="sub-modal-overlay" id="submissionModal">
+          <div class="sub-modal-card" style="${isEdit ? 'border: 2px solid #007bff;' : ''}">
+            <div class="sub-modal-header" style="${isEdit ? 'background: #007bff; color: white;' : ''}">
+              <h3>${isEdit ? 'Edit Student Submission Details' : 'Student Submission Details'}</h3>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" id="toggleEditMode" style="background: ${isEdit ? '#28a745' : '#6c757d'}; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                  ${isEdit ? '✧ Save Changes' : '✎ Edit'}
+                </button>
+                <button type="button" class="sub-modal-close" onclick="document.getElementById('submissionModal').remove()">✖</button>
+              </div>
+            </div>
+            <div class="sub-modal-body">
+              <div class="sub-info-grid">
+                <div>
+                  <label>First Name</label>
+                  ${isEdit ? '<input type="text" id="edit_firstName" value="' + (item.firstName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.firstName || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Middle Name</label>
+                  ${isEdit ? '<input type="text" id="edit_middleName" value="' + (item.middleName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.middleName || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Last Name</label>
+                  ${isEdit ? '<input type="text" id="edit_lastName" value="' + (item.lastName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.lastName || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Student ID</label>
+                  ${isEdit ? '<input type="text" id="edit_id" value="' + (item.id || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.id || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>LRN</label>
+                  ${isEdit ? '<input type="text" id="edit_lrn" value="' + (item.lrn || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.lrn || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Course / Program</label>
+                  ${isEdit ? '<input type="text" id="edit_program" value="' + (item.program || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.program || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Year Level</label>
+                  ${isEdit ? '<input type="text" id="edit_year" value="' + (item.year || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.year || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Gender</label>
+                  ${isEdit ? '<input type="text" id="edit_gender" value="' + (item.gender || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.gender || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Civil Status</label>
+                  ${isEdit ? '<input type="text" id="edit_civilStatus" value="' + (item.civilStatus || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.civilStatus || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Birthday</label>
+                  ${isEdit ? '<input type="date" id="edit_birthday" value="' + (item.birthday || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.birthday || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Religion</label>
+                  ${isEdit ? '<input type="text" id="edit_religion" value="' + (item.religion || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.religion || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Contact Number</label>
+                  ${isEdit ? '<input type="text" id="edit_contactNumber" value="' + (item.contactNumber || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.contactNumber || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Gmail</label>
+                  ${isEdit ? '<input type="email" id="edit_gmail" value="' + (item.gmail || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.gmail || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Facebook</label>
+                  ${isEdit ? '<input type="text" id="edit_facebook" value="' + (item.facebook || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.facebook || 'N/A') + '</strong>'}
+                </div>
+                <div class="full-span">
+                  <label>Current Address</label>
+                  ${isEdit ? '<input type="text" id="edit_currentAddress" value="' + (item.currentAddress || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.currentAddress || 'N/A') + '</strong>'}
+                </div>
+                <div class="full-span">
+                  <label>Educational Background</label>
+                  ${isEdit ? '<div style="display: flex; gap: 6px; flex-wrap: wrap;"><input type="text" id="edit_preschool" placeholder="Preschool" value="' + (item.preschool || '') + '" style="flex:1; padding:6px; border:1px solid #ccc; border-radius:4px;"><input type="text" id="edit_elementary" placeholder="Elementary" value="' + (item.elementary || '') + '" style="flex:1; padding:6px; border:1px solid #ccc; border-radius:4px;"><input type="text" id="edit_juniorHigh" placeholder="Junior High" value="' + (item.juniorHigh || '') + '" style="flex:1; padding:6px; border:1px solid #ccc; border-radius:4px;"><input type="text" id="edit_seniorHigh" placeholder="Senior High" value="' + (item.seniorHigh || '') + '" style="flex:1; padding:6px; border:1px solid #ccc; border-radius:4px;"></div>' : '<strong>Preschool: ' + (item.preschool || 'N/A') + ' | Elem: ' + (item.elementary || 'N/A') + ' | JHS: ' + (item.juniorHigh || 'N/A') + ' | SHS: ' + (item.seniorHigh || 'N/A') + '</strong>'}
+                </div>
+                <div>
+                  <label>Father's Name</label>
+                  ${isEdit ? '<input type="text" id="edit_fatherName" placeholder="Father\'s Name" value="' + (item.fatherName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px; margin-bottom:4px;"><input type="text" id="edit_fatherContact" placeholder="Contact Number" value="' + (item.fatherContact || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.fatherName || 'N/A') + ' (' + (item.fatherContact || 'No contact') + ')</strong>'}
+                </div>
+                <div>
+                  <label>Mother's Name</label>
+                  ${isEdit ? '<input type="text" id="edit_motherMaidenName" placeholder="Mother\'s Name" value="' + (item.motherMaidenName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px; margin-bottom:4px;"><input type="text" id="edit_motherContact" placeholder="Contact Number" value="' + (item.motherContact || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.motherMaidenName || 'N/A') + ' (' + (item.motherContact || 'No contact') + ')</strong>'}
+                </div>
+                <div>
+                  <label>Guardian's Name</label>
+                  ${isEdit ? '<input type="text" id="edit_guardianName" placeholder="Guardian\'s Name" value="' + (item.guardianName || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px; margin-bottom:4px;"><input type="text" id="edit_guardianContact" placeholder="Contact Number" value="' + (item.guardianContact || '') + '" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:4px;">' : '<strong>' + (item.guardianName || 'N/A') + ' (' + (item.guardianContact || 'No contact') + ')</strong>'}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
 
-    document.body.insertAdjacentHTML("beforeend", modalHtml);
+      document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+      document.getElementById("toggleEditMode").addEventListener("click", () => {
+        if (!isEdit) {
+          renderModal(true);
+        } else {
+          item.firstName = document.getElementById("edit_firstName").value.trim();
+          item.middleName = document.getElementById("edit_middleName").value.trim();
+          item.lastName = document.getElementById("edit_lastName").value.trim();
+          item.name = `${item.firstName} ${item.middleName ? item.middleName + ' ' : ''}${item.lastName}`.trim();
+          item.id = document.getElementById("edit_id").value.trim();
+          item.lrn = document.getElementById("edit_lrn").value.trim();
+          item.program = document.getElementById("edit_program").value.trim();
+          item.year = document.getElementById("edit_year").value.trim();
+          item.gender = document.getElementById("edit_gender").value.trim();
+          item.civilStatus = document.getElementById("edit_civilStatus").value.trim();
+          item.birthday = document.getElementById("edit_birthday").value.trim();
+          item.religion = document.getElementById("edit_religion").value.trim();
+          item.contactNumber = document.getElementById("edit_contactNumber").value.trim();
+          item.gmail = document.getElementById("edit_gmail").value.trim();
+          item.facebook = document.getElementById("edit_facebook").value.trim();
+          item.currentAddress = document.getElementById("edit_currentAddress").value.trim();
+          item.preschool = document.getElementById("edit_preschool").value.trim();
+          item.elementary = document.getElementById("edit_elementary").value.trim();
+          item.juniorHigh = document.getElementById("edit_juniorHigh").value.trim();
+          item.seniorHigh = document.getElementById("edit_seniorHigh").value.trim();
+          item.fatherName = document.getElementById("edit_fatherName").value.trim();
+          item.fatherContact = document.getElementById("edit_fatherContact").value.trim();
+          item.motherMaidenName = document.getElementById("edit_motherMaidenName").value.trim();
+          item.motherContact = document.getElementById("edit_motherContact").value.trim();
+          item.guardianName = document.getElementById("edit_guardianName").value.trim();
+          item.guardianContact = document.getElementById("edit_guardianContact").value.trim();
+
+          localStorage.setItem("gpath_submissions", JSON.stringify(currentSubmissions));
+
+          let students = JSON.parse(localStorage.getItem("gpath_students")) || [];
+          const studentIndex = students.findIndex(st => String(st.id) === String(item.id));
+          if (studentIndex !== -1) {
+            students[studentIndex].name = `${item.firstName} ${item.lastName}`.trim();
+            students[studentIndex].year = item.year;
+            students[studentIndex].program = item.program;
+            students[studentIndex].gender = item.gender;
+            students[studentIndex].birthday = item.birthday;
+            localStorage.setItem("gpath_students", JSON.stringify(students));
+          }
+
+          if (typeof showToast === "function") {
+            showToast("Submission updated successfully.");
+          }
+
+          loadSubmissions();
+          renderModal(false);
+        }
+      });
+    }
+
+    renderModal(false);
   };
 
   window.handleAction = function(timestamp, action) {

@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem(key, JSON.stringify(defaultDocs));
     }
   });
-  // -------------------------------------------------------------------------
 
   const list = document.getElementById("activityList");
   if (!list) return;
@@ -127,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderTotalDocuments();
 
-  //=========================== Total Students count ===========================
   function countTotalStudents() {
     try {
       const stored = JSON.parse(localStorage.getItem("gpath_students"));
@@ -144,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderTotalStudents();
 
-  //=========================== Total Info Submission count ===========================
   function totalSubmissionCount() {
     try {
       const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));
@@ -163,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderTotalSubmissions();
 
-  //=========================== Total Approved Submissions count ===========================
   function countTotalApproved() {
     try {
       const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));

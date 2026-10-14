@@ -225,7 +225,6 @@
   }
 }
 
-/* .as-modal needs this so the loading overlay below can anchor to it */
 .as-modal {
   position: relative;
 }

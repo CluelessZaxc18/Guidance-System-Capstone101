@@ -106,20 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
                                     email: "GuidanceCounselor@gmail.com",
                                     password: "admin",
                                     pin: "113734",
-                                    position: "Guidance Counselor",
+                                    position: "Admin",
                                     idImage: "../img/emp_id102.png"
                                 });
                             }
 
-                            // Inside your file reader listener in Sign-up_3.js:
-                            let uploadedImageSrc = "../img/emp-id101.jpg"; // default fallback
+                            let uploadedImageSrc = "../img/emp-id101.jpg";
                             fileUploadInput.addEventListener('change', function(event) {
                                 const file = event.target.files[0];
                                 if (file && file.type.startsWith('image/')) {
                                     const reader = new FileReader();
                                     reader.onload = function(e) {
-                                        uploadedImageSrc = e.target.result; // store base64 string
-                                        // ... preview update code ...
+                                        uploadedImageSrc = e.target.result;
                                     };
                                     reader.readAsDataURL(file);
                                 }

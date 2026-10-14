@@ -1,12 +1,10 @@
 window.openSendEmailModal = function(resultId) {
   document.getElementById("emailModalOverlay")?.remove();
 
-  // Load the specific OLSAT result
   const olsatResults = JSON.parse(localStorage.getItem("gpath_olsat_results")) || [];
   const record = olsatResults.find(i => String(i.id) === String(resultId));
   if (!record) return;
 
-  // Fallback default student list with emails in case local storage hasn't been initialized yet
   const defaultStudentEmails = [
     { id: "110187", name: "Ana Mae Cruz", gmail: "CruzAnamae@gmail.com" },
     { id: "110638", name: "Miguel Santos", gmail: "MiguelSantos06@gmail.com" },
@@ -22,7 +20,6 @@ window.openSendEmailModal = function(resultId) {
     { id: "111186", name: "Ethan Flores", gmail: "EthanFlores.tourism@gmail.com" }
   ];
 
-  // Load submissions and students from storage, falling back to defaults if empty
   const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || defaultStudentEmails;
   const students = JSON.parse(localStorage.getItem("gpath_students")) || defaultStudentEmails;
 
@@ -35,7 +32,6 @@ window.openSendEmailModal = function(resultId) {
     studentEmail = matchedSub.gmail || matchedSub.email || "";
   }
 
-  // Get current date/time to set default min values for scheduler
   const now = new Date();
   const todayStr = now.toISOString().split("T")[0];
   const timeStr = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0');
@@ -99,7 +95,6 @@ window.openSendEmailModal = function(resultId) {
 
   document.body.insertAdjacentHTML("beforeend", modalHtml);
 
-  // Live update preview name when editable name changes
   const nameInput = document.getElementById("emailStudentName");
   const previewSpan = document.getElementById("previewName");
   nameInput.addEventListener("input", () => {
@@ -114,7 +109,6 @@ window.openSendEmailModal = function(resultId) {
     if (e.target.id === "emailModalOverlay") closeModal();
   });
 
-  // Handle email dispatch or scheduling
   document.getElementById("emailDispatchForm").addEventListener("submit", e => {
     e.preventDefault();
 
@@ -146,7 +140,6 @@ window.openSendEmailModal = function(resultId) {
       }
     }
 
-    // Log Email Activity Notification
     const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
     notifs.unshift({
       type: "blue",

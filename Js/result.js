@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("olsatTableBody");
   const searchInput = document.getElementById("olsatSearchInput");
 
-  // Independent Delete Confirmation Modal Overlay function
   function showDeleteConfirmModal(recordName, onConfirm) {
     document.getElementById("olsatDeleteModalOverlay")?.remove();
 
@@ -82,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </tr>
     `).join("");
 
-    // Bind send email actions
     document.querySelectorAll(".send-email-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.dataset.id;
@@ -92,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     
-    // Bind delete actions with confirmation warning modal
     document.querySelectorAll(".delete-olsat-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = Number(btn.dataset.id);
@@ -104,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.setItem(OLSAT_STORAGE_KEY, JSON.stringify(storedList));
           window.renderOlsatTable();
 
-          // Log deletion notification safely inside callback
           const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
           notifs.unshift({
             type: "red",
@@ -120,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Search filter
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.trim().toLowerCase();

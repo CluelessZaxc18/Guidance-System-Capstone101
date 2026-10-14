@@ -25,12 +25,10 @@ document.getElementById("studentForm").addEventListener("submit", e => {
   const formData = new FormData(e.target);
   const studentObj = Object.fromEntries(formData.entries());
 
-  // Store individual name components separately
   studentObj.firstName = studentObj.firstName ? studentObj.firstName.trim() : "";
   studentObj.middleName = studentObj.middleName ? studentObj.middleName.trim() : "";
   studentObj.lastName = studentObj.lastName ? studentObj.lastName.trim() : "";
 
-  // Construct full name cleanly for reference
   studentObj.name = `${studentObj.firstName} ${studentObj.middleName ? studentObj.middleName + ' ' : ''}${studentObj.lastName}`.trim();
 
   studentObj.id = studentObj.idNumber && studentObj.idNumber.trim() !== "" ? studentObj.idNumber : "N/A";

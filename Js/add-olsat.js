@@ -1,7 +1,6 @@
 window.openAddOlsatModal = function() {
   document.getElementById("olsatModalOverlay")?.remove();
 
-  // Fallback default student list so dropdown works instantly even after a hard reset
   const defaultStudents = [
     { id: "110187", name: "Ana Cruz", program: "BS Information Technology" },
     { id: "110638", name: "Miguel Santos", program: "BS Criminology" },
@@ -109,7 +108,6 @@ window.openAddOlsatModal = function() {
     existingResults.unshift(newResult);
     localStorage.setItem("gpath_olsat_results", JSON.stringify(existingResults));
 
-    // Log Activity for Recent Activity list
     const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
     notifs.unshift({
       type: "green",
@@ -125,7 +123,6 @@ window.openAddOlsatModal = function() {
 
     closeModal();
 
-    // Redirect to Result.html so they can view the newly added record
     window.location.href = "Result.html";
   });
 };

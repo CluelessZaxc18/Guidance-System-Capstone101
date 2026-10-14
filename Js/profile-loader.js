@@ -1,13 +1,10 @@
-// Js/profile-loader.js
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Grab active user from localStorage
   const activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
 
   if (activeUser) {
     const fullName = activeUser.name || "Staff Member";
     const role = activeUser.position || "Guidance Staff";
     
-    // Generate initials (e.g., "Ana Cruz" -> "AC")
     const initials = fullName
       .split(' ')
       .map(n => n[0])
@@ -15,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .toUpperCase()
       .substring(0, 2);
 
-    // 2. Update Top Header Profile via IDs
     const topAvatar = document.getElementById('topAvatar');
     const topName = document.getElementById('topName');
     const topRole = document.getElementById('topRole');
@@ -24,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (topName) topName.textContent = fullName;
     if (topRole) topRole.textContent = role;
 
-    // 3. Update Sidebar Profile via IDs
     const sidebarAvatar = document.getElementById('sidebarAvatar');
     const sidebarName = document.getElementById('sidebarName');
     const sidebarRole = document.getElementById('sidebarRole');
@@ -34,12 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sidebarRole) sidebarRole.textContent = role;
   }
 
-  // 4. Handle Log-out Button functionality
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('gpath_active_user');
-      window.location.href = 'Login.html'; // Adjust relative path if your main pages are in subfolders
+      window.location.href = 'Login.html';
     });
   }
 });

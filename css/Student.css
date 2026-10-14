@@ -211,8 +211,6 @@ a {
   height: 34px;
 }
 
-/* Panel card — moved here from Dashboard.css so Student.html doesn't need it.
-   Keep this ABOVE the .student-* rules below so their padding overrides win. */
 .panel {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -221,14 +219,12 @@ a {
   padding: 20px;
 }
 
-/* Start of Frame 10 Section Styles */
 .student-management-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Filter Panel Bar */
 .student-filter-panel {
   background:linear-gradient(135deg, #9cd6ff, #21bcff);
   display: flex;
@@ -344,7 +340,6 @@ a {
   line-height: 1;
 }
 
-/* Student Data Table Panel */
 .student-table-panel {
   padding: 0;
   overflow-y: auto;
@@ -403,7 +398,6 @@ a {
 .violet-bg { background: #f1efff; color: var(--violet); }
 .blue-bg { background: #edf4ff; color: var(--blue); }
 
-/* Status Badges */
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -444,7 +438,6 @@ a {
   background: #0284c7;
 }
 
-/* View Profile Action Button */
 .view-profile-btn {
   background: white;
   border: 1px solid var(--line);
@@ -470,7 +463,6 @@ a {
   border-color: #cbd5e1;
   color: var(--primary-dark);
 }
-/* End of Frame 10 Section Styles */
 
 
 
@@ -581,7 +573,6 @@ a {
   color: var(--muted);
 }
 
-/* Add these to Student.css so you can safely delete dashboard.css */
 .content {
   max-width: 1420px;
   margin: 0 auto;
