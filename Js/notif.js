@@ -19,6 +19,13 @@ function gpathSyncBellDot() {
 }
 
 window.addSystemNotification = function (title, description, type = 'green') {
+    let activeUser = null;
+    try {
+        activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+    } catch (e) {}
+
+    const userRole = activeUser ? (activeUser.position || activeUser.role || 'Staff') : 'Staff';
+
     const notifs = gpathReadNotifs();
 
     notifs.unshift({
@@ -26,6 +33,7 @@ window.addSystemNotification = function (title, description, type = 'green') {
         title: title,
         desc: description,
         type: type,
+        role: userRole,
         timestamp: Date.now(),
         unread: true
     });
@@ -119,21 +127,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const notifs = gpathReadNotifs();
 
-        const listHtml = notifs.map(n => `
-            <div class="notif-item ${n.unread ? 'unread' : ''}">
-                <div class="notif-icon ${n.type}">
-                    ${n.type === 'red' ? '🗑️' : n.type === 'orange' ? '⚠️' : n.type === 'purple' ? '❖' : n.type === 'blue' ? '⬆️' : '📄'}
-                </div>
-                <div class="notif-content">
-                    <div class="notif-title-row">
-                        <h4>${escapeHtml(n.title)}</h4>
-                        <span class="notif-time">${escapeHtml(n.timestamp ? timeAgo(n.timestamp) : (n.time || ''))}</span>
+        const listHtml = notifs.map(n => {
+            let activeUser = null;
+            try {
+                activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+            } catch (err) {}
+
+            const roleToCheck = n.role || (activeUser ? (activeUser.position || activeUser.role) : 'Admin');
+            const isStaff = String(roleToCheck).toLowerCase().includes("staff");
+            const indicatorColor = isStaff ? "#0D9488" : "#1E3A8A";
+
+            return `
+                <div class="notif-item ${n.unread ? 'unread' : ''}">
+                    <span title="${escapeHtml(roleToCheck)} Action" style="position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background-color: ${indicatorColor}; border-radius: 50%;"></span>
+                    <div class="notif-icon ${n.type}">
+                        ${n.type === 'red' ? '🗑️' : n.type === 'orange' ? '⚠️' : n.type === 'purple' ? '❖' : n.type === 'blue' ? '⬆️' : '📄'}
                     </div>
-                    <p>${escapeHtml(n.desc)}</p>
+                    <div class="notif-content">
+                        <div class="notif-title-row">
+                            <h4>${escapeHtml(n.title)}</h4>
+                            <span class="notif-time">${escapeHtml(n.timestamp ? timeAgo(n.timestamp) : (n.time || ''))}</span>
+                        </div>
+                        <p>${escapeHtml(n.desc)}</p>
+                    </div>
+                    ${n.unread ? '<span class="unread-dot"></span>' : ''}
                 </div>
-                ${n.unread ? '<span class="unread-dot"></span>' : ''}
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
         const overlayDiv = document.createElement('div');
         overlayDiv.id = 'notifOverlay';

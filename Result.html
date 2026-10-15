@@ -135,7 +135,7 @@
             </div>
 
             <div style="position: relative;">
-              <button id="filterMenuBtn" title="Filter by Test Date" style="background: white; border: 1px solid #cbd5e1; color: #034662; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s;">
+              <button id="filterMenuBtn" title="Filter" style="background: white; border: 1px solid #cbd5e1; color: #034662; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                 <i class="fa-solid fa-filter"></i>
               </button>
 
@@ -164,7 +164,11 @@
                 <th style="padding: 12px;">Student ID</th>
                 <th style="padding: 12px;">OLSAT Score</th>
                 <th style="padding: 12px;">Test Date</th>
-                <th style="padding: 12px;">Actions</th>
+                <th style="padding: 12px; text-align: right;">
+                  <button id="sendBatchBtn" style="background: #0e8bf8; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i> Send as Batch
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody id="olsatTableBody">

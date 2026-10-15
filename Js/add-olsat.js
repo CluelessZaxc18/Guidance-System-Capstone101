@@ -50,7 +50,7 @@ window.openAddOlsatModal = function() {
 
           <div class="olsat-modal-footer">
             <button type="button" class="olsat-btn-cancel" id="cancelOlsatBtn">Cancel</button>
-            <button type="submit" class="olsat-btn-submit">Save</button>
+            <button type="submit" id="olsatSubmitBtn" class="olsat-btn-submit">Save</button>
           </div>
         </form>
       </div>
@@ -123,36 +123,43 @@ window.openAddOlsatModal = function() {
       return;
     }
 
-    const formattedDate = new Date(dateInput).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    const submitBtn = document.getElementById("olsatSubmitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+    submitBtn.style.opacity = "0.7";
 
-    const newResult = {
-      id: Date.now(),
-      studentId: matchedStudent.id,
-      name: matchedStudent.name,
-      score: score,
-      date: formattedDate,
-      rawDate: dateInput,
-      remarks: score >= 110 ? "Above Average" : "Average"
-    };
+    setTimeout(() => {
+      const formattedDate = new Date(dateInput).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-    const existingResults = JSON.parse(localStorage.getItem("gpath_olsat_results")) || [];
-    existingResults.unshift(newResult);
-    localStorage.setItem("gpath_olsat_results", JSON.stringify(existingResults));
+      const newResult = {
+        id: Date.now(),
+        studentId: matchedStudent.id,
+        name: matchedStudent.name,
+        score: score,
+        date: formattedDate,
+        rawDate: dateInput,
+        remarks: score >= 110 ? "Above Average" : "Average"
+      };
 
-    const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
-    notifs.unshift({
-      type: "green",
-      title: "OLSAT Result Recorded",
-      desc: `Added test score (${score}) for ${matchedStudent.name}.`,
-      timestamp: Date.now()
-    });
-    localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
+      const existingResults = JSON.parse(localStorage.getItem("gpath_olsat_results")) || [];
+      existingResults.unshift(newResult);
+      localStorage.setItem("gpath_olsat_results", JSON.stringify(existingResults));
 
-    if (typeof showToast === "function") {
-      showToast(`OLSAT result saved for ${matchedStudent.name}.`);
-    }
+      const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
+      notifs.unshift({
+        type: "green",
+        title: "OLSAT Result Recorded",
+        desc: `Added test score for ${matchedStudent.name}.`,
+        timestamp: Date.now()
+      });
+      localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
 
-    closeModal();
-    window.location.href = "Result.html";
+      if (typeof showToast === "function") {
+        showToast(`OLSAT result saved for ${matchedStudent.name}.`);
+      }
+
+      closeModal();
+      window.location.href = "Result.html";
+    }, 600);
   });
 };

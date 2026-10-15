@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const DEFAULT_STYLE = { colorClass: "teal", icon: "•" };
 
   const PLACEHOLDER_ROWS = [
-    { colorClass: "teal", icon: "✓", title: "Welcome to G-PATH", desc: "Your guidance management system is ready to use." },
-    { colorClass: "blue", icon: "+", title: "Get started", desc: "Add your first student or upload a document." },
-    { colorClass: "violet", icon: "🔔", title: "Stay updated", desc: "Actions you take will appear here automatically." },
-    { colorClass: "orange", icon: "⚙", title: "Tip", desc: "Visit Account to update your profile and preferences." },
+    { colorClass: "teal", icon: "✓", title: "Welcome to G-PATH", desc: "Your guidance management system is ready to use.", role: "Admin" },
+    { colorClass: "blue", icon: "+", title: "Get started", desc: "Add your first student or upload a document.", role: "Staff" },
+    { colorClass: "violet", icon: "🔔", title: "Stay updated", desc: "Actions you take will appear here automatically.", role: "Admin" },
+    { colorClass: "orange", icon: "⚙", title: "Tip", desc: "Visit Account to update your profile and preferences.", role: "Staff" },
   ];
 
   function readNotifications() {
@@ -70,9 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }[ch]));
   }
 
-  function rowHtml(colorClass, icon, title, desc, timeText) {
+  function rowHtml(colorClass, icon, title, desc, timeText, role) {
+    let activeUser = null;
+    try {
+      activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+    } catch (err) {}
+
+    const roleToCheck = role || (activeUser ? (activeUser.position || activeUser.role) : 'Admin');
+    const isStaff = String(roleToCheck).toLowerCase().includes("staff");
+    const indicatorColor = isStaff ? "#0D9488" : "#1E3A8A";
+
     return `
-      <div class="activity">
+      <div class="activity" style="position: relative;">
+        <span title="${escapeHtml(roleToCheck)} Action" style="position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background-color: ${indicatorColor}; border-radius: 50%;"></span>
         <div class="activity-symbol ${colorClass}">${icon}</div>
         <div>
           <strong>${escapeHtml(title)}</strong>
@@ -88,14 +98,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (notifs.length === 0) {
       list.innerHTML = PLACEHOLDER_ROWS
-        .map(row => rowHtml(row.colorClass, row.icon, row.title, row.desc, ""))
+        .map(row => rowHtml(row.colorClass, row.icon, row.title, row.desc, "", row.role))
         .join("");
       return;
     }
 
     list.innerHTML = notifs.slice(0, MAX_ROWS).map(n => {
       const style = TYPE_STYLE[n.type] || DEFAULT_STYLE;
-      return rowHtml(style.colorClass, style.icon, n.title, n.desc, timeAgo(n.timestamp));
+      return rowHtml(style.colorClass, style.icon, n.title, n.desc, timeAgo(n.timestamp), n.role);
     }).join("");
   }
 

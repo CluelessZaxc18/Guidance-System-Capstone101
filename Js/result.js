@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterMenuBtn = document.getElementById("filterMenuBtn");
   const filterDropdownMenu = document.getElementById("filterDropdownMenu");
   let selectedDateFilter = "all";
+  let activeFilteredList = loadOlsatData();
 
   if (filterMenuBtn && filterDropdownMenu) {
     filterMenuBtn.addEventListener("click", (e) => {
@@ -80,6 +81,76 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function showSendToAllConfirmModal(onConfirm) {
+    document.getElementById("sendToAllModalOverlay")?.remove();
+
+    const modalOverlay = document.createElement("div");
+    modalOverlay.id = "sendToAllModalOverlay";
+    modalOverlay.style.cssText = `
+      position: fixed; inset: 0; background: rgba(23, 32, 51, 0.5);
+      backdrop-filter: blur(4px); display: grid; place-items: center;
+      z-index: 9999; animation: fadeIn 0.2s ease;
+    `;
+
+    modalOverlay.innerHTML = `
+      <div style="background: white; padding: 24px; border-radius: 14px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 12px;">⚠️</div>
+        <h3 style="font-size: 18px; color: #172033; margin-bottom: 8px;">Send to All?</h3>
+        <p style="font-size: 13px; color: #788398; margin-bottom: 20px;">
+          You currently have <strong>All Test Dates</strong> selected. This will dispatch batch score reports to <strong>all registered students</strong> across all schedules. Are you sure you wish to proceed?
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button id="cancelSendToAllBtn" style="padding: 10px 18px; border: 1px solid #e7ebf2; background: white; border-radius: 8px; font-weight: 600; cursor: pointer; color: #172033;">Cancel</button>
+          <button id="confirmSendToAllBtn" style="padding: 10px 18px; border: none; background: #1b36eb; color: white; border-radius: 8px; font-weight: 600; cursor: pointer;">Yes, Send to All</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+
+    document.getElementById("cancelSendToAllBtn").addEventListener("click", () => modalOverlay.remove());
+    document.getElementById("confirmSendToAllBtn").addEventListener("click", () => {
+      onConfirm();
+      modalOverlay.remove();
+    });
+
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) modalOverlay.remove();
+    });
+  }
+
+  function bindBatchButton() {
+    const sendBatchBtn = document.getElementById("sendBatchBtn");
+    if (!sendBatchBtn) return;
+
+    if (activeFilteredList.length <= 1) {
+      sendBatchBtn.style.opacity = "0.35";
+    } else {
+      sendBatchBtn.style.opacity = "1";
+    }
+
+    sendBatchBtn.onclick = (e) => {
+      e.stopPropagation();
+      if (activeFilteredList.length <= 1) return;
+
+      if (selectedDateFilter === "all") {
+        showSendToAllConfirmModal(() => {
+          if (typeof window.openBatchEmailModal === "function") {
+            window.openBatchEmailModal(activeFilteredList, "All Test Dates");
+          }
+        });
+      } else {
+        let dateLabel = selectedDateFilter;
+        const activeOption = filterDropdownMenu?.querySelector(`[data-date="${selectedDateFilter}"]`);
+        if (activeOption) dateLabel = activeOption.textContent.trim();
+
+        if (typeof window.openBatchEmailModal === "function") {
+          window.openBatchEmailModal(activeFilteredList, dateLabel);
+        }
+      }
+    };
+  }
+
   function showDeleteConfirmModal(recordName, onConfirm) {
     document.getElementById("olsatDeleteModalOverlay")?.remove();
 
@@ -120,11 +191,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.renderOlsatTable = function(customData = null) {
     const currentData = customData || loadOlsatData();
+    activeFilteredList = currentData;
 
     if (!tbody) return;
 
     if (currentData.length === 0) {
       tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--muted);">No OLSAT results found.</td></tr>`;
+      bindBatchButton();
       return;
     }
 
@@ -134,12 +207,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <td style="padding: 14px 12px; color: var(--muted);">${item.studentId}</td>
         <td style="padding: 14px 12px;"><strong style="color: var(--primary);">${item.score}</strong></td>
         <td style="padding: 14px 12px; color: var(--muted);">${item.date}</td>
-        <td style="padding: 14px 12px;">
+        <td style="padding: 14px 12px; text-align: right;">
           <button class="send-email-btn" data-id="${item.id}" style="background: #e2fbfe; color: #109a8c; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 6px;">Send</button>
           <button class="delete-olsat-btn" data-id="${item.id}" data-name="${item.name}" style="background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">Delete</button>
         </td>
       </tr>
     `).join("");
+
+    bindBatchButton();
 
     document.querySelectorAll(".send-email-btn").forEach(btn => {
       btn.addEventListener("click", () => {
