@@ -28,7 +28,7 @@ const DEFAULT_STUDENT_DATA = [
 function loadStudentData() {
   try {
     const stored = JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY));
-    if (Array.isArray(stored)) {
+    if (Array.isArray(stored) && stored.length > 0) {
       return stored.map(s => ({
         ...s,
         name: getFirstAndLastName(s.name, s.firstName, s.lastName)

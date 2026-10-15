@@ -237,11 +237,18 @@ document.addEventListener("DOMContentLoaded", () => {
           populateDateFilterMenu();
           window.renderOlsatTable();
 
+          let activeUser = null;
+          try {
+            activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+          } catch (e) {}
+          const userRole = activeUser ? (activeUser.position || activeUser.role || 'Admin') : 'Admin';
+
           const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
           notifs.unshift({
             type: "red",
             title: "OLSAT Result Deleted",
             desc: `Removed OLSAT test record for ${recordName}.`,
+            role: userRole,
             timestamp: Date.now()
           });
           localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
