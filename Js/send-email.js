@@ -91,6 +91,12 @@ window.openSendEmailModal = function(resultId) {
   document.getElementById("emailDispatchForm").addEventListener("submit", e => {
     e.preventDefault();
 
+    let activeUser = null;
+    try {
+      activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+    } catch (err) {}
+    const userRole = activeUser ? (activeUser.position || activeUser.role || 'Admin') : 'Admin';
+
     if (isScheduling) {
       const schedDate = document.getElementById("scheduleDate").value;
       const schedTime = document.getElementById("scheduleTime").value;
@@ -104,6 +110,7 @@ window.openSendEmailModal = function(resultId) {
         type: "blue",
         title: "OLSAT Email Scheduled",
         desc: `Scheduled score report for ${record.name} on ${schedDate} at ${schedTime}.`,
+        role: userRole,
         timestamp: Date.now()
       });
       localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
@@ -127,8 +134,9 @@ window.openSendEmailModal = function(resultId) {
       const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
       notifs.unshift({
         type: "green",
-        title: "OLSAT Email Dispatched",
+        title: "OLSAT Email Sent",
         desc: `Sent result score report to ${record.name}.`,
+        role: userRole,
         timestamp: Date.now()
       });
       localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
@@ -264,6 +272,12 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
   document.getElementById("batchEmailDispatchForm").addEventListener("submit", e => {
     e.preventDefault();
 
+    let activeUser = null;
+    try {
+      activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
+    } catch (err) {}
+    const userRole = activeUser ? (activeUser.position || activeUser.role || 'Admin') : 'Admin';
+
     if (isBatchScheduling) {
       const schedDate = document.getElementById("batchScheduleDate").value;
       const schedTime = document.getElementById("batchScheduleTime").value;
@@ -277,6 +291,7 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
         type: "blue",
         title: "Batch OLSAT Email Scheduled",
         desc: `Scheduled score reports for ${filteredStudents.length} students (${filterDateLabel}) on ${schedDate} at ${schedTime}.`,
+        role: userRole,
         timestamp: Date.now()
       });
       localStorage.setItem("gpath_notifications", JSON.stringify(notifs));
@@ -290,6 +305,7 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
         type: "green",
         title: "Batch OLSAT Emails Sent",
         desc: `Dispatched score reports to ${filteredStudents.length} recipients (${filterDateLabel}).`,
+        role: userRole,
         timestamp: Date.now()
       });
       localStorage.setItem("gpath_notifications", JSON.stringify(notifs));

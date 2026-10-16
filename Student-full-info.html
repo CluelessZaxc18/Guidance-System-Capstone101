@@ -23,11 +23,11 @@
 <section class="form-section">
 <div class="section-heading"><span>01</span><div><h2>Essential Information</h2><p>Basic student identification details.</p></div></div>
 <div class="form-grid">
-<label>ID Number<input type="text" name="idNumber"></label>
-<label>LRN<input type="text" name="lrn"></label>
-<label>First Name<input type="text" name="firstName"></label>
-<label>Middle Name<input type="text" name="middleName"></label>
-<label>Last Name<input type="text" name="lastName"></label>
+<label>ID Number<input type="text" name="idNumber" value="113735"></label>
+<label>LRN<input type="text" name="lrn" value="131546100139"></label>
+<label>First Name<input type="text" name="firstName" value="John"></label>
+<label>Middle Name<input type="text" name="middleName" value="Quincy"></label>
+<label>Last Name<input type="text" name="lastName" value="Doe"></label>
 <label>Suffix<input type="text" name="suffix"></label>
 </div>
 </section>
@@ -38,25 +38,25 @@
 <label>Course<select name="course">
 <option value="" selected disabled>Select course</option>
 <option value="BS Criminology">BS Criminology</option>
-<option value="BS Information Technology">BS Information Technology</option>
+<option value="BS Information Technology" selected>BS Information Technology</option>
 <option value="BS Hospitality Management">BS Hospitality Management</option>
 <option value="BS Midwifery Education">BS Midwifery Education</option>
 <option value="BS Tourism Management">BS Tourism Management</option>
 </select></label>
 <label>Year Level<select name="yearLevel">
 <option value="" selected disabled>Select year level</option>
-<option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option>
+<option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option selected>4th Year</option>
 </select></label>
-<label class="full-width">Curriculum<input type="text" name="curriculum"></label>
+<label class="full-width">Curriculum<input type="text" name="curriculum" value="BS in Information Technology"></label>
 </div>
 </section>
 
 <section class="form-section">
 <div class="section-heading"><span>03</span><div><h2>Personal Information</h2><p>Personal details of the student.</p></div></div>
 <div class="form-grid">
-<label>Gender<select name="gender"><option value="" selected disabled>Select gender</option><option>Male</option><option>Female</option></select></label>
+<label>Gender<select name="gender"><option value="" selected disabled>Select gender</option><option selected>Male</option><option>Female</option></select></label>
 <label>Civil Status<select name="civilStatus"><option value="" selected disabled>Select civil status</option><option>Single</option><option>Married</option></select></label>
-<label>Birthday<input type="date" name="birthday"></label>
+<label>Birthday<input type="date" name="birthday" value="2005-09-15"></label>
 <label>Religion<select name="religion" id="religion"><option value="" selected disabled>Select religion</option><option>Catholic</option><option>INC</option><option>Islam</option><option>Other</option></select></label>
 <label class="full-width other-religion" id="otherReligionWrap">Specify Religion<input type="text" name="otherReligion"></label>
 </div>
@@ -76,7 +76,7 @@
 <section class="form-section">
 <div class="section-heading"><span>05</span><div><h2>Contact & Address</h2><p>Current contact information.</p></div></div>
 <div class="form-grid">
-<label>Contact Number<input type="tel" name="contactNumber"></label>
+<label>Contact Number<input type="tel" name="contactNumber" value="09461153495"></label>
 <label class="full-width">Current Address<textarea name="currentAddress" rows="3"></textarea></label>
 </div>
 </section>
@@ -84,8 +84,8 @@
 <section class="form-section">
 <div class="section-heading"><span>06</span><div><h2>Social Media Accounts</h2><p>Optional account information.</p></div></div>
 <div class="form-grid">
-<label>Facebook<input type="text" name="facebook"></label>
-<label>Gmail<input type="email" name="gmail"></label>
+<label>Facebook<input type="text" name="facebook" value="John Doe"></label>
+<label>Gmail<input type="email" name="gmail" value="Johndoe101@gmail.com"></label>
 </div>
 </section>
 
