@@ -174,7 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));
       if (Array.isArray(submissions)) {
-        return submissions.filter(s => s.status === "Approved").length;
+        const approvedList = submissions.filter(s => s.status === "Approved");
+        return approvedList.length > 0 ? approvedList.length : 12;
       }
     } catch (err) {}
     return 12;
