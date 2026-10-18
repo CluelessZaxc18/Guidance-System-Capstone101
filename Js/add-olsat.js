@@ -1,7 +1,7 @@
 window.openAddOlsatModal = function() {
   document.getElementById("olsatModalOverlay")?.remove();
 
-  const allStudents = [
+  const fallbackStudents = [
     { id: "110187", name: "Ana Cruz", program: "BS Information Technology" },
     { id: "110638", name: "Miguel Santos", program: "BS Criminology" },
     { id: "110744", name: "Maria Lim", program: "BS Hospitality Management" },
@@ -16,17 +16,14 @@ window.openAddOlsatModal = function() {
     { id: "111186", name: "Ethan Flores", program: "BS Tourism Management" }
   ];
 
-  let students = [];
+  let storedStudents = [];
   try {
-    students = JSON.parse(localStorage.getItem("gpath_students")) || [];
+    storedStudents = JSON.parse(localStorage.getItem("gpath_students")) || [];
   } catch (err) {
-    students = [];
+    storedStudents = [];
   }
-  if (!Array.isArray(students) || students.length === 0) {
-    students = allStudents;
-    localStorage.setItem("gpath_students", JSON.stringify(allStudents));
-  }
-  const activeStudents = students;
+
+  const activeStudents = storedStudents.length > 0 ? storedStudents : fallbackStudents;
 
   const modalHtml = `
     <div class="olsat-modal-overlay" id="olsatModalOverlay">
