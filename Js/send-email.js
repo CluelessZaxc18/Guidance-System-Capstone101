@@ -10,7 +10,12 @@ const LITERAL_STUDENT_EMAILS = {
   "111419": "CamilleNavarro@gmail.com",
   "111308": "RafaelMendoza.hm@gmail.com",
   "111297": "NicoleReyes.mid@gmail.com",
-  "111186": "EthanFlores.tourism@gmail.com"
+  "111186": "EthanFlores.tourism@gmail.com",
+  "111923": "JMarieAlonzo@gmail.com",
+  "112045": "LucasPanigan12@gmail.com",
+  "112158": "ChloeSantos314@gmail.com",
+  "112310": "GabrielA.Ramos@gmail.com",
+  "112462": "SamDizon21@gmail.com"
 };
 
 function getStudentEmail(record) {

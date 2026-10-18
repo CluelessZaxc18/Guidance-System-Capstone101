@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const stored = JSON.parse(localStorage.getItem("gpath_students"));
       if (Array.isArray(stored)) return stored.length;
     } catch (err) {}
-    return 12;
+    return 17;
   }
 
   function renderTotalStudents() {
@@ -175,10 +175,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const submissions = JSON.parse(localStorage.getItem("gpath_submissions"));
       if (Array.isArray(submissions)) {
         const approvedList = submissions.filter(s => s.status === "Approved");
-        return approvedList.length > 0 ? approvedList.length : 12;
+        return approvedList.length > 0 ? approvedList.length : 17;
       }
     } catch (err) {}
-    return 12;
+    return 17;
   }
 
   function renderTotalApproved() {

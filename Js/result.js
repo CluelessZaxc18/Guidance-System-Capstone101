@@ -5,18 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: 1, studentId: "110187", name: "Ana Cruz", score: 85, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Above Average" },
     { id: 2, studentId: "110638", name: "Miguel Santos", score: 72, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Average" },
     { id: 3, studentId: "110744", name: "Maria Lim", score: 90, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Above Average" },
+    { id: 17, studentId: "112462", name: "Samantha Dizon", score: 80, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Average" },
     
     { id: 4, studentId: "110859", name: "Joshua Reyes", score: 68, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Average" },
     { id: 5, studentId: "110963", name: "Sofia Mendoza", score: 78, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Average" },
     { id: 6, studentId: "111074", name: "Liam Torres", score: 94, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Above Average" },
     { id: 7, studentId: "110198", name: "Aris Villanueva", score: 75, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Average" },
+    { id: 16, studentId: "112310", name: "Gabriel Ramos", score: 90, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Above Average" },
 
     { id: 8, studentId: "111530", name: "Daniel Garcia", score: 88, date: "Sep 28, 2026", rawDate: "2026-09-28", remarks: "Above Average" },
     { id: 9, studentId: "111419", name: "Camille Navarro", score: 65, date: "Sep 28, 2026", rawDate: "2026-09-28", remarks: "Average" },
-    
+    { id: 15, studentId: "112158", name: "Chloe Santos", score: 85, date: "Sep 28, 2026", rawDate: "2026-09-28", remarks: "Above Average" },
+
     { id: 10, studentId: "111308", name: "Rafael Mendoza", score: 82, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" },
     { id: 11, studentId: "111297", name: "Nicole Reyes", score: 76, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Average" },
-    { id: 12, studentId: "111186", name: "Ethan Flores", score: 89, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" }
+    { id: 12, studentId: "111186", name: "Ethan Flores", score: 89, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" },
+    { id: 13, studentId: "111923", name: "Jean Alonzo", score: 95, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" },
+    { id: 14, studentId: "112045", name: "Lucas Panigan", score: 77, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Average" }
   ];
 
   function loadOlsatData() {

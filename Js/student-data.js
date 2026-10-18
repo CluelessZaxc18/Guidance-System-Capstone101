@@ -22,7 +22,12 @@ const DEFAULT_STUDENT_DATA = [
   { name: "Camille Navarro", id: "111419", year: "1st Year", program: "BS Tourism Management", section: "Room 5", gender: "Female", birthday: "September 08, 2007", updated: "June 8, 2026", standing: "Transferee", status: "Monitoring" },
   { name: "Rafael Mendoza", id: "111308", year: "4th Year", program: "BS Hospitality Management", section: "Room 3", gender: "Female", birthday: "May 17, 2004", updated: "June 5, 2026", standing: "Regular", status: "Active" },
   { name: "Nicole Reyes", id: "111297", year: "3rd Year", program: "BS Midwifery Education", section: "7", gender: "Female", birthday: "December 21, 2005", updated: "June 3, 2026", standing: "Regular", status: "Follow-up" },
-  { name: "Ethan Flores", id: "111186", year: "2nd Year", program: "BS Tourism Management", section: "9", gender: "Male", birthday: "June 14, 2006", updated: "May 30, 2026", standing: "Irregular", status: "Active" },
+  { name: "Ethan Flores", id: "111186", year: "2nd Year", program: "BS Tourism Management", section: "9", gender: "Male", birthday: "June 14, 2006", updated: "May 30, 2026", standing: "Irregular", status: "Follow-up" },
+  { name: "Jean Alonzo", id: "111923", year: "3rd Year", program: "BS Information Technology", section: "4", gender: "Female", birthday: "November 21, 2005", updated: "August 14, 2026", standing: "Regular", status: "Active" },
+  { name: "Lucas Panigan", id: "112045", year: "1st Year", program: "BS Criminology", section: "2", gender: "Male", birthday: "February 8, 2007", updated: "July 03, 2026", standing: "Regular", status: "Monitoring" },
+  { name: "Chloe Santos", id: "112158", year: "4th Year", program: "BS Hospitality Management", section: "1", gender: "Female", birthday: "September 19, 2004", updated: "September 11, 2026", standing: "Irregular", status: "Active" },
+  { name: "Gabriel Ramos", id: "112310", year: "2nd Year", program: "BS Tourism Management", section: "8", gender: "Male", birthday: "December 3, 2005", updated: "June 28, 2026", standing: "Regular", status: "Active" },
+  { name: "Samantha Dizon", id: "112462", year: "3rd Year", program: "BS Midwifery Education", section: "3", gender: "Female", birthday: "April 25, 2005", updated: "August 22, 2026", standing: "Regular", status: "Follow-up" },
 ];
 
 function loadStudentData() {
