@@ -439,7 +439,7 @@ a {
 }
 
 .empty-state {
-  color: var(--muted);
+  color:#5f5f5f;
   font-size: 13px;
   padding: 20px 0;
 }

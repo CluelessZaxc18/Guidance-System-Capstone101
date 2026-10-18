@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalOverlay.innerHTML = `
       <div style="background: white; padding: 24px; border-radius: 14px; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center;">
         <div style="font-size: 36px; margin-bottom: 12px;">⚠️</div>
-        <h3 style="font-size: 18px; color: #172033; margin-bottom: 8px;">Delete Table (${dateLabel})?</h3>
+        <h3 style="font-size: 18px; color: #172033; margin-bottom: 8px;">Delete Table?</h3>
         <p style="font-size: 13px; color: #788398; margin-bottom: 20px;">
           Are you sure you want to delete all OLSAT records for <strong>"${dateLabel}"</strong>? This table and all its student scores will be removed.
         </p>
