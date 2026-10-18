@@ -1,9 +1,48 @@
+const LITERAL_STUDENT_EMAILS = {
+  "110187": "CruzAnamae@gmail.com",
+  "110638": "MiguelSantos06@gmail.com",
+  "110744": "MariaLim.hm@gmail.com",
+  "110859": "JoshuaReyes.tourism@gmail.com",
+  "110963": "SofiaMendoza.mid@gmail.com",
+  "111074": "LiamTorres.it@gmail.com",
+  "110198": "ArisVillanueva@gmail.com",
+  "111530": "DanielGarcia.crim@gmail.com",
+  "111419": "CamilleNavarro@gmail.com",
+  "111308": "RafaelMendoza.hm@gmail.com",
+  "111297": "NicoleReyes.mid@gmail.com",
+  "111186": "EthanFlores.tourism@gmail.com"
+};
+
+function getStudentEmail(record) {
+  const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
+  const subMatch = submissions.find(sub => 
+    String(sub.id) === String(record.studentId) || 
+    (sub.name && record.name && sub.name.toLowerCase().trim() === record.name.toLowerCase().trim())
+  );
+  
+  if (subMatch && (subMatch.gmail || subMatch.email)) {
+    return subMatch.gmail || subMatch.email;
+  }
+
+  if (record.studentId && LITERAL_STUDENT_EMAILS[record.studentId]) {
+    return LITERAL_STUDENT_EMAILS[record.studentId];
+  }
+
+  const foundKey = Object.keys(LITERAL_STUDENT_EMAILS).find(id => {
+    return false;
+  });
+
+  return record.email || "No Email Provided";
+}
+
 window.openSendEmailModal = function(resultId) {
   document.getElementById("emailModalOverlay")?.remove();
 
   const olsatResults = JSON.parse(localStorage.getItem("gpath_olsat_results")) || [];
   const record = olsatResults.find(i => String(i.id) === String(resultId));
   if (!record) return;
+
+  const studentEmail = getStudentEmail(record);
 
   const now = new Date();
   const todayStr = now.toISOString().split("T")[0];
@@ -18,6 +57,11 @@ window.openSendEmailModal = function(resultId) {
         </div>
         <form id="emailDispatchForm">
           <div class="email-modal-body">
+            <div class="email-form-group">
+              <label>Recipient Email</label>
+              <input type="text" value="${studentEmail}" readonly style="background: #f8fafc; font-weight: 600; color: #0369a1;">
+            </div>
+
             <div class="email-form-group">
               <label>Message Review</label>
               <div class="email-preview-box" style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e7ebf2; font-size: 13px; line-height: 1.5;">
@@ -109,7 +153,7 @@ window.openSendEmailModal = function(resultId) {
       notifs.unshift({
         type: "blue",
         title: "OLSAT Email Scheduled",
-        desc: `Scheduled score report for ${record.name} on ${schedDate} at ${schedTime}.`,
+        desc: `Scheduled score report for ${record.name} (${studentEmail}) on ${schedDate} at ${schedTime}.`,
         role: userRole,
         timestamp: Date.now()
       });
@@ -118,14 +162,14 @@ window.openSendEmailModal = function(resultId) {
       const subject = encodeURIComponent("Your OLSAT Results Are Ready!");
       const body = encodeURIComponent(
         `Dear ${record.name},\n\n` +
-        `Your OLSAT score (${record.score}) has been officially processed.\n\n` +
+        `Your OLSAT score (${record.score}/100) has been officially processed.\n\n` +
         `Please check your student portal to view your complete score report.\n\n` +
         `Best regards,\n` +
         `Guidance Counseling Office\n` +
         `Admin / Staff`
       );
 
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${studentEmail !== "No Email Provided" ? studentEmail : ""}?subject=${subject}&body=${body}`;
 
       if (typeof showToast === "function") {
         showToast(`Email draft dispatched for ${record.name}.`);
@@ -135,7 +179,7 @@ window.openSendEmailModal = function(resultId) {
       notifs.unshift({
         type: "green",
         title: "OLSAT Email Sent",
-        desc: `Sent result score report to ${record.name}.`,
+        desc: `Sent result score report to ${record.name} (${studentEmail}).`,
         role: userRole,
         timestamp: Date.now()
       });
@@ -154,8 +198,6 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
     return;
   }
 
-  const submissions = JSON.parse(localStorage.getItem("gpath_submissions")) || [];
-
   const pastelColors = [
     { bg: "#fef3c7", text: "#92400e", border: "#fde68a" },
     { bg: "#e0f2fe", text: "#0369a1", border: "#bae6fd" },
@@ -167,13 +209,11 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
 
   const studentBadgesHtml = filteredStudents.map((s, idx) => {
     const col = pastelColors[idx % pastelColors.length];
-    
-    const subMatch = submissions.find(sub => String(sub.id) === String(s.studentId) || sub.name === s.name);
-    const studentEmail = (subMatch && (subMatch.gmail || subMatch.email)) ? (subMatch.gmail || subMatch.email) : "No Email Provided";
+    const studentEmail = getStudentEmail(s);
 
     return `
       <span style="display: inline-flex; align-items: center; gap: 4px; background: ${col.bg}; color: ${col.text}; border: 1px solid ${col.border}; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">
-        <i class="fa-solid fa-user" style="font-size: 9px;"></i> ${s.name} <span style="opacity: 0.7; font-weight: 400;">(${studentEmail})</span>
+        <i class="fa-solid fa-user" style="font-size: 9px;"></i> ${s.name} <span style="opacity: 0.8; font-weight: 500; color: #0369a1;">(${studentEmail})</span>
       </span>
     `;
   }).join("");
@@ -194,7 +234,7 @@ window.openBatchEmailModal = function(filteredStudents, filterDateLabel) {
             
             <div class="email-form-group">
               <label>Recipients (${filteredStudents.length} Students)</label>
-              <div style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 110px; overflow-y: auto; padding: 10px; background: #f8fafc; border: 1px solid #e7ebf2; border-radius: 8px;">
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 130px; overflow-y: auto; padding: 10px; background: #f8fafc; border: 1px solid #e7ebf2; border-radius: 8px;">
                 ${studentBadgesHtml}
               </div>
             </div>

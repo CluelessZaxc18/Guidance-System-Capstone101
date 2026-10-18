@@ -28,8 +28,6 @@ window.openAddOlsatModal = function() {
   }
   const activeStudents = students;
 
-  let selectedStudentId = "";
-
   const modalHtml = `
     <div class="olsat-modal-overlay" id="olsatModalOverlay">
       <div class="olsat-modal-card">
@@ -48,7 +46,7 @@ window.openAddOlsatModal = function() {
 
             <div class="olsat-form-group">
               <label>OLSAT Score</label>
-              <input type="number" id="olsatScoreInput" placeholder="//" required min="0" style="width: 100%; padding: 10px; border: 1px solid #e7ebf2; border-radius: 8px;">
+              <input type="number" id="olsatScoreInput" placeholder="Enter score" required min="0" max="100" style="width: 100%; padding: 10px; border: 1px solid #e7ebf2; border-radius: 8px;">
             </div>
 
             <div class="olsat-form-group">
@@ -59,7 +57,7 @@ window.openAddOlsatModal = function() {
 
           <div class="olsat-modal-footer">
             <button type="button" class="olsat-btn-cancel" id="cancelOlsatBtn">Cancel</button>
-            <button type="submit" id="olsatSubmitBtn" class="olsat-btn-submit">Save</button>
+            <button type="submit" id="olsatSubmitBtn" class="olsat-btn-submit">Save Result</button>
           </div>
         </form>
       </div>
@@ -90,7 +88,6 @@ window.openAddOlsatModal = function() {
       item.addEventListener("click", () => {
         searchInput.value = `${item.dataset.name} (ID: ${item.dataset.id})`;
         hiddenIdInput.value = item.dataset.id;
-        selectedStudentId = item.dataset.id;
         dropdownList.style.display = "none";
       });
     });
@@ -115,7 +112,6 @@ window.openAddOlsatModal = function() {
   });
 
   const closeModal = () => document.getElementById("olsatModalOverlay")?.remove();
-  
   document.getElementById("closeOlsatModal").addEventListener("click", closeModal);
   document.getElementById("cancelOlsatBtn").addEventListener("click", closeModal);
 
@@ -126,6 +122,11 @@ window.openAddOlsatModal = function() {
     const score = Number(document.getElementById("olsatScoreInput").value);
     const dateInput = document.getElementById("olsatDate").value;
 
+    if (score > 100 || score < 0) {
+      alert("OLSAT score must be between 0 and 100.");
+      return;
+    }
+
     const matchedStudent = activeStudents.find(s => String(s.id) === String(studentId));
     if (!matchedStudent) {
       alert("Please select a valid student from the search list.");
@@ -135,7 +136,6 @@ window.openAddOlsatModal = function() {
     const submitBtn = document.getElementById("olsatSubmitBtn");
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
-    submitBtn.style.opacity = "0.7";
 
     setTimeout(() => {
       const formattedDate = new Date(dateInput).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -147,50 +147,26 @@ window.openAddOlsatModal = function() {
         score: score,
         date: formattedDate,
         rawDate: dateInput,
-        remarks: score >= 110 ? "Above Average" : "Average"
+        remarks: score >= 75 ? "Above Average" : "Average"
       };
 
       const OLSAT_STORAGE_KEY = "gpath_olsat_results";
-      const DEFAULT_OLSAT_DATA = [
-        { id: 1, studentId: "110187", name: "Ana Cruz", score: 115, date: "Sep 12, 2026", rawDate: "2026-09-12", remarks: "Above Average" },
-        { id: 2, studentId: "110638", name: "Miguel Santos", score: 102, date: "Sep 15, 2026", rawDate: "2026-09-15", remarks: "Average" },
-        { id: 3, studentId: "110744", name: "Maria Lim", score: 118, date: "Sep 18, 2026", rawDate: "2026-09-18", remarks: "Above Average" },
-        { id: 4, studentId: "110859", name: "Joshua Reyes", score: 95, date: "Sep 20, 2026", rawDate: "2026-09-20", remarks: "Average" },
-        { id: 5, studentId: "110963", name: "Sofia Mendoza", score: 108, date: "Sep 22, 2026", rawDate: "2026-09-22", remarks: "Average" },
-        { id: 6, studentId: "111074", name: "Liam Torres", score: 124, date: "Sep 25, 2026", rawDate: "2026-09-25", remarks: "Above Average" },
-        { id: 7, studentId: "110198", name: "Aris Villanueva", score: 101, date: "Sep 28, 2026", rawDate: "2026-09-28", remarks: "Average" },
-        { id: 8, studentId: "111530", name: "Daniel Garcia", score: 112, date: "Oct 02, 2026", rawDate: "2026-10-02", remarks: "Above Average" },
-        { id: 9, studentId: "111419", name: "Camille Navarro", score: 99, date: "Oct 05, 2026", rawDate: "2026-10-05", remarks: "Average" },
-        { id: 10, studentId: "111308", name: "Rafael Mendoza", score: 110, date: "Oct 08, 2026", rawDate: "2026-10-08", remarks: "Above Average" },
-        { id: 11, studentId: "111297", name: "Nicole Reyes", score: 104, date: "Oct 10, 2026", rawDate: "2026-10-10", remarks: "Average" },
-        { id: 12, studentId: "111186", name: "Ethan Flores", score: 116, date: "Oct 12, 2026", rawDate: "2026-10-12", remarks: "Above Average" }
-      ];
-
-      let existingResults = [];
-      try {
-        existingResults = JSON.parse(localStorage.getItem(OLSAT_STORAGE_KEY));
-      } catch (err) {
-        existingResults = null;
-      }
-
-      if (!Array.isArray(existingResults) || existingResults.length === 0) {
-        existingResults = DEFAULT_OLSAT_DATA;
-      }
-
+      let existingResults = JSON.parse(localStorage.getItem(OLSAT_STORAGE_KEY)) || [];
+      
       existingResults.unshift(newResult);
       localStorage.setItem(OLSAT_STORAGE_KEY, JSON.stringify(existingResults));
 
       let activeUser = null;
       try {
         activeUser = JSON.parse(localStorage.getItem('gpath_active_user'));
-      } catch (e) {}
+      } catch (err) {}
       const userRole = activeUser ? (activeUser.position || activeUser.role || 'Admin') : 'Admin';
 
       const notifs = JSON.parse(localStorage.getItem("gpath_notifications")) || [];
       notifs.unshift({
         type: "green",
         title: "OLSAT Result Recorded",
-        desc: `Added test score for ${matchedStudent.name}.`,
+        desc: `Added test score for ${matchedStudent.name} (${formattedDate}).`,
         role: userRole,
         timestamp: Date.now()
       });
@@ -201,7 +177,12 @@ window.openAddOlsatModal = function() {
       }
 
       closeModal();
-      window.location.href = "Result.html";
-    }, 600);
+
+      if (typeof window.renderOlsatTables === "function") {
+        window.renderOlsatTables();
+      } else {
+        window.location.href = "Result.html";
+      }
+    }, 500);
   });
 };

@@ -41,7 +41,6 @@
         <a href="Student.html" data-page="Students">Context 2</a>
       </div>
       
-
       <button class="nav-item nav-dropdown" id="studentToggle2" type="button" aria-expanded="false">
         <span class="nav-icon">☷</span>
         <span>Document Management</span>
@@ -49,30 +48,28 @@
       </button>
 
       <div class="submenu" id="studentMenu2">
-
         <button class="nav-item nav-dropdown" id="studentToggle3" type="button" aria-expanded="false">
-        <span class="nav-icon">❐</span>
-        <span>Narrative Report for</span>
-        <span class="chevron">›</span>
-      </button>
-            <div class="submenu" id="studentMenu3">
-              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Testing</a>
-              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Referrals</a>
-              <a href="DM-Narrative-reports.html" data-page="Narrative Report">Counseling</a>
-          </div>
+          <span class="nav-icon">❐</span>
+          <span>Narrative Report for</span>
+          <span class="chevron">›</span>
+        </button>
+        <div class="submenu" id="studentMenu3">
+          <a href="DM-Narrative-reports.html" data-page="Narrative Report">Testing</a>
+          <a href="DM-Narrative-reports.html" data-page="Narrative Report">Referrals</a>
+          <a href="DM-Narrative-reports.html" data-page="Narrative Report">Counseling</a>
+        </div>
 
         <button class="nav-item nav-dropdown" id="studentToggle4" type="button" aria-expanded="false">
-        <span class="nav-icon">℉</span>
-        <span>Forms for </span>
-        <span class="chevron">›</span>
-      </button>
-            <div class="submenu" id="studentMenu4">
-              <a href="DM-Forms.html" data-page="Forms">Referrals</a>
-              <a href="DM-Forms.html" data-page="Forms">Informed Consent</a>
-              <a href="DM-Forms.html" data-page="Forms">Referral Feedback</a>
-              <a href="DM-Forms.html" data-page="Forms">Case Notes</a>
-          </div>
-
+          <span class="nav-icon">℉</span>
+          <span>Forms for </span>
+          <span class="chevron">›</span>
+        </button>
+        <div class="submenu" id="studentMenu4">
+          <a href="DM-Forms.html" data-page="Forms">Referrals</a>
+          <a href="DM-Forms.html" data-page="Forms">Informed Consent</a>
+          <a href="DM-Forms.html" data-page="Forms">Referral Feedback</a>
+          <a href="DM-Forms.html" data-page="Forms">Case Notes</a>
+        </div>
       </div>
 
       <a class="nav-item active" href="Result.html" data-page="OLSAT Result">
@@ -127,7 +124,7 @@
 
     <div class="content">
       <section class="student-management-section">
-        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: linear-gradient(135deg, #9cd6ff, #21bcff); gap: 15px; position: relative;">
+        <div class="student-filter-panel panel" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: linear-gradient(135deg, #9cd6ff, #21bcff); gap: 15px; position: relative;">
           
           <div style="display: flex; align-items: center; gap: 10px; flex: 1; max-width: 380px;">
             <div class="search-box-wrap" style="flex: 1;">
@@ -135,18 +132,13 @@
             </div>
 
             <div style="position: relative;">
-              <button id="filterMenuBtn" title="Filter" style="background: white; border: 1px solid #cbd5e1; color: #034662; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+              <button id="filterMenuBtn" title="Filter by Test Date" style="background: white; border: 1px solid #cbd5e1; color: #034662; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                 <i class="fa-solid fa-filter"></i>
               </button>
 
               <div id="filterDropdownMenu" style="display: none; position: absolute; top: 50px; left: 0; background: white; border: 1px solid #e2e8f0; border-radius: 12px; width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); z-index: 100; padding: 8px;">
                 <div style="padding: 8px 12px; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">FILTER BY TEST DATE</div>
-                <div class="filter-option" data-date="all" style="padding: 8px 12px; font-size: 13px; font-weight: 600; color: #1e293b; border-radius: 6px; cursor: pointer;">All Test Dates</div>
-                <div class="filter-option" data-date="2026-09-12" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 12, 2026</div>
-                <div class="filter-option" data-date="2026-09-20" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 20, 2026</div>
-                <div class="filter-option" data-date="2026-09-28" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Sep 28, 2026</div>
-                <div class="filter-option" data-date="2026-10-02" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Oct 02, 2026</div>
-                <div class="filter-option" data-date="2026-10-12" style="padding: 8px 12px; font-size: 13px; color: #334155; border-radius: 6px; cursor: pointer;">Oct 12, 2026</div>
+                <div class="filter-option active-filter" data-date="all" style="padding: 8px 12px; font-size: 13px; font-weight: 600; color: #1e293b; border-radius: 6px; cursor: pointer;">All Test Dates</div>
               </div>
             </div>
           </div>
@@ -156,31 +148,13 @@
           </button>
         </div>
 
-        <div class="panel student-table-panel">
-          <table class="student-data-table" style="width: 100%; border-collapse: collapse;">
-            <thead>
-              <tr style="text-align: left; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px;">
-                <th style="padding: 12px;">Student Name</th>
-                <th style="padding: 12px;">Student ID</th>
-                <th style="padding: 12px;">OLSAT Score</th>
-                <th style="padding: 12px;">Test Date</th>
-                <th style="padding: 12px; text-align: right;">
-                  <button id="sendBatchBtn" style="background: #0e8bf8; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                    <i class="fa-solid fa-paper-plane" style="font-size: 10px;"></i> Send as Batch
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="olsatTableBody">
-            </tbody>
-          </table>
+        <div id="olsatTablesContainer" style="display: flex; flex-direction: column; gap: 25px;">
         </div>
       </section>        
     </div>
   </main>
 
   <div class="toast" id="toast"></div>
-
   <div id="addStudentMount"></div>
 
   <script src="Js/profile-loader.js" defer></script>

@@ -399,13 +399,38 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("gpath_students", JSON.stringify(existingStudents));
   }
 
-  const tabBtns = document.querySelectorAll(".sub-tab-btn");
+  const subTabsContainer = document.querySelector(".sub-tabs");
+  if (subTabsContainer && !document.getElementById("submissionBackBtn")) {
+    const backBtn = document.createElement("button");
+    backBtn.type = "button";
+    backBtn.id = "submissionBackBtn";
+    backBtn.className = "sub-tab-btn";
+    backBtn.textContent = "❮";
+    backBtn.title = "Back to Students";
+    backBtn.style.cssText = "font-weight: bold; cursor: pointer;";
+    backBtn.addEventListener("click", () => {
+      window.location.href = "Student.html";
+    });
+    subTabsContainer.prepend(backBtn);
+  }
+
+  const tabBtns = document.querySelectorAll(".sub-tab-btn:not(#submissionBackBtn)");
   const pendingSection = document.getElementById("pendingSection");
   const approvedSection = document.getElementById("approvedSection");
   const pendingList = document.getElementById("pendingList");
   const approvedList = document.getElementById("approvedList");
   const pendingBadge = document.getElementById("pendingBadge");
   const approvedBadge = document.getElementById("approvedBadge");
+
+  if (pendingSection) pendingSection.classList.add("active");
+  if (approvedSection) approvedSection.classList.remove("active");
+  tabBtns.forEach(b => {
+    if (b.dataset.tab === "pending") {
+      b.classList.add("active");
+    } else if (b.dataset.tab === "approved") {
+      b.classList.remove("active");
+    }
+  });
 
   function getManualStudents() {
     const allStudents = JSON.parse(localStorage.getItem("gpath_students")) || [];
